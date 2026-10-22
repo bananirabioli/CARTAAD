@@ -1,0 +1,50 @@
+# Production overlay for a VPS. Needs Docker Compose v2.24+ (`!reset`) and DOMAIN, SECRET_KEY, BASIC_AUTH_USER and
+# BASIC_AUTH_HASH in .env (see docs/DEPLOY.md):
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+x-prod-env: &prod-env
+  SECRET_KEY: ${SECRET_KEY:?define SECRET_KEY in .env}
+  COOKIE_SECURE: "true"
+  DEMO_MODE: ${DEMO_MODE:-true}
+
+services:
+  db:
+    restart: unless-stopped
+  redis:
+    restart: unless-stopped
+
+  # The browser only talks to Next.js (/api/* is proxied to the API), so neither is published; Caddy is the only way in.
+  api:
+    restart: unless-stopped
+    ports: !reset []
+    environment: *prod-env
+  worker:
+    restart: unless-stopped
+    environment: *prod-env
+  beat:
+    restart: unless-stopped
+    environment: *prod-env
+  web:
+    restart: unless-stopped
+    ports: !reset []
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?define DOMAIN in .env}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:?define BASIC_AUTH_USER in .env}
+      BASIC_AUTH_HASH: ${BASIC_AUTH_HASH:?define BASIC_AUTH_HASH in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+
+volumes:
+  caddy_data:
+  caddy_config:
