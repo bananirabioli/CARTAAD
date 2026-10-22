@@ -17,3 +17,4 @@ from app.models.monitoring import Comment, InteractionSnapshot, MonitoredSource,
 from app.models.cases import Case, Claim, Classification, Interpretation  # noqa: F401
 from app.models.generation import ConsentRecord, FigureCheck, Piece, PieceVersion, Proposal, RedTeamNote, Review  # noqa: F401
 from app.models.publishing import AllyPackage, AllyShare, ScheduledPost  # noqa: F401
+from app.models.metrics import PostMetrics  # noqa: F401

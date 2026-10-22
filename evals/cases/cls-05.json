@@ -1,0 +1,10 @@
+{
+  "id": "cls-05",
+  "kind": "classify",
+  "text": "El presupuesto del puente se lo roban: es un fraude de la Dirección de Obras.",
+  "expected": {
+    "stance": "en_contra",
+    "message_type": "acusacion_o_difamacion",
+    "topic": "obra_publica"
+  }
+}

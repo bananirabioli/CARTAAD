@@ -3,7 +3,7 @@
 import { ArrowRight, Pencil, RefreshCw, Scale } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { AlertBadge } from "@/components/app/badges";
@@ -11,6 +11,7 @@ import { ErrorState, KeyValue, Loading, ReasonDialog } from "@/components/app/co
 import { FormDialog } from "@/components/app/form-dialog";
 import { useSession } from "@/components/app/session";
 import { CaseStatusBadge, ClaimList, LearningTable, RiskBreakdown, RiskMeter } from "@/components/cases/parts";
+import { CaseMetricsPanel } from "@/components/metrics/parts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { enumOptions, fmtDate, fmtNum, t, tEnum } from "@/i18n";
 import { api, ApiError, fileUrl, refresh, useApi, type Schemas } from "@/lib/api/client";
-import { useTopics } from "@/lib/hooks";
+import { useStateResetOn, useTopics } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 type CaseD = Schemas["CaseDetail"];
@@ -48,11 +49,10 @@ function DecisionPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) 
   const [accountId, setAccountId] = useState<string>(firstOk ? String(firstOk.id) : "");
   const account = accounts.find((a) => String(a.id) === accountId);
   const recommended = (c.recommended_style?.value as string | null) ?? null;
-  const [style, setStyle] = useState<string>("");
+  const [style, setStyle] = useStateResetOn<string>(accountId, () => "");
   const [strategy, setStrategy] = useState<string>(c.strategy_suggested ?? "");
   const [reasonFor, setReasonFor] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  useEffect(() => setStyle(""), [accountId]);
 
   if (c.status !== "interpretado" || !can("case.decide")) return null;
 
@@ -324,6 +324,11 @@ export default function CaseDetailPage() {
 
         <div className="grid content-start gap-4">
           <DecisionPanel c={c} onDone={set} />
+          {["publicado", "medido", "calificado"].includes(c.status) ? (
+            <Section title={t("metrics.panel")}>
+              <CaseMetricsPanel caseId={c.id} onChanged={() => void mutate()} />
+            </Section>
+          ) : null}
           <LegalPanel c={c} onDone={set} />
           {c.flow ? (
             <Section title={t("cases.strategy")}>

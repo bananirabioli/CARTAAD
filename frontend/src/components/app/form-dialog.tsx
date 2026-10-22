@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { useStateResetOn } from "@/lib/hooks";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -56,17 +58,9 @@ export function FormDialog({
   onSubmit: (values: FormValues) => Promise<unknown>;
   wide?: boolean;
 }) {
-  const [values, setValues] = useState<FormValues>(initial ?? {});
+  const [values, setValues] = useStateResetOn<FormValues>(open, () => initial ?? {});
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (open) {
-      setValues(initial ?? {});
-      setError(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  const [error, setError] = useStateResetOn<string | null>(open, () => null);
 
   const set = (name: string, value: unknown) => setValues((prev) => ({ ...prev, [name]: value }));
   const missing = fields.some((f) => f.required && (values[f.name] === undefined || values[f.name] === null || values[f.name] === ""));

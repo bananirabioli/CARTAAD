@@ -1,8 +1,19 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 
 import { useApi, type Schemas } from "@/lib/api/client";
+
+/** State that resets to `init()` whenever `key` changes, adjusted during render instead of in an effect. */
+export function useStateResetOn<T>(key: unknown, init: () => T): [T, Dispatch<SetStateAction<T>>] {
+  const [prevKey, setPrevKey] = useState(key);
+  const [state, setState] = useState(init);
+  if (!Object.is(prevKey, key)) {
+    setPrevKey(key);
+    setState(init());
+  }
+  return [state, setState];
+}
 
 export function useTopics() {
   const { data } = useApi<Schemas["TopicOut"][]>("/topics");

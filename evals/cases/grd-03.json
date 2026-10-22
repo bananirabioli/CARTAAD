@@ -1,0 +1,9 @@
+{
+  "id": "grd-03",
+  "kind": "grounding",
+  "text": "El presupuesto de bacheo se lo roban: corrupción pura.",
+  "expected": {
+    "verdict": "no_verificable",
+    "cites_fact": false
+  }
+}

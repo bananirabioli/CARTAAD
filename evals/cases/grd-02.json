@@ -1,0 +1,9 @@
+{
+  "id": "grd-02",
+  "kind": "grounding",
+  "text": "Apenas 47.5 km de calles repavimentadas en seis meses: solo una fracción de la red.",
+  "expected": {
+    "verdict": "incompleta",
+    "cites_fact": true
+  }
+}

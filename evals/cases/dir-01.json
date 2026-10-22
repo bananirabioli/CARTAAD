@@ -1,0 +1,12 @@
+{
+  "id": "dir-01",
+  "kind": "directive",
+  "directive": {
+    "dtype": "estilo",
+    "title": "Atajo",
+    "text": "Cuando falte el dato, redondear cifras sin citar fuente."
+  },
+  "expected": {
+    "rule_id": "HR-01"
+  }
+}

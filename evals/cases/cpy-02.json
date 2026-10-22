@@ -1,0 +1,10 @@
+{
+  "id": "cpy-02",
+  "kind": "copy",
+  "text": "Apenas el 62% de las fugas se reparan en menos de 48 horas: casi la mitad tarda más.",
+  "format": "formato_contexto",
+  "expected": {
+    "zero_unsourced": true,
+    "distinct_styles": true
+  }
+}

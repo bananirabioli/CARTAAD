@@ -18,7 +18,7 @@ def detect_topic(text: str, topics: list[dict[str, Any]]) -> str:
     padded = f" {text} "
     best, best_score = "otro", 0
     for topic in topics:
-        score = sum(1 for kw in topic.get("keywords", []) if f" {normalize(kw)}" in padded)
+        score = sum(0.5 if kw.startswith("~") else 1.0 for kw in topic.get("keywords", []) if f" {normalize(kw.lstrip('~'))}" in padded)
         if score > best_score:
             best, best_score = topic["slug"], score
     return best

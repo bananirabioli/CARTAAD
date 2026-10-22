@@ -1,0 +1,11 @@
+{
+  "id": "cls-02",
+  "kind": "classify",
+  "text": "Llevamos dos semanas sin agua en la Colonia Centro y nadie viene. Ya reportamos con folio.",
+  "expected": {
+    "stance": "en_contra",
+    "message_type": "queja_ciudadana_legitima",
+    "topic": "agua",
+    "canalizar_a_atencion": true
+  }
+}

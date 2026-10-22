@@ -1,0 +1,10 @@
+{
+  "id": "cls-08",
+  "kind": "classify",
+  "text": "Excelente: repararon en un día la fuga de agua de mi cuadra. Buen trabajo de la cuadrilla.",
+  "expected": {
+    "stance": "a_favor",
+    "message_type": "opinion",
+    "topic": "agua"
+  }
+}

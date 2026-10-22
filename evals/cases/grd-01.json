@@ -1,0 +1,9 @@
+{
+  "id": "grd-01",
+  "kind": "grounding",
+  "text": "El municipio no ha tapado ni un solo bache en todo el año.",
+  "expected": {
+    "verdict": "falsa",
+    "cites_fact": true
+  }
+}

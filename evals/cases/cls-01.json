@@ -1,0 +1,10 @@
+{
+  "id": "cls-01",
+  "kind": "classify",
+  "text": "El municipio no ha tapado ni un solo bache en la Colonia Sur. Cero obras, puras promesas.",
+  "expected": {
+    "stance": "en_contra",
+    "message_type": "dato_falso",
+    "topic": "baches"
+  }
+}

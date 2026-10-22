@@ -1,0 +1,10 @@
+{
+  "id": "cls-04",
+  "kind": "classify",
+  "text": "Apenas 14 parques rehabilitados, mientras que se anuncian obras por todos lados.",
+  "expected": {
+    "stance": "en_contra",
+    "message_type": "dato_sacado_de_contexto",
+    "topic": "obra_publica"
+  }
+}

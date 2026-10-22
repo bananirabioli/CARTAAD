@@ -7,8 +7,9 @@ from app.models.core import Client, Topic
 from app.models.kb import GovLevel
 from app.services.bootstrap import register_cloner
 
+# Keywords prefixed with "~" are weak signals (count half) for topic detection.
 DEFAULT_TOPICS = [
-    ("baches", "Baches", ["bache", "bacheo", "pavimento", "repavimenta", "calle", "vialidad", "vial", "hoyo", "asfalto"]),
+    ("baches", "Baches", ["bache", "bacheo", "pavimento", "repavimenta", "~calle", "vialidad", "vial", "hoyo", "asfalto"]),
     ("seguridad", "Seguridad", ["seguridad", "inseguridad", "robo a", "asalto", "patrulla", "policía", "policial", "delito", "delincuente", "fiscalía", "vigilancia", "luminaria"]),
     ("agua", "Agua", ["agua", "pipa", "tandeo", "fuga", "drenaje", "presión", "garrafón", "abasto", "acueducto", "tubería"]),
     ("obra_publica", "Obra pública", ["obra", "construcción", "puente", "parque", "inauguración", "licitación", "remodelación", "rehabilit", "banqueta", "etapa"]),

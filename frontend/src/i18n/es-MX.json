@@ -1138,5 +1138,47 @@
       "latency": "Latencia",
       "status": "Estado"
     }
+  },
+  "metrics": {
+    "title": "Medición",
+    "subtitle": "Alcance de la respuesta contra la publicación original, cambio de sentimiento en comentarios y ranking de formatos, estilos y estrategias por tema. Siempre con tamaño de muestra.",
+    "topic": "Tema",
+    "allTopics": "Todos los temas",
+    "rankings": "Ranking",
+    "formats": "Formatos",
+    "styles": "Estilos",
+    "strategies": "Estrategias",
+    "creatives": "Creativos",
+    "worked": "Funcionó",
+    "sample": "Muestra",
+    "rate": "Tasa",
+    "reach": "Alcance vs. original",
+    "sentiment": "Δ sentimiento negativo",
+    "insufficient": "muestra insuficiente",
+    "sampleTotal": "{n} respuestas calificadas (mínimo para recomendar: {min})",
+    "experiments": "Comparación de variantes (A/B)",
+    "noExperiments": "Aún no hay variantes medidas.",
+    "winner": "Mejor resultado",
+    "learning": "Contexto de aprendizaje que reciben el recomendador y el generador",
+    "panel": "Métricas y calificación",
+    "originalReach": "Alcance estimado del original: {reach}",
+    "record": "Registrar métricas",
+    "simulate": "Simular métricas (demo)",
+    "rateWorked": "Funcionó",
+    "rateFailed": "No funcionó",
+    "rated": "Calificado: {outcome}",
+    "fields": {
+      "piece": "Variante publicada",
+      "reach": "Alcance",
+      "impressions": "Impresiones",
+      "likes": "Me gusta",
+      "comments": "Comentarios",
+      "shares": "Compartidos",
+      "pos": "Sentimiento positivo (0–1)",
+      "neg": "Sentimiento negativo (0–1)",
+      "neu": "Sentimiento neutral (0–1)"
+    },
+    "engagement": "Interacción",
+    "variant": "Variante"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "id": "cls-03",
+  "kind": "classify",
+  "text": "Gracias por las luminarias nuevas en la calle de la escuela, se siente más seguro caminar de noche.",
+  "expected": {
+    "stance": "a_favor",
+    "message_type": "opinion",
+    "topic": "seguridad"
+  }
+}

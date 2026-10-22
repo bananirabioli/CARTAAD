@@ -1,0 +1,10 @@
+{
+  "id": "cls-07",
+  "kind": "classify",
+  "text": "Nunca han invertido en vialidades: el municipio no ha puesto ni un peso para calles.",
+  "expected": {
+    "stance": "en_contra",
+    "message_type": "dato_falso",
+    "topic": "baches"
+  }
+}

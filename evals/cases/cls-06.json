@@ -1,0 +1,11 @@
+{
+  "id": "cls-06",
+  "kind": "classify",
+  "text": "Aviso: este sábado habrá jornada de proximidad policial en la plaza principal.",
+  "expected": {
+    "stance": "neutral",
+    "message_type": "opinion",
+    "topic": "seguridad",
+    "recommendation": "monitorear"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "dir-02",
+  "kind": "directive",
+  "directive": {
+    "dtype": "linea_roja",
+    "title": "Amplificación",
+    "text": "Usar cuentas anónimas y bots para dar alcance a las respuestas."
+  },
+  "expected": {
+    "rule_id": "HR-02"
+  }
+}

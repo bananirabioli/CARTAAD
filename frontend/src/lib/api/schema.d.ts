@@ -2035,6 +2035,115 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Case Metrics */
+        get: operations["case_metrics_cases__case_id__metrics_get"];
+        put?: never;
+        /** Add Metrics */
+        post: operations["add_metrics_cases__case_id__metrics_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/metrics/simulate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Simulate */
+        post: operations["simulate_cases__case_id__metrics_simulate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/rate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rate */
+        post: operations["rate_cases__case_id__rate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/metrics/rankings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rankings */
+        get: operations["rankings_metrics_rankings_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/metrics/learning": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Learning
+         * @description The learning context fed to the strategy recommender and the generator.
+         */
+        get: operations["learning_metrics_learning_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/metrics/experiments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Experiments
+         * @description A/B: cases with more than one measured variant.
+         */
+        get: operations["experiments_metrics_experiments_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -2730,6 +2839,23 @@ export interface components {
              * @default 0
              */
             pieces_count: number;
+        };
+        /** CaseMetricsOut */
+        CaseMetricsOut: {
+            /** Case Id */
+            case_id: number;
+            /** Status */
+            status: string;
+            /** Rating */
+            rating: string | null;
+            /** Original Reach */
+            original_reach: number;
+            /** Original Sentiment Neg */
+            original_sentiment_neg: number;
+            /** Variants */
+            variants: {
+                [key: string]: unknown;
+            }[];
         };
         /** CheckResult */
         CheckResult: {
@@ -3969,6 +4095,55 @@ export interface components {
              */
             message: string;
         };
+        /** MetricsIn */
+        MetricsIn: {
+            /** Piece Id */
+            piece_id: number;
+            /** Reach */
+            reach: number;
+            /**
+             * Impressions
+             * @default 0
+             */
+            impressions: number;
+            /**
+             * Likes
+             * @default 0
+             */
+            likes: number;
+            /**
+             * Comments
+             * @default 0
+             */
+            comments: number;
+            /**
+             * Shares
+             * @default 0
+             */
+            shares: number;
+            /**
+             * Sentiment Pos
+             * @default 0
+             */
+            sentiment_pos: number;
+            /**
+             * Sentiment Neg
+             * @default 0
+             */
+            sentiment_neg: number;
+            /**
+             * Sentiment Neu
+             * @default 0
+             */
+            sentiment_neu: number;
+            /** Original Reach */
+            original_reach?: number | null;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
         /** Page[AiRunOut] */
         Page_AiRunOut_: {
             /** Items */
@@ -4527,6 +4702,16 @@ export interface components {
             images: string[];
             /** Text */
             text: string;
+        };
+        /** RateIn */
+        RateIn: {
+            /** Outcome */
+            outcome: string;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** ReasonIn */
         ReasonIn: {
@@ -10105,6 +10290,226 @@ export interface operations {
                     "application/json": {
                         [key: string]: number;
                     };
+                };
+            };
+        };
+    };
+    case_metrics_cases__case_id__metrics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseMetricsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_metrics_cases__case_id__metrics_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MetricsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseMetricsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    simulate_cases__case_id__metrics_simulate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseMetricsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rate_cases__case_id__rate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseMetricsOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rankings_metrics_rankings_get: {
+        parameters: {
+            query?: {
+                topic?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    learning_metrics_learning_get: {
+        parameters: {
+            query?: {
+                topic?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    experiments_metrics_experiments_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    }[];
                 };
             };
         };

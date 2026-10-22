@@ -55,6 +55,7 @@ export async function apiFetch<T = unknown>(path: string, init: { method?: strin
   }
   const res = await fetch(`${API_BASE}${path}`, { method: init.method ?? (body ? "POST" : "GET"), headers, body, credentials: "same-origin" });
   if (res.status === 401 && typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- outside React; full reload clears cached data
     window.location.href = `/login?next=${encodeURIComponent(window.location.pathname)}`;
   }
   if (!res.ok) throw await parseError(res);

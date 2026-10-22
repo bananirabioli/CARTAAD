@@ -1,7 +1,7 @@
 "use client";
 
 import { Copy, Download, FlaskConical, Plus, Upload } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { EmptyState, Loading } from "@/components/app/common";
@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { fmtDate, t, tEnum } from "@/i18n";
 import { api, ApiError, refresh, useApi, type Schemas } from "@/lib/api/client";
+import { useStateResetOn } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 import { commas, FindingList, lines, LintBadge, RiskBadge, StatusBadge, TagChips } from "./common";
@@ -300,8 +301,7 @@ function Detail({ label, items, inline }: { label: string; items: string[]; inli
 function TestPanel({ styleId }: { styleId: number }) {
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
-  const [result, setResult] = useState<Schemas["StyleTestOut"] | null>(null);
-  useEffect(() => setResult(null), [styleId]);
+  const [result, setResult] = useStateResetOn<Schemas["StyleTestOut"] | null>(styleId, () => null);
   async function run() {
     setBusy(true);
     try {
@@ -480,16 +480,11 @@ function StyleEditor({ open, onOpenChange, style, onSaved }: { open: boolean; on
   const { can } = useSession();
   const { data: dims } = useApi<Dim[]>("/tags");
   const { data: formats } = useApi<Schemas["FormatOut"][]>("/catalog/formats");
-  const [d, setD] = useState<Draft>(toDraft(style));
+  const resetKey = open ? (style ?? "new") : "closed";
+  const [d, setD] = useStateResetOn<Draft>(resetKey, () => toDraft(style));
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useStateResetOn<string | null>(resetKey, () => null);
   const visualOnly = !can("style.edit") && can("style.visual_guide");
-  useEffect(() => {
-    if (open) {
-      setD(toDraft(style));
-      setError(null);
-    }
-  }, [open, style]);
   const set = <K extends keyof Draft>(k: K, v: Draft[K]) => setD((p) => ({ ...p, [k]: v }));
   const categorical = useMemo(() => (dims ?? []).filter((x) => x.kind === "categorical" && x.slug !== "riesgo"), [dims]);
 

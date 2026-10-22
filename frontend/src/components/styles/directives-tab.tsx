@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, RefreshCw, ShieldAlert, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { EmptyState, Loading } from "@/components/app/common";
@@ -18,7 +18,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { enumOptions, fmtDate, fmtDay, t, tEnum } from "@/i18n";
 import { api, ApiError, refresh, useApi, type Schemas } from "@/lib/api/client";
-import { useTopics } from "@/lib/hooks";
+import { useStateResetOn, useTopics } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 import { commas, ConflictBadge, StatusBadge } from "./common";
@@ -303,15 +303,10 @@ function F({ label, children, span = 2 }: { label: string; children: React.React
 function DirectiveEditor({ open, onOpenChange, directive, onSaved }: { open: boolean; onOpenChange: (o: boolean) => void; directive?: Directive; onSaved: (d: Directive) => void }) {
   const topics = useTopics();
   const { data: styles } = useApi<Schemas["StyleOut"][]>("/styles");
-  const [d, setD] = useState<DraftD>(toDraftD(directive));
+  const resetKey = open ? (directive ?? "new") : "closed";
+  const [d, setD] = useStateResetOn<DraftD>(resetKey, () => toDraftD(directive));
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    if (open) {
-      setD(toDraftD(directive));
-      setError(null);
-    }
-  }, [open, directive]);
+  const [error, setError] = useStateResetOn<string | null>(resetKey, () => null);
   const set = <K extends keyof DraftD>(k: K, v: DraftD[K]) => setD((p) => ({ ...p, [k]: v }));
   async function save() {
     setBusy(true);

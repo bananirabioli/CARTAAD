@@ -103,3 +103,26 @@ Registro de desviaciones o precisiones respecto al stack propuesto. Cada entrada
 
 - **Decisión:** el modelo `RestrictionMode` se adelantó a M2 porque el verificador de directrices debe detectar choques
   con vedas vigentes o programadas. La gestión en pantalla llega en M6.
+
+## D-16 · Métricas manuales o simuladas, una fila de historial por variante
+
+- **Decisión:** las métricas se capturan a mano o se simulan de forma determinista (semilla = caso + pieza) porque no hay
+  conexión a redes reales. El alcance del original se estima como interacciones × 9 cuando no se captura. Al calificar
+  un caso se escribe una fila de `ResponseHistory` **por variante medida** (formato, estilo, estrategia, creativo,
+  alcance relativo y Δ de sentimiento), que alimenta el contexto de aprendizaje y los rankings.
+- **Por qué:** el A/B compara variantes; una sola fila por caso perdería qué variante funcionó. La simulación permite la
+  demo sin tocar redes y queda marcada como `simulado` en pantalla.
+
+## D-17 · Evals de regresión sobre el pipeline real
+
+- **Decisión:** `make eval` corre 20 casos (clasificación, *grounding*, copy por estilo, directrices contra reglas duras)
+  sobre una base SQLite temporal recién sembrada, usando los mismos servicios que la API. Con el MockProvider es una
+  prueba de regresión (sale con código 1 si algún caso falla); con `EVAL_PROVIDER=anthropic` mide calidad del modelo real
+  y siempre escribe el reporte.
+- **Por qué:** evaluar el pipeline completo (reglas, validadores, linter) y no solo el texto del modelo.
+
+## D-18 · Palabras clave débiles en temas
+
+- **Decisión:** una palabra clave de tema con prefijo `~` cuenta medio punto (p. ej. `~calle` en baches), para que una
+  mención incidental no gane sobre la palabra clave fuerte de otro tema ("calle de la escuela" + "luminarias" →
+  seguridad).

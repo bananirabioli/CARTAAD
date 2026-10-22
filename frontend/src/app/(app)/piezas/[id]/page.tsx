@@ -3,7 +3,7 @@
 import { ArrowLeft, ChevronLeft, ChevronRight, RefreshCw, Save } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { ErrorState, Loading } from "@/components/app/common";
@@ -36,6 +36,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { enumOptions, t, tEnum } from "@/i18n";
 import { API_BASE, api, fileUrl, refresh, useApi, type Schemas } from "@/lib/api/client";
+import { useStateResetOn } from "@/lib/hooks";
 
 type Seg = { text: string; type: string; fact_ids: number[] };
 type Slot = { text: string; fact_ids: number[] };
@@ -74,19 +75,13 @@ function Preview({ piece }: { piece: PieceD }) {
 
 function ContentEditor({ piece, onChange }: { piece: PieceD; onChange: (p: PieceD) => void }) {
   const { can } = useSession();
-  const [segments, setSegments] = useState<Seg[]>([]);
-  const [slots, setSlots] = useState<Record<string, Slot>>({});
-  const [slides, setSlides] = useState<Slide[]>([]);
-  const [images, setImages] = useState<Record<string, unknown>[]>([]);
+  const [segments, setSegments] = useStateResetOn<Seg[]>(piece.content, () => ((piece.content.segments as Seg[]) ?? []).map((s) => ({ ...s })));
+  const [slots, setSlots] = useStateResetOn<Record<string, Slot>>(piece.content, () => ({ ...((piece.content.slots as Record<string, Slot>) ?? {}) }));
+  const [slides, setSlides] = useStateResetOn<Slide[]>(piece.content, () => ((piece.content.slides as Slide[]) ?? []).map((s) => ({ ...s })));
+  const [images, setImages] = useStateResetOn<Record<string, unknown>[]>(piece.content, () => ((piece.content.images as Record<string, unknown>[]) ?? []).map((x) => ({ ...x })));
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const { data: bank } = useApi<Schemas["ImageOut"][]>(piece.kind === "creative" ? "/kb/images?image_type=foto_real" : null);
-  useEffect(() => {
-    setSegments(((piece.content.segments as Seg[]) ?? []).map((s) => ({ ...s })));
-    setSlots({ ...((piece.content.slots as Record<string, Slot>) ?? {}) });
-    setSlides(((piece.content.slides as Slide[]) ?? []).map((s) => ({ ...s })));
-    setImages(((piece.content.images as Record<string, unknown>[]) ?? []).map((x) => ({ ...x })));
-  }, [piece.id, piece.current_version, piece.content]);
   const editable = can("piece.edit") && !["programado", "publicado", "descartado"].includes(piece.status);
   const realIdx = images.findIndex((x) => x.approved_image_id);
 
@@ -107,10 +102,10 @@ function ContentEditor({ piece, onChange }: { piece: PieceD; onChange: (p: Piece
 
   const ids = (v: string) => v.split(",").map((x) => Number(x.trim())).filter((x) => Number.isFinite(x) && x > 0);
   return (
-    <div className="grid gap-3">
+    <div className="grid grid-cols-1 gap-3">
       {piece.kind === "copy" ? (
         segments.map((s, i) => (
-          <div key={i} className="grid gap-1.5 rounded-md border p-2">
+          <div key={i} className="grid grid-cols-1 gap-1.5 rounded-md border p-2">
             <Textarea rows={2} value={s.text} disabled={!editable} onChange={(e) => setSegments(segments.map((x, k) => (k === i ? { ...x, text: e.target.value } : x)))} />
             <div className="grid grid-cols-2 gap-2">
               <Select value={s.type} disabled={!editable} onValueChange={(v) => setSegments(segments.map((x, k) => (k === i ? { ...x, type: v } : x)))}>
@@ -124,14 +119,14 @@ function ContentEditor({ piece, onChange }: { piece: PieceD; onChange: (p: Piece
       ) : (
         <>
           {Object.entries(slots).map(([name, slot]) => (
-            <div key={name} className="grid gap-1">
+            <div key={name} className="grid grid-cols-1 gap-1">
               <Label className="text-xs">{name}{slot.fact_ids.length ? ` · hechos ${slot.fact_ids.join(", ")}` : ""}</Label>
               <Textarea rows={2} value={slot.text} disabled={!editable} onChange={(e) => setSlots({ ...slots, [name]: { ...slot, text: e.target.value } })} />
             </div>
           ))}
           {slides.length ? <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t("editor.slides")}</p> : null}
           {slides.map((s, i) => (
-            <div key={i} className="grid gap-1 rounded-md border p-2">
+            <div key={i} className="grid grid-cols-1 gap-1 rounded-md border p-2">
               <Input className="h-7 text-xs font-medium" value={s.title} disabled={!editable} onChange={(e) => setSlides(slides.map((x, k) => (k === i ? { ...x, title: e.target.value } : x)))} />
               <Textarea rows={2} value={s.text} disabled={!editable} onChange={(e) => setSlides(slides.map((x, k) => (k === i ? { ...x, text: e.target.value } : x)))} />
             </div>

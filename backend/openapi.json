@@ -7000,6 +7000,322 @@
     }
    }
   },
+  "/cases/{case_id}/metrics": {
+   "get": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Case Metrics",
+    "operationId": "case_metrics_cases__case_id__metrics_get",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseMetricsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Add Metrics",
+    "operationId": "add_metrics_cases__case_id__metrics_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MetricsIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseMetricsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/metrics/simulate": {
+   "post": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Simulate",
+    "operationId": "simulate_cases__case_id__metrics_simulate_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseMetricsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/rate": {
+   "post": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Rate",
+    "operationId": "rate_cases__case_id__rate_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RateIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseMetricsOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/metrics/rankings": {
+   "get": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Rankings",
+    "operationId": "rankings_metrics_rankings_get",
+    "parameters": [
+     {
+      "name": "topic",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Rankings Metrics Rankings Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/metrics/learning": {
+   "get": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Learning",
+    "description": "The learning context fed to the strategy recommender and the generator.",
+    "operationId": "learning_metrics_learning_get",
+    "parameters": [
+     {
+      "name": "topic",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Learning Metrics Learning Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/metrics/experiments": {
+   "get": {
+    "tags": [
+     "metrics"
+    ],
+    "summary": "Experiments",
+    "description": "A/B: cases with more than one measured variant.",
+    "operationId": "experiments_metrics_experiments_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "additionalProperties": true,
+          "type": "object"
+         },
+         "type": "array",
+         "title": "Response Experiments Metrics Experiments Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -8996,6 +9312,55 @@
      "post_id"
     ],
     "title": "CaseListItem"
+   },
+   "CaseMetricsOut": {
+    "properties": {
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "rating": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rating"
+     },
+     "original_reach": {
+      "type": "integer",
+      "title": "Original Reach"
+     },
+     "original_sentiment_neg": {
+      "type": "number",
+      "title": "Original Sentiment Neg"
+     },
+     "variants": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Variants"
+     }
+    },
+    "type": "object",
+    "required": [
+     "case_id",
+     "status",
+     "rating",
+     "original_reach",
+     "original_sentiment_neg",
+     "variants"
+    ],
+    "title": "CaseMetricsOut"
    },
    "CheckResult": {
     "properties": {
@@ -12732,6 +13097,87 @@
     "type": "object",
     "title": "Message"
    },
+   "MetricsIn": {
+    "properties": {
+     "piece_id": {
+      "type": "integer",
+      "title": "Piece Id"
+     },
+     "reach": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Reach"
+     },
+     "impressions": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Impressions",
+      "default": 0
+     },
+     "likes": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Likes",
+      "default": 0
+     },
+     "comments": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Comments",
+      "default": 0
+     },
+     "shares": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Shares",
+      "default": 0
+     },
+     "sentiment_pos": {
+      "type": "number",
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Sentiment Pos",
+      "default": 0
+     },
+     "sentiment_neg": {
+      "type": "number",
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Sentiment Neg",
+      "default": 0
+     },
+     "sentiment_neu": {
+      "type": "number",
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Sentiment Neu",
+      "default": 0
+     },
+     "original_reach": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Original Reach"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "piece_id",
+     "reach"
+    ],
+    "title": "MetricsIn"
+   },
    "Page_AiRunOut_": {
     "properties": {
      "items": {
@@ -14241,6 +14687,25 @@
      "text"
     ],
     "title": "PublicPiece"
+   },
+   "RateIn": {
+    "properties": {
+     "outcome": {
+      "type": "string",
+      "pattern": "^(funciono|no_funciono)$",
+      "title": "Outcome"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "outcome"
+    ],
+    "title": "RateIn"
    },
    "ReasonIn": {
     "properties": {

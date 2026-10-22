@@ -43,6 +43,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(async () => {
     await api.post("/auth/logout");
+    // Full reload on purpose: drops every cached SWR response of the previous session.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.href = "/login";
   }, []);
 

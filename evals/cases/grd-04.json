@@ -1,0 +1,9 @@
+{
+  "id": "grd-04",
+  "kind": "grounding",
+  "text": "El municipio no ha invertido nada en agua potable este año.",
+  "expected": {
+    "verdict": "falsa",
+    "cites_fact": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "cpy-04",
+  "kind": "copy",
+  "text": "Gracias por rehabilitar el Parque Las Flores: quedó muy bien.",
+  "format": "formato_historieta",
+  "expected": {
+    "zero_unsourced": true,
+    "distinct_styles": true
+  }
+}

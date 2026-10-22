@@ -1,0 +1,10 @@
+{
+  "id": "cpy-01",
+  "kind": "copy",
+  "text": "Nunca han invertido en vialidades: el municipio no ha puesto ni un peso para calles este año.",
+  "format": "formato_clasico",
+  "expected": {
+    "zero_unsourced": true,
+    "distinct_styles": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "cpy-03",
+  "kind": "copy",
+  "text": "Solo 142 patrullas para todo el municipio, mientras que la población no deja de crecer.",
+  "format": "formato_comparativa",
+  "expected": {
+    "zero_unsourced": true,
+    "distinct_styles": true
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "dir-04",
+  "kind": "directive",
+  "directive": {
+    "dtype": "narrativa",
+    "title": "Responsabilidad compartida",
+    "text": "Explicar la responsabilidad compartida con el dato de inversión de cada nivel."
+  },
+  "expected": {
+    "rule_id": null
+  }
+}

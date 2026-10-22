@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle2, Plus, Save } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { EmptyState, JsonBlock, Loading, PageHeader, Pagination } from "@/components/app/common";
@@ -19,7 +19,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { enumOptions, fmtDate, t, tEnum } from "@/i18n";
 import { api, qs, refresh, useApi, type Schemas } from "@/lib/api/client";
-import { useTopics } from "@/lib/hooks";
+import { useStateResetOn, useTopics } from "@/lib/hooks";
 
 const commas = (v: unknown) => (Array.isArray(v) ? v : String(v ?? "").split(",")).map((s) => String(s).trim()).filter(Boolean);
 
@@ -168,8 +168,7 @@ type SettingsData = Record<string, unknown>;
 function ThresholdsTab() {
   const { can } = useSession();
   const { data, mutate } = useApi<Schemas["SettingsOut"]>("/settings");
-  const [s, setS] = useState<SettingsData | null>(null);
-  useEffect(() => { if (data) setS(structuredClone(data.settings)); }, [data]);
+  const [s, setS] = useStateResetOn<SettingsData | null>(data, () => (data ? structuredClone(data.settings) : null));
   if (!s) return <Loading />;
   const get = (path: string) => path.split(".").reduce<unknown>((o, k) => (o as Record<string, unknown>)?.[k], s);
   const set = (path: string, value: unknown) => {

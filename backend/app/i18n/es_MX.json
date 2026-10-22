@@ -271,5 +271,8 @@
       "rejected_figures": "Hay cifras rechazadas por la persona verificadora.",
       "render": "El render de la imagen está {status}."
     }
+  },
+  "metrics": {
+    "not_published": "Solo se miden piezas publicadas."
   }
 }

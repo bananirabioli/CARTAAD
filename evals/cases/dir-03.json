@@ -1,0 +1,12 @@
+{
+  "id": "dir-03",
+  "kind": "directive",
+  "directive": {
+    "dtype": "narrativa",
+    "title": "Títeres",
+    "text": "Los títeres deben imitar a los personajes de los Muppets."
+  },
+  "expected": {
+    "rule_id": "HR-10"
+  }
+}

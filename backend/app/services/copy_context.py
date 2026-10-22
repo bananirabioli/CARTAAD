@@ -36,7 +36,7 @@ def fact_dict(fact: Fact) -> dict[str, Any]:
 def detect_topic(db: Session, client_id: int, text: str) -> Topic | None:
     topics = list(db.scalars(select(Topic).where(Topic.client_id == client_id, Topic.active.is_(True))))
     norm = f" {normalize(text)} "
-    scored = [(sum(1 for kw in t.keywords or [] if f" {normalize(kw)}" in norm), t) for t in topics]
+    scored = [(sum(0.5 if kw.startswith("~") else 1.0 for kw in t.keywords or [] if f" {normalize(kw.lstrip('~'))}" in norm), t) for t in topics]
     scored.sort(key=lambda pair: pair[0], reverse=True)
     return scored[0][1] if scored and scored[0][0] > 0 else None
 
