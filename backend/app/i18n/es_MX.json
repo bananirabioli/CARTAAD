@@ -1,0 +1,88 @@
+{
+  "errors": {
+    "not_authenticated": "Sesión no iniciada o vencida.",
+    "invalid_credentials": "Correo o contraseña incorrectos.",
+    "forbidden": "Tu rol no tiene permiso para esta acción ({permission}).",
+    "client_forbidden": "No tienes acceso a este cliente.",
+    "client_required": "Selecciona un cliente para continuar.",
+    "not_found": "No se encontró el recurso solicitado.",
+    "demo_only": "Esta función solo está disponible en modo demo.",
+    "demo_user_missing": "No hay usuario demo con el rol {role}.",
+    "invalid_value": "Valor no válido: {detail}",
+    "conflict": "Conflicto: {detail}"
+  },
+  "hard_rules": {
+    "HR-01": {
+      "title": "Todo dato muestra fuente y fecha",
+      "description": "Todo dato muestra fuente y fecha visibles en la plataforma. No se inventan, redondean ni ocultan cifras o fuentes.",
+      "missing_source": "El dato {fact} no muestra su fuente y fecha visibles.",
+      "no_document": "sin documento de origen",
+      "no_date": "sin fecha"
+    },
+    "HR-02": {
+      "title": "Solo cuentas reales registradas",
+      "description": "La amplificación se hace solo con cuentas reales registradas (propias, aliadas, vocerías). No existen cuentas falsas, bots ni publicación masiva automatizada.",
+      "unregistered_account": "La cuenta destino no está registrada y verificada por el equipo. Solo se puede programar hacia cuentas propias, aliadas o vocerías registradas.",
+      "wrong_client": "La cuenta destino pertenece a otro cliente.",
+      "bulk_forbidden": "No existe publicación masiva automatizada."
+    },
+    "HR-03": {
+      "title": "No se perfila a quien comenta",
+      "description": "Se monitorean páginas y publicaciones; no se perfila a ciudadanos que comentan ni se guardan sus identificadores.",
+      "identity_rejected": "Se descartaron identificadores de comentaristas ({fields})."
+    },
+    "HR-04": {
+      "title": "Modo veda y restricciones",
+      "description": "El modo veda lo gestiona el equipo manualmente. Mientras está activo se bloquean formatos y creativos restringidos y se exigen sus leyendas.",
+      "format_blocked": "El formato {format} está bloqueado por el modo veda «{name}».",
+      "creative_blocked": "El creativo {creative} está bloqueado por el modo veda «{name}»."
+    },
+    "HR-05": {
+      "title": "Las quejas legítimas se canalizan",
+      "description": "Las quejas ciudadanas legítimas nunca se tratan como ataque: se canalizan a atención y, si se responde, se informa qué se va a hacer.",
+      "not_routed": "Una queja ciudadana legítima debe marcarse para canalizar a atención.",
+      "attack_strategy": "La estrategia «{strategy}» trata la queja legítima como ataque. Usa una estrategia informativa."
+    },
+    "HR-06": {
+      "title": "Una imagen generada no es evidencia",
+      "description": "Las piezas que muestran hechos reales usan solo fotos reales aprobadas con crédito; las ilustraciones se marcan como tales.",
+      "generated_as_evidence": "La imagen {image} es generada o ilustración y no puede usarse como evidencia.",
+      "missing_credit": "La foto {image} no tiene crédito o no está aprobada como foto real."
+    },
+    "HR-07": {
+      "title": "Testimonios reales y figuras representativas",
+      "description": "Los testimonios de «Voz ciudadana» son reales y con consentimiento adjunto. Las figuras de «La voz del pueblo» llevan siempre la etiqueta «ilustración representativa».",
+      "missing_consent": "El testimonio no tiene registro de consentimiento adjunto.",
+      "missing_label": "Falta la etiqueta visible «ilustración representativa»."
+    },
+    "HR-08": {
+      "title": "Afirmaciones sobre actores con respaldo",
+      "description": "No se generan afirmaciones sobre personas o actores que no estén respaldadas por hechos de la base.",
+      "unbacked": "La afirmación «{text}» no está respaldada por hechos vigentes de la base."
+    },
+    "HR-09": {
+      "title": "Aprobación humana y cifras verificadas",
+      "description": "Ninguna pieza se publica ni se programa sin aprobación humana y sin que cada cifra esté verificada por una persona, aunque la haya generado o modificado el copiloto.",
+      "not_approved": "La pieza no tiene aprobación humana vigente.",
+      "figures_pending": "Faltan {count} cifra(s) por verificar.",
+      "blocked": "La pieza tiene hallazgos bloqueantes de los validadores.",
+      "legal_pending": "La pieza requiere liberación de legal.",
+      "stale_approval": "La aprobación corresponde a una versión anterior de la pieza.",
+      "bad_status": "La pieza está en estado «{status}»."
+    },
+    "HR-10": {
+      "title": "Sin imitar a terceros; sátira con revisión legal",
+      "description": "Estilos y formatos no imitan personajes, marcas ni medios. Las figuras satíricas representan roles o instituciones y todo lo que requiere legal pasa por legal.",
+      "imitation": "Referencia a obra, marca o personaje de terceros: «{snippet}»."
+    },
+    "HR-11": {
+      "title": "Las imágenes generadas no llevan texto ni cifras",
+      "description": "Los modelos de imagen no producen texto, cifras, logos ni rostros reales; esos elementos se superponen con código.",
+      "forbidden_request": "El prompt de imagen pide elementos prohibidos: {items}."
+    },
+    "directive_match": "La directriz contradice {rule} ({title}): «{snippet}»."
+  },
+  "reminders": {
+    "sources_review": "Toca curar la lista de páginas monitoreadas (cada {days} días)."
+  }
+}
