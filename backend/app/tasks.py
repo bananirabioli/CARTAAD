@@ -50,3 +50,47 @@ def process_document_task(document_id: int) -> int:
         n = process_document(db, doc)
         db.commit()
         return n
+
+
+@celery_app.task(name="app.tasks.generate_proposal")
+def generate_proposal_task(proposal_id: int, user_id: int | None = None) -> str:
+    from app.db import SessionLocal
+    from app.models.cases import Case
+    from app.models.core import User
+    from app.models.generation import Proposal
+    from app.services.cases import transition
+    from app.services.generation import generate_proposal
+
+    with SessionLocal() as db:
+        proposal = db.get(Proposal, proposal_id)
+        user = db.get(User, user_id) if user_id else None
+        try:
+            generate_proposal(db, proposal, user)
+            db.commit()
+            return "listo"
+        except Exception as exc:  # noqa: BLE001
+            db.rollback()
+            proposal = db.get(Proposal, proposal_id)
+            proposal.status, proposal.error = "error", str(exc)[:1000]
+            case = db.get(Case, proposal.case_id)
+            if case.status == "generando":
+                transition(db, case, "listo_para_generar", user, note="error de generación")
+            db.commit()
+            if celery_app.conf.task_always_eager:
+                raise
+            return "error"
+
+
+@celery_app.task(name="app.tasks.render_piece")
+def render_piece_task(piece_id: int) -> int:
+    from app.db import SessionLocal
+    from app.models.generation import Piece
+    from app.render.renderer import render_piece
+
+    with SessionLocal() as db:
+        piece = db.get(Piece, piece_id)
+        if piece is None:
+            return 0
+        keys = render_piece(db, piece)
+        db.commit()
+        return len(keys)

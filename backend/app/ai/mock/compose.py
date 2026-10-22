@@ -42,8 +42,16 @@ def _pick(options: list[str] | str | None, index: int) -> str:
     return options[max(0, min(index, len(options) - 1))]
 
 
+def _cycle(options: list[str] | str | None, index: int) -> str:
+    if not options:
+        return ""
+    if isinstance(options, str):
+        return options
+    return options[index % len(options)]
+
+
 def fact_sentence(fx: dict[str, Any], fact: dict[str, Any], index: int, ctx: dict[str, Any]) -> str:
-    prefix = _pick(fx.get("fact_prefix"), index)
+    prefix = _cycle(fx.get("fact_prefix"), index)
     issuer = fact.get("issuer") or "la fuente oficial"
     statement = fact["statement"].strip()
     if prefix:
@@ -77,7 +85,8 @@ def compose_copy(ctx: dict[str, Any]) -> dict[str, Any]:
     segments.append({"text": opener, "type": "opinion_marcada", "fact_ids": []})
 
     facts = list(ctx.get("facts") or [])
-    max_facts = int(ctx.get("max_facts") or 2)
+    max_len_hint = ((style.get("length") or {}).get("copy_principal") or {}).get("max") or 400
+    max_facts = 1 if int(max_len_hint) < 280 else int(ctx.get("max_facts") or 2)
     used = facts[:max_facts]
     missing: list[str] = []
     for i, fact in enumerate(used):
@@ -87,7 +96,7 @@ def compose_copy(ctx: dict[str, Any]) -> dict[str, Any]:
         missing.append(f"Dato oficial sobre {ctx.get('topic_name') or 'el tema'}: pedir al dueño de la base.")
 
     for phrase in ctx.get("mandatory_vocab") or []:
-        segments.append({"text": _fmt(fx.get("mandatory_template", "{phrase}."), ctx, phrase=phrase), "type": "opinion_marcada", "fact_ids": []})
+        segments.append({"text": _fmt(fx.get("mandatory_template", "{phrase}."), ctx, phrase=phrase), "type": "opinion_marcada", "fact_ids": [], "_keep": True})
     if not ctx.get("mandatory_vocab") and ctx.get("key_messages"):
         km = ctx["key_messages"][variant % len(ctx["key_messages"])]
         segments.append({"text": km, "type": "opinion_marcada", "fact_ids": []})
@@ -103,10 +112,12 @@ def compose_copy(ctx: dict[str, Any]) -> dict[str, Any]:
     max_len = ((style.get("length") or {}).get("copy_principal") or {}).get("max")
     if max_len:
         while sum(len(s["text"]) + 1 for s in segments) > max_len and len(segments) > 2:
-            removable = [i for i, s in enumerate(segments) if s["type"] in ("opinion_marcada", "llamado") and i > 0]
+            removable = [i for i, s in enumerate(segments) if s["type"] in ("opinion_marcada", "llamado") and i > 0 and not s.get("_keep")]
             if not removable:
                 break
             segments.pop(removable[-1])
 
+    for seg in segments:
+        seg.pop("_keep", None)
     why = f"Estilo {style.get('name', slug)} (fixture «{fixture_slug}»), estrategia «{strategy}», intensidad {intensity}; {len(used)} hecho(s) citado(s) de la base."
     return {"segments": segments, "why": why, "adaptation": None, "missing_data": missing}

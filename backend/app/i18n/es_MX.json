@@ -151,7 +151,8 @@
       "style_not_allowed": "El estilo «{style}» no está permitido en el formato «{format}».",
       "veda_format": "El formato «{format}» está bloqueado por el modo veda «{name}».",
       "veda_creative": "El creativo «{creative}» está bloqueado por el modo veda «{name}».",
-      "unregistered_account": "La cuenta destino no está registrada y verificada."
+      "unregistered_account": "La cuenta destino no está registrada y verificada.",
+      "adaptation_missing": "El creativo «{creative}» es compatible con adaptación y no explica qué cambió."
     },
     "style": {
       "prohibited_term": "Vocabulario prohibido: «{term}» ({source}).",
@@ -161,6 +162,28 @@
       "emoji": "El estilo no usa emoji.",
       "caps": "Mayúsculas sostenidas: {words}.",
       "legend_missing": "Falta la leyenda obligatoria: «{legend}»."
+    },
+    "numeric": {
+      "unsourced": "Número sin fuente: «{raw}» ({location}) no cita ningún hecho.",
+      "mismatch": "La cifra «{raw}» ({location}) no coincide con el hecho citado ({expected}).",
+      "fact_missing": "El hecho {fact_id} citado en {location} no existe en la base de este cliente.",
+      "fact_expired": "El hecho {fact} está vencido (vigente hasta {until}).",
+      "fact_no_document": "El hecho {fact} no tiene documento de origen.",
+      "comparison_mismatch": "La comparación {left} vs {right} no usa el mismo periodo y la misma base."
+    },
+    "claims": {
+      "factual_unbacked": "Aserción factual sin hechos vigentes de la base ({location}).",
+      "actor_attribution": "Posible afirmación sin respaldo sobre «{actor}» («{verb}», {location}): requiere revisión humana."
+    },
+    "labels": {
+      "representative_label": "Falta la etiqueta visible «ilustración representativa».",
+      "consent_missing": "Voz ciudadana sin consentimiento adjunto: no se podrá aprobar.",
+      "testimony_missing": "Falta el testimonio real (nunca se inventa).",
+      "generated_meta": "Una imagen generada no trae los metadatos generada_por_ia e ilustracion.",
+      "generated_as_evidence": "Una imagen generada no puede usarse como evidencia en este creativo.",
+      "image_missing": "La imagen {image} no existe en el banco aprobado.",
+      "evidence_not_real": "La imagen «{image}» no es una foto real aprobada con crédito.",
+      "sources_missing": "Faltan en el pie de fuentes los hechos citados: {facts}."
     }
   },
   "learning": {
@@ -206,5 +229,36 @@
     "style_not_allowed": "El estilo «{style}» no está permitido en el formato de la cuenta destino.",
     "decision_needs_response": "Solo los casos con decisión «responder» pueden generar piezas.",
     "rated_requires_metrics": "Registra métricas antes de calificar."
+  },
+  "pieces": {
+    "legal": {
+      "style": "El estilo «{style}» requiere revisión de legal.",
+      "satire_actor": "Pieza satírica que nombra a «{actor}»."
+    },
+    "errors": {
+      "not_generable": "El caso no está listo para generar (estado: {status}).",
+      "legal_pending": "El caso requiere liberación de legal antes de generar.",
+      "veda_format": "El formato de la cuenta destino está bloqueado por el modo veda.",
+      "locked": "La pieza está {status}; no se puede modificar.",
+      "version_missing": "No existe la versión {version}.",
+      "style_not_allowed": "El estilo «{style}» no está permitido en el formato «{format}».",
+      "figure_wrong_version": "La cifra pertenece a otra versión de la pieza."
+    },
+    "copilot": {
+      "intensity_max": "«Más firme» excede la intensidad máxima del estilo «{style}» ({max}). Prueba con el estilo «{suggested}».",
+      "intensity_max_no_alt": "«Más firme» excede la intensidad máxima del estilo «{style}» ({max}) y no hay otro estilo permitido en este formato con más intensidad.",
+      "register": "El estilo «{style}» usa registro {current}; para un registro {target} cambia al estilo «{suggested}».",
+      "register_no_alt": "El estilo «{style}» no admite registro {target} y no hay otro estilo permitido para este formato con ese registro.",
+      "hard_rule": "La instrucción contradice {rule}: {message}",
+      "no_fact": "Dato faltante: no hay un hecho vigente y pertinente en la base; pídelo al dueño de la base.",
+      "same_style": "La pieza ya está en el estilo «{style}».",
+      "no_other_angle": "No hay otra estrategia disponible para este caso."
+    },
+    "label_representative": "ILUSTRACIÓN REPRESENTATIVA · no corresponde a una persona real",
+    "label_illustration": "Ilustración"
+  },
+  "generation": {
+    "missing_fact": "Faltan insumos: no hay un dato duro con fuente sobre el tema.",
+    "missing_photos": "Faltan insumos: no hay par de fotos reales «antes» y «después» con crédito."
   }
 }

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --c1: {{ palette[0] }}; --c2: {{ palette[1] }}; --c3: {{ palette[2] }}; --c4: {{ palette[3] }};
+    --ink: #161616; --paper: #ffffff; --w: {{ width }}px; --h: {{ height }}px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: var(--w); height: var(--h); }
+  body { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: var(--c2); position: relative; overflow: hidden; }
+  .frame { position: absolute; inset: 0; display: flex; flex-direction: column; }
+  .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 28px; padding: 64px 72px 40px; }
+  h1 { font-size: 70px; line-height: 1.05; letter-spacing: -0.5px; }
+  h2 { font-size: 46px; line-height: 1.1; }
+  p { font-size: 35px; line-height: 1.3; }
+  .muted { opacity: 0.75; }
+  .footer { position: relative; z-index: 3; padding: 18px 72px 26px; font-size: 18px; line-height: 1.35; background: rgba(255,255,255,0.92); color: #333; border-top: 4px solid var(--c1); }
+  .footer .src { display: block; }
+  .legend { font-weight: 700; color: #222; }
+  .tag { position: absolute; z-index: 4; top: 22px; right: 22px; background: rgba(0,0,0,.72); color: #fff; font-size: 18px; padding: 6px 12px; border-radius: 6px; letter-spacing: .5px; }
+  .label-rep { position: absolute; z-index: 4; left: 0; right: 0; top: 0; background: var(--ink); color: #fff; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: 1.5px; padding: 12px; }
+  .card { background: var(--paper); border-radius: 24px; padding: 40px 44px; box-shadow: 0 12px 40px rgba(0,0,0,.18); display: flex; flex-direction: column; gap: 22px; }
+  .points { display: grid; gap: 16px; }
+  .point { display: flex; gap: 18px; align-items: flex-start; font-size: 31px; line-height: 1.3; }
+  .dot { flex: 0 0 26px; height: 26px; border-radius: 50%; background: var(--c1); margin-top: 6px; }
+  .big { font-size: 140px; font-weight: 900; line-height: 1; color: var(--c1); letter-spacing: -2px; }
+  .mito, .realidad { border-radius: 20px; padding: 28px 34px; }
+  .mito { background: #f3f3f3; border-left: 14px solid #9a9a9a; }
+  .realidad { background: var(--paper); border-left: 14px solid var(--c1); }
+  .k { font-size: 22px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .duo figure { background: #fff; border-radius: 16px; overflow: hidden; }
+  .duo img { width: 100%; height: 380px; object-fit: cover; display: block; }
+  .duo figcaption { font-size: 22px; padding: 12px 16px; }
+  .duo .credit { font-size: 15px; color: #666; padding: 0 16px 12px; }
+  .timeline { display: grid; gap: 18px; border-left: 6px solid var(--c1); padding-left: 28px; }
+  .timeline .hit { font-size: 27px; line-height: 1.3; }
+  .slide-n { position: absolute; z-index: 5; top: 92px; right: 40px; font-size: 24px; font-weight: 800; color: #fff; background: rgba(0,0,0,.65); border-radius: 999px; padding: 6px 16px; }
+  .quote { font-size: 44px; line-height: 1.25; font-style: italic; }
+  /* F1 Contexto */
+  .f-contexto { background: #1f1f1f; }
+  .f-contexto .bg { filter: grayscale(.4) brightness(.45); }
+  .f-contexto .banner { position: relative; z-index: 3; display: flex; align-items: stretch; }
+  .f-contexto .banner .a { background: #ffd400; color: #111; font-weight: 900; font-size: 30px; letter-spacing: 3px; padding: 22px 30px; }
+  .f-contexto .banner .b { background: #111; color: #fff; font-weight: 900; font-size: 54px; letter-spacing: 6px; padding: 14px 34px; flex: 1; }
+  .f-contexto.neutral .banner .a { background: var(--c1); color: #fff; }
+  /* F2 Historieta */
+  .f-historieta { background: #fff7e6; }
+  .f-historieta .bg { opacity: .35; }
+  .f-historieta .card { border: 6px solid #222; box-shadow: 10px 10px 0 #222; border-radius: 18px; }
+  .f-historieta h1 { font-family: "Comic Neue", "Trebuchet MS", sans-serif; }
+  /* F3 Títeres */
+  .f-titeres .bg { opacity: .95; }
+  .f-titeres .content { justify-content: flex-start; padding-top: 70px; }
+  .f-titeres .card { background: #fffdf3; border: 8px solid var(--c1); border-radius: 12px; }
+  /* F4 Comparativa */
+  .f-comparativa { background: #f0f4f8; }
+  .f-comparativa .closing { font-size: 30px; font-weight: 800; color: var(--c1); text-align: center; }
+  /* F5 Voz del pueblo */
+  .f-voz_pueblo .bg { top: 54px; }
+  .f-voz_pueblo .content { justify-content: flex-start; padding-top: 110px; }
+  .f-voz_pueblo .bubble { background: #fff; border-radius: 28px; padding: 30px 36px; position: relative; box-shadow: 0 8px 30px rgba(0,0,0,.15); }
+  .f-voz_pueblo .bubble:after { content: ""; position: absolute; bottom: -26px; left: 90px; border: 26px solid transparent; border-top-color: #fff; border-bottom: 0; }
+  /* F6 Clásico */
+  .f-clasico { background: #fafafa; }
+  .f-clasico .masthead { position: relative; z-index: 3; background: var(--ink); color: #fff; padding: 18px 72px; display: flex; justify-content: space-between; font-size: 22px; letter-spacing: 3px; text-transform: uppercase; }
+  .f-clasico .masthead b { color: var(--c3); }
+  .f-clasico h1 { font-family: Georgia, "Times New Roman", serif; font-size: 62px; }
+  .f-clasico .hero { width: 100%; height: 360px; object-fit: cover; border-radius: 10px; }
+  .f-clasico .credit { font-size: 16px; color: #666; margin-top: -16px; }
+</style>
+</head>
+<body>
+<div class="frame f-{{ frame }} {% if flow == 'B' %}neutral{% endif %}">
+  {% if background %}<div class="bg" style="background-image:url('{{ background }}')"></div>{% endif %}
+  {% if frame == 'voz_pueblo' and representative_label %}<div class="label-rep">{{ representative_label }}</div>{% endif %}
+  {% if illustration_tag %}<div class="tag">{{ illustration_tag }}</div>{% endif %}
+  {% if frame == 'contexto' %}
+    <div class="banner"><div class="a">{{ alert_label }}</div><div class="b">{{ banner_label }}</div></div>
+  {% elif frame == 'clasico' %}
+    <div class="masthead"><span><b>{{ masthead }}</b></span><span>{{ topic_name }}</span></div>
+  {% endif %}
+
+  <div class="content">
+  {% set s = slots %}
+  {% if layout == 'responsabilidad' or layout == 'infografia' %}
+    <div class="card">
+      <h1>{{ s.titulo or headline }}</h1>
+      {% if s.cuerpo %}<p>{{ s.cuerpo }}</p>{% endif %}
+      <div class="points">{% for p in points %}<div class="point"><span class="dot"></span><span>{{ p }}</span></div>{% endfor %}</div>
+    </div>
+  {% elif layout == 'pregunta' %}
+    <div class="card"><h2 class="muted">{{ s.titulo or headline }}</h2><h1>{{ s.pregunta }}</h1></div>
+  {% elif layout == 'mito_realidad' %}
+    <div class="card">
+      <div class="mito"><div class="k">Lo que se dice</div><p>«{{ s.mito }}»</p></div>
+      <div class="realidad"><div class="k">Lo que dicen los datos</div><p>{{ s.realidad }}</p></div>
+    </div>
+  {% elif layout == 'dato_duro' %}
+    <div class="card"><div class="big">{{ s.cifra }}</div><p>{{ s.descripcion }}</p></div>
+  {% elif layout == 'antes_despues' or frame == 'comparativa' and photos|length >= 2 %}
+    <h1>{{ s.titulo or headline }}</h1>
+    <div class="duo">
+      {% for ph in photos[:2] %}
+      <figure><img src="{{ ph.src }}"><figcaption><b>{{ ph.caption }}</b></figcaption><div class="credit">{{ ph.credit }}</div></figure>
+      {% endfor %}
+    </div>
+    {% if s.pie %}<p>{{ s.pie }}</p>{% endif %}
+    {% if frame == 'comparativa' and closing %}<div class="closing">{{ closing }}</div>{% endif %}
+  {% elif layout == 'linea_tiempo' %}
+    <div class="card"><h1>{{ s.titulo or headline }}</h1><div class="timeline">{% for p in points %}<div class="hit">{{ p }}</div>{% endfor %}</div></div>
+  {% elif layout == 'carrusel' %}
+    <div class="card"><h1>{{ slide.title }}</h1><p>{{ slide.text }}</p></div>
+  {% elif layout == 'testimonio' %}
+    <div class="card"><div class="quote">«{{ s.cita }}»</div><p class="muted">— {{ s.persona }}</p></div>
+  {% else %}
+    <div class="{% if frame == 'voz_pueblo' %}bubble{% else %}card{% endif %}">
+      {% if s.titulo or s.comentario %}<h1>{{ s.titulo or s.comentario }}</h1>{% endif %}
+      {% for p in points %}<p>{{ p }}</p>{% endfor %}
+    </div>
+  {% endif %}
+  {% if frame == 'clasico' and hero %}<img class="hero" src="{{ hero.src }}"><div class="credit">{{ hero.credit }}</div>{% endif %}
+  </div>
+  {% if slide_counter %}<div class="slide-n">{{ slide_counter }}</div>{% endif %}
+  <div class="footer">
+    {% for src in sources %}<span class="src">{{ src }}</span>{% endfor %}
+    {% for lg in legends %}<span class="legend">{{ lg }}</span>{% endfor %}
+  </div>
+</div>
+</body>
+</html>

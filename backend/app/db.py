@@ -84,6 +84,7 @@ class Base(DeclarativeBase):
         dict[str, Any]: JSONType,
         dict[str, list[str]]: JSONType,
         dict[str, float]: JSONType,
+        dict[str, int]: JSONType,
         list[str]: JSONType,
         list[int]: JSONType,
         list[float]: JSONType,

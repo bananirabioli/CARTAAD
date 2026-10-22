@@ -91,6 +91,12 @@ class SlideValue(BaseModel):
     fact_ids: list[int] = Field(default_factory=list)
 
 
+class Comparison(BaseModel):
+    left: list[int]
+    right: list[int]
+    mode: Literal["comparativa", "antes_despues"] = "comparativa"
+
+
 class CreativeDraft(BaseModel):
     creative_slug: str
     why: str
@@ -99,6 +105,7 @@ class CreativeDraft(BaseModel):
     slides: list[SlideValue] = Field(default_factory=list)
     image_ids: list[int] = Field(default_factory=list)
     missing_inputs: list[str] = Field(default_factory=list)
+    comparison: Comparison | None = Field(default=None, description="Para comparaciones: fact_ids de cada lado (mismo periodo y misma base).")
 
 
 class GenerateCreativesOut(BaseModel):

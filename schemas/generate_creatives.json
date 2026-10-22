@@ -1,5 +1,38 @@
 {
   "$defs": {
+    "Comparison": {
+      "properties": {
+        "left": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Left",
+          "type": "array"
+        },
+        "right": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Right",
+          "type": "array"
+        },
+        "mode": {
+          "default": "comparativa",
+          "enum": [
+            "comparativa",
+            "antes_despues"
+          ],
+          "title": "Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left",
+        "right"
+      ],
+      "title": "Comparison",
+      "type": "object"
+    },
     "CreativeDraft": {
       "properties": {
         "creative_slug": {
@@ -49,6 +82,18 @@
           },
           "title": "Missing Inputs",
           "type": "array"
+        },
+        "comparison": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Comparison"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Para comparaciones: fact_ids de cada lado (mismo periodo y misma base)."
         }
       },
       "required": [
