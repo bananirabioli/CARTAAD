@@ -29,7 +29,7 @@ def test_alert_thresholds_are_configurable():
 
 def test_seeded_posts_hit_their_alert_levels(db):
     posts = list(db.scalars(select(Post).where(Post.client_id == 1, Post.is_history.is_(False))))
-    assert len(posts) == 40
+    assert len(posts) == 43
     assert {p.alert_level for p in posts} == {"bajo", "medio", "alto", "critico", "sin_linea_base"}
     assert all(p.alert_level == p.meta["seed"]["alert"] for p in posts)
 

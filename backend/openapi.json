@@ -4913,6 +4913,596 @@
     }
    }
   },
+  "/cases": {
+   "get": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "List Cases",
+    "operationId": "list_cases_cases_get",
+    "parameters": [
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "name": "flow",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Flow"
+      }
+     },
+     {
+      "name": "alert_level",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Alert Level"
+      }
+     },
+     {
+      "name": "topic",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic"
+      }
+     },
+     {
+      "name": "stance",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Stance"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "open_only",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Open Only"
+      }
+     },
+     {
+      "name": "order",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(recent|alert|risk)$",
+       "default": "recent",
+       "title": "Order"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 1,
+       "title": "Page"
+      }
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 25,
+       "title": "Page Size"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_CaseListItem_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}": {
+   "get": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Get Case",
+    "operationId": "get_case_cases__case_id__get",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/classification": {
+   "patch": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Edit Classification",
+    "operationId": "edit_classification_cases__case_id__classification_patch",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ClassificationPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/reinterpret": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Reinterpret",
+    "operationId": "reinterpret_cases__case_id__reinterpret_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/decide": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Decide",
+    "operationId": "decide_cases__case_id__decide_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DecideIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/legal": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Legal",
+    "operationId": "legal_cases__case_id__legal_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LegalIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/close": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Close",
+    "operationId": "close_cases__case_id__close_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReasonIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/reopen": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Reopen",
+    "operationId": "reopen_cases__case_id__reopen_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReasonIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/assign": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Assign",
+    "operationId": "assign_cases__case_id__assign_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AssignIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/dashboard": {
+   "get": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Dashboard",
+    "operationId": "dashboard_dashboard_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DashboardOut"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -5011,6 +5601,74 @@
      "format_slug"
     ],
     "title": "AccountIn"
+   },
+   "AccountOption": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "account_type": {
+      "type": "string",
+      "title": "Account Type"
+     },
+     "network": {
+      "type": "string",
+      "title": "Network"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "format_name": {
+      "type": "string",
+      "title": "Format Name"
+     },
+     "allowed_styles": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Allowed Styles"
+     },
+     "default_style": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Style"
+     },
+     "default_source": {
+      "type": "string",
+      "title": "Default Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "handle",
+     "display_name",
+     "account_type",
+     "network",
+     "format_slug",
+     "format_name",
+     "allowed_styles",
+     "default_style",
+     "default_source"
+    ],
+    "title": "AccountOption"
    },
    "AccountOut": {
     "properties": {
@@ -5550,6 +6208,26 @@
     ],
     "title": "AiRunOut"
    },
+   "AssignIn": {
+    "properties": {
+     "user_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "User Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "user_id"
+    ],
+    "title": "AssignIn"
+   },
    "AuditOut": {
     "properties": {
      "id": {
@@ -6014,6 +6692,667 @@
     ],
     "title": "BriefOut"
    },
+   "CaseDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "flow": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flow"
+     },
+     "topic_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Slug"
+     },
+     "message_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Message Type"
+     },
+     "stance": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stance"
+     },
+     "alert_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Level"
+     },
+     "decision": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decision"
+     },
+     "strategy": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strategy"
+     },
+     "strategy_suggested": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strategy Suggested"
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     },
+     "risk_score": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Risk Score"
+     },
+     "legal_required": {
+      "type": "boolean",
+      "title": "Legal Required"
+     },
+     "legal_status": {
+      "type": "string",
+      "title": "Legal Status"
+     },
+     "canalizar_a_atencion": {
+      "type": "boolean",
+      "title": "Canalizar A Atencion"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "post_id": {
+      "type": "integer",
+      "title": "Post Id"
+     },
+     "post_text": {
+      "type": "string",
+      "title": "Post Text",
+      "default": ""
+     },
+     "source_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Name"
+     },
+     "network": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Network"
+     },
+     "alert_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Ratio"
+     },
+     "recommendation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recommendation"
+     },
+     "assigned_to_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Assigned To Name"
+     },
+     "pieces_count": {
+      "type": "integer",
+      "title": "Pieces Count",
+      "default": 0
+     },
+     "decision_reason": {
+      "type": "string",
+      "title": "Decision Reason"
+     },
+     "decided_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decided At"
+     },
+     "decided_by_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decided By Name"
+     },
+     "strategy_justification": {
+      "type": "string",
+      "title": "Strategy Justification"
+     },
+     "strategy_alternatives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Strategy Alternatives"
+     },
+     "style_choice": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Style Choice"
+     },
+     "recommended_style": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Recommended Style"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "risk_breakdown": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Risk Breakdown"
+     },
+     "legal_note": {
+      "type": "string",
+      "title": "Legal Note"
+     },
+     "legal_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Legal At"
+     },
+     "learning_context": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Learning Context"
+     },
+     "closed_reason": {
+      "type": "string",
+      "title": "Closed Reason"
+     },
+     "rating": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rating"
+     },
+     "rating_note": {
+      "type": "string",
+      "title": "Rating Note"
+     },
+     "post": {
+      "$ref": "#/components/schemas/PostDetail"
+     },
+     "classification": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ClassificationOut"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "interpretation": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/InterpretationOut"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "facts": {
+      "items": {
+       "$ref": "#/components/schemas/FactOut"
+      },
+      "type": "array",
+      "title": "Facts",
+      "default": []
+     },
+     "strategy_candidates": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Strategy Candidates",
+      "default": []
+     },
+     "account_options": {
+      "items": {
+       "$ref": "#/components/schemas/AccountOption"
+      },
+      "type": "array",
+      "title": "Account Options",
+      "default": []
+     },
+     "timeline": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Timeline",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "status",
+     "flow",
+     "topic_slug",
+     "message_type",
+     "stance",
+     "alert_level",
+     "decision",
+     "strategy",
+     "strategy_suggested",
+     "style_slug",
+     "risk_score",
+     "legal_required",
+     "legal_status",
+     "canalizar_a_atencion",
+     "created_at",
+     "updated_at",
+     "post_id",
+     "decision_reason",
+     "decided_at",
+     "strategy_justification",
+     "strategy_alternatives",
+     "style_choice",
+     "recommended_style",
+     "account_id",
+     "risk_breakdown",
+     "legal_note",
+     "legal_at",
+     "learning_context",
+     "closed_reason",
+     "rating",
+     "rating_note",
+     "post",
+     "classification",
+     "interpretation"
+    ],
+    "title": "CaseDetail"
+   },
+   "CaseListItem": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "flow": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flow"
+     },
+     "topic_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Slug"
+     },
+     "message_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Message Type"
+     },
+     "stance": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stance"
+     },
+     "alert_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Level"
+     },
+     "decision": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decision"
+     },
+     "strategy": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strategy"
+     },
+     "strategy_suggested": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strategy Suggested"
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     },
+     "risk_score": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Risk Score"
+     },
+     "legal_required": {
+      "type": "boolean",
+      "title": "Legal Required"
+     },
+     "legal_status": {
+      "type": "string",
+      "title": "Legal Status"
+     },
+     "canalizar_a_atencion": {
+      "type": "boolean",
+      "title": "Canalizar A Atencion"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "post_id": {
+      "type": "integer",
+      "title": "Post Id"
+     },
+     "post_text": {
+      "type": "string",
+      "title": "Post Text",
+      "default": ""
+     },
+     "source_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Name"
+     },
+     "network": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Network"
+     },
+     "alert_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Ratio"
+     },
+     "recommendation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recommendation"
+     },
+     "assigned_to_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Assigned To Name"
+     },
+     "pieces_count": {
+      "type": "integer",
+      "title": "Pieces Count",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "status",
+     "flow",
+     "topic_slug",
+     "message_type",
+     "stance",
+     "alert_level",
+     "decision",
+     "strategy",
+     "strategy_suggested",
+     "style_slug",
+     "risk_score",
+     "legal_required",
+     "legal_status",
+     "canalizar_a_atencion",
+     "created_at",
+     "updated_at",
+     "post_id"
+    ],
+    "title": "CaseListItem"
+   },
    "CheckResult": {
     "properties": {
      "source_id": {
@@ -6069,6 +7408,225 @@
      "text"
     ],
     "title": "ChunkOut"
+   },
+   "ClaimOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "verdict": {
+      "type": "string",
+      "title": "Verdict"
+     },
+     "fact_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Fact Ids"
+     },
+     "explanation": {
+      "type": "string",
+      "title": "Explanation"
+     },
+     "missing_data": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Missing Data"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "text",
+     "verdict",
+     "fact_ids",
+     "explanation",
+     "missing_data"
+    ],
+    "title": "ClaimOut"
+   },
+   "ClassificationOut": {
+    "properties": {
+     "stance": {
+      "type": "string",
+      "title": "Stance"
+     },
+     "topic_slug": {
+      "type": "string",
+      "title": "Topic Slug"
+     },
+     "message_type": {
+      "type": "string",
+      "title": "Message Type"
+     },
+     "alert_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Level"
+     },
+     "alert_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Ratio"
+     },
+     "velocity": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Velocity"
+     },
+     "recommendation": {
+      "type": "string",
+      "title": "Recommendation"
+     },
+     "confidence": {
+      "type": "number",
+      "title": "Confidence"
+     },
+     "explanation": {
+      "type": "string",
+      "title": "Explanation"
+     },
+     "canalizar_a_atencion": {
+      "type": "boolean",
+      "title": "Canalizar A Atencion"
+     },
+     "edited_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Edited At"
+     },
+     "ai_run_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ai Run Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "stance",
+     "topic_slug",
+     "message_type",
+     "alert_level",
+     "alert_ratio",
+     "velocity",
+     "recommendation",
+     "confidence",
+     "explanation",
+     "canalizar_a_atencion",
+     "edited_at",
+     "ai_run_id"
+    ],
+    "title": "ClassificationOut"
+   },
+   "ClassificationPatch": {
+    "properties": {
+     "stance": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "a_favor",
+         "en_contra",
+         "neutral"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stance"
+     },
+     "topic_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Slug"
+     },
+     "message_type": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "opinion",
+         "dato_falso",
+         "dato_sacado_de_contexto",
+         "acusacion_o_difamacion",
+         "queja_ciudadana_legitima"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Message Type"
+     },
+     "recommendation": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "responder",
+         "monitorear",
+         "ignorar"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recommendation"
+     }
+    },
+    "type": "object",
+    "title": "ClassificationPatch"
    },
    "ClientIn": {
     "properties": {
@@ -6525,6 +8083,138 @@
     },
     "type": "object",
     "title": "CreativeTypePatch"
+   },
+   "DashboardOut": {
+    "properties": {
+     "by_alert": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "By Alert"
+     },
+     "by_status": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "By Status"
+     },
+     "matrix": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Matrix"
+     },
+     "accelerating": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Accelerating"
+     },
+     "repeated": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Repeated"
+     },
+     "pending": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Pending"
+     },
+     "recent_cases": {
+      "items": {
+       "$ref": "#/components/schemas/CaseListItem"
+      },
+      "type": "array",
+      "title": "Recent Cases"
+     }
+    },
+    "type": "object",
+    "required": [
+     "by_alert",
+     "by_status",
+     "matrix",
+     "accelerating",
+     "repeated",
+     "pending",
+     "recent_cases"
+    ],
+    "title": "DashboardOut"
+   },
+   "DecideIn": {
+    "properties": {
+     "decision": {
+      "type": "string",
+      "enum": [
+       "responder",
+       "monitorear",
+       "ignorar",
+       "canalizar"
+      ],
+      "title": "Decision"
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason",
+      "default": ""
+     },
+     "strategy": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "desmentir",
+         "contextualizar",
+         "reencuadrar",
+         "contrastar",
+         "amplificar",
+         "agradecer"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strategy"
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "decision"
+    ],
+    "title": "DecideIn"
    },
    "DirectiveFields": {
     "properties": {
@@ -8425,6 +10115,71 @@
     ],
     "title": "ImportReport"
    },
+   "InterpretationOut": {
+    "properties": {
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "narrative": {
+      "type": "string",
+      "title": "Narrative"
+     },
+     "missing_context": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Missing Context"
+     },
+     "comments_summary": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Comments Summary"
+     },
+     "repeated_in": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Repeated In"
+     },
+     "claims": {
+      "items": {
+       "$ref": "#/components/schemas/ClaimOut"
+      },
+      "type": "array",
+      "title": "Claims"
+     },
+     "ai_run_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ai Run Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "summary",
+     "narrative",
+     "missing_context",
+     "comments_summary",
+     "repeated_in",
+     "claims",
+     "ai_run_id"
+    ],
+    "title": "InterpretationOut"
+   },
    "KeyMessageIn": {
     "properties": {
      "topic_id": {
@@ -8510,6 +10265,28 @@
      "active"
     ],
     "title": "KeyMessageOut"
+   },
+   "LegalIn": {
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "liberar",
+       "bloquear"
+      ],
+      "title": "Action"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "action",
+     "note"
+    ],
+    "title": "LegalIn"
    },
    "LoginIn": {
     "properties": {
@@ -8735,6 +10512,37 @@
      "page_size"
     ],
     "title": "Page[AuditOut]"
+   },
+   "Page_CaseListItem_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/CaseListItem"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "page_size": {
+      "type": "integer",
+      "title": "Page Size"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "page",
+     "page_size"
+    ],
+    "title": "Page[CaseListItem]"
    },
    "Page_FactOut_": {
     "properties": {
@@ -9207,6 +11015,19 @@
      "total_interactions"
     ],
     "title": "PostOut"
+   },
+   "ReasonIn": {
+    "properties": {
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "reason"
+    ],
+    "title": "ReasonIn"
    },
    "ResolvePreviewIn": {
     "properties": {

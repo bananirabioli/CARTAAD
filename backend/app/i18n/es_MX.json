@@ -162,5 +162,49 @@
       "caps": "Mayúsculas sostenidas: {words}.",
       "legend_missing": "Falta la leyenda obligatoria: «{legend}»."
     }
+  },
+  "learning": {
+    "insufficient": "Muestra insuficiente ({n} de {min} casos) para recomendar.",
+    "worked": "Funcionó {ok} de {n} veces en este tema."
+  },
+  "risk": {
+    "alert_level": {
+      "label": "Nivel de alerta",
+      "explanation": "Alerta {raw}: más tracción, más exposición de la respuesta."
+    },
+    "message_type": {
+      "label": "Tipo de mensaje",
+      "explanation": "Tipo {raw}: las acusaciones y los datos falsos elevan el riesgo."
+    },
+    "style_risk": {
+      "label": "Riesgo del estilo",
+      "explanation": "Riesgo del estilo: {raw}."
+    },
+    "unverified_figures": {
+      "label": "Cifras sin verificar",
+      "explanation": "{raw} cifra(s) pendiente(s) de verificación humana o sin respaldo."
+    },
+    "names_actors": {
+      "label": "Menciona actores",
+      "explanation": "Actores mencionados: {raw}."
+    },
+    "veda_active": {
+      "label": "Modo veda",
+      "explanation": "Modo veda activo: {raw}."
+    },
+    "red_team": {
+      "label": "Hallazgos del red team",
+      "explanation": "Notas del red team (alta/media/baja): {raw}."
+    }
+  },
+  "cases": {
+    "auto_monitor": "Postura neutral: monitorear por defecto.",
+    "reason_required": "El motivo es obligatorio para cerrar el caso.",
+    "bad_transition": "Transición no permitida: {from} → {to}.",
+    "legal_required": "Requiere revisión de legal antes de generar o publicar (acusación o difamación).",
+    "no_account": "Elige una cuenta destino registrada.",
+    "style_not_allowed": "El estilo «{style}» no está permitido en el formato de la cuenta destino.",
+    "decision_needs_response": "Solo los casos con decisión «responder» pueden generar piezas.",
+    "rated_requires_metrics": "Registra métricas antes de calificar."
   }
 }

@@ -280,7 +280,7 @@
    "message_type": "queja_ciudadana_legitima",
    "alert": "medio",
    "hours_ago": 11,
-   "text": "En mi colonia llevamos una semana sin luminarias en la Calle Hidalgo Ejemplo, de noche está oscurísimo. Ya reportamos con folio.",
+   "text": "En mi colonia llevamos una semana sin luminarias en la cuadra de la escuela, de noche está oscurísimo. Ya reportamos con folio.",
    "comments": [
     "Peligroso",
     "Que pongan lámparas ya"
@@ -424,7 +424,7 @@
    "message_type": "opinion",
    "alert": "medio",
    "hours_ago": 12,
-   "text": "Excelente: repararon en un día la fuga de la calle principal de la Colonia Norte. Buen trabajo de la cuadrilla.",
+   "text": "Excelente: repararon en un día la fuga de agua de la Colonia Norte. Buen trabajo de la cuadrilla.",
    "comments": [
     "Así sí",
     "Bravo"
@@ -578,7 +578,7 @@
    "message_type": "opinion",
    "alert": "bajo",
    "hours_ago": 30,
-   "text": "¿Alguien sabe hasta cuándo dura la obra de la calle de la escuela en la Colonia Sur?",
+   "text": "¿Alguien sabe hasta cuándo dura la obra de construcción frente a la escuela en la Colonia Sur?",
    "comments": [
     "Dicen que dos semanas"
    ]
@@ -642,6 +642,47 @@
    "comments": [
     "La fiscalía",
     "Buena pregunta"
+   ]
+  },
+  {
+   "source": "partido_azul",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "medio",
+   "hours_ago": 4,
+   "coordinated": true,
+   "text": "El municipio no ha tapado ni un solo bache este año. Cero obras, puras promesas. ¡Compártelo!",
+   "comments": [
+    "Compartido",
+    "Así es"
+   ]
+  },
+  {
+   "source": "bancada_verde",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "medio",
+   "hours_ago": 3,
+   "coordinated": true,
+   "text": "El municipio no ha tapado ni un solo bache en todo el año: cero obras y puras promesas. Compártelo.",
+   "comments": [
+    "Compartido"
+   ]
+  },
+  {
+   "source": "colonia_norte",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "alto",
+   "hours_ago": 2,
+   "coordinated": true,
+   "text": "Ni un solo bache tapado en todo el año en el municipio. Cero obras, puras promesas. Compártelo.",
+   "comments": [
+    "Que lo compartan",
+    "¿Seguro?"
    ]
   }
  ]

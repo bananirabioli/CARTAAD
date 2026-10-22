@@ -1,0 +1,33 @@
+{
+  "message_type": [
+    {"type": "acusacion_o_difamacion", "any": ["corrup", "se lo roban", "se las roban", "se los roban", "nos roban", "fraude", "coludid", "desvio de", "desvian", "moches", "lo encubre", "los encubre", "nido de"]},
+    {"type": "queja_ciudadana_legitima", "any": ["llevamos", "llevo dias", "llevo semanas", "ya reportamos", "ya lo reportamos", "reportamos con folio", "puse folio", "nadie viene", "desde hace", "mi calle", "en mi colonia", "frente a mi casa", "sin agua en", "sin luminarias"]},
+    {"type": "dato_falso", "any": ["ni un solo", "ni un peso", "cero obras", "cero avance", "no ha tapado", "no ha invertido", "nunca han", "100%", "no existe ningun", "ni una patrulla", "ni una sola"]},
+    {"type": "dato_sacado_de_contexto", "any": ["apenas", "solo ", "nomas", "mientras que", "unicamente"], "requires_number": true}
+  ],
+  "stance": {
+    "a_favor": ["gracias", "excelente", "por fin", "bien hecho", "felicidades", "que bueno", "quedo muy bien", "reconocemos", "bravo", "aplausos", "se agradece", "buen trabajo", "se ve muy bien", "si avanza"],
+    "en_contra": ["no hace nada", "nadie hace nada", "nadie viene", "nadie da", "desastre", "abandon", "promesas", "deja mucho que desear", "feo", "relumbron", "equivocadas", "a la periferia nunca", "mas preocupado", "esquivar baches", "destrozada", "sigue siendo", "puro cuento", "exigimos"],
+    "neutral": ["aviso", "este sabado", "este lunes", "pregunta seria", "dato curioso", "alguien sabe", "segun el informe", "habra"]
+  },
+  "comment_themes": [
+    {"theme": "molestia", "label": "Molestia por el problema", "any": ["peligros", "urge", "urgente", "harto", "ya ni", "cada vez peor", "siempre lo mismo", "puro", "igual aqui", "aqui igual", "es mucho", "poquito", "faltan"]},
+    {"theme": "pide_fuente", "label": "Piden la fuente o datos", "any": ["fuente", "pruebas", "cuanto", "cuantos", "cuantas", "comparado", "que lo demuestren", "que investiguen", "ojala investiguen"]},
+    {"theme": "jurisdiccion", "label": "Dudas sobre quién es responsable", "any": ["es del estado", "del estado", "la fiscalia", "quien se encarga", "estatal"]},
+    {"theme": "apoyo", "label": "Reconocen lo hecho", "any": ["gracias", "se agradece", "bravo", "bien", "ya era hora", "hermoso", "asi si", "se nota", "si la arreglaron", "si he visto", "si tiene", "si trabajan", "algo es algo", "buena noticia", "bonito"]},
+    {"theme": "propuesta", "label": "Piden acciones concretas", "any": ["que pongan", "pongan", "sigan con", "que no se acabe", "cuando lo terminen", "cuidan", "ojala lo"]}
+  ],
+  "recommendation_text": {
+    "responder_dato": "Responder: la publicación difunde un dato verificable y tiene tracción ({level}); dejarla sin contexto deja correr la versión incorrecta.",
+    "responder_queja": "Responder y canalizar: es una queja ciudadana legítima; se informa qué se va a hacer y se canaliza a atención ciudadana.",
+    "responder_acusacion": "Responder solo tras revisión de legal: es una acusación con alto alcance ({level}).",
+    "monitorear_acusacion": "Monitorear: la acusación tiene poco alcance ({level}); responder ahora le daría más visibilidad. Legal debe revisarla si escala.",
+    "responder_opinion_alta": "Responder con contexto: la opinión está acelerando ({level}) y conviene aportar datos.",
+    "monitorear_opinion": "Monitorear: opinión con alcance moderado ({level}); responder podría amplificarla.",
+    "ignorar_opinion": "Ignorar: opinión de bajo alcance ({level}); responder le daría más alcance al ataque.",
+    "responder_favor": "Amplificar: publicación favorable con tracción ({level}); conviene reforzarla y darle alcance.",
+    "monitorear_favor": "Monitorear: publicación favorable de bajo alcance ({level}); se puede agradecer si crece.",
+    "monitorear_neutral": "Monitorear: publicación informativa o neutral; no requiere respuesta por ahora.",
+    "monitorear_dato_bajo": "Monitorear: el dato es verificable pero tiene poco alcance ({level}); responder lo amplificaría."
+  }
+}

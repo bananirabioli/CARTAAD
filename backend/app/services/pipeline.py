@@ -1,4 +1,5 @@
-"""Post-capture pipeline hook. M4 plugs classification, interpretation and case creation here."""
+"""Post-capture pipeline hook: every new capture opens a case and runs classification, interpretation,
+strategy suggestion and risk score. Human decision comes next."""
 
 from sqlalchemy.orm import Session
 
@@ -7,5 +8,6 @@ from app.models.monitoring import Post
 
 
 def process_post(db: Session, post: Post, user: User | None = None) -> None:
-    """Called after every new capture (automatic or manual)."""
-    return None
+    from app.services.cases import process_new_post
+
+    process_new_post(db, post, user)

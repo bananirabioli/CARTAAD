@@ -248,6 +248,63 @@
       "file": "Importación de archivo",
       "social_listening": "Social listening (API)",
       "manual": "Solo manual"
+    },
+    "stance": {
+      "a_favor": "A favor",
+      "en_contra": "En contra",
+      "neutral": "Neutral"
+    },
+    "message_type": {
+      "opinion": "Opinión",
+      "dato_falso": "Dato falso",
+      "dato_sacado_de_contexto": "Dato sacado de contexto",
+      "acusacion_o_difamacion": "Acusación o difamación",
+      "queja_ciudadana_legitima": "Queja ciudadana legítima"
+    },
+    "recommendation": {
+      "responder": "Responder",
+      "monitorear": "Monitorear",
+      "ignorar": "Ignorar"
+    },
+    "decision": {
+      "responder": "Responder",
+      "monitorear": "Monitorear",
+      "ignorar": "Ignorar",
+      "canalizar": "Canalizar a atención"
+    },
+    "verdict": {
+      "cierta": "Cierta",
+      "falsa": "Falsa",
+      "incompleta": "Incompleta",
+      "no_verificable": "No verificable"
+    },
+    "legal_status": {
+      "no_requerida": "No requerida",
+      "pendiente": "Pendiente",
+      "liberada": "Liberada",
+      "bloqueada": "Bloqueada"
+    },
+    "case_status": {
+      "capturado": "Capturado",
+      "clasificado": "Clasificado",
+      "interpretado": "Por decidir",
+      "revision_legal": "Revisión legal",
+      "listo_para_generar": "Listo para generar",
+      "generando": "Generando",
+      "generado": "Generado",
+      "en_revision": "En revisión",
+      "aprobado": "Aprobado",
+      "programado": "Programado",
+      "publicado": "Publicado",
+      "medido": "Medido",
+      "calificado": "Calificado",
+      "monitoreando": "Monitoreando",
+      "ignorado": "Ignorado",
+      "canalizado": "Canalizado",
+      "descartado": "Descartado"
+    },
+    "topic_fallback": {
+      "otro": "Otro"
     }
   },
   "common": {
@@ -319,7 +376,19 @@
   "dashboard": {
     "title": "Tablero de alertas",
     "subtitle": "Casos por nivel de alerta y estado, publicaciones que más aceleran y narrativas repetidas.",
-    "welcome": "Hola, {name}"
+    "welcome": "Hola, {name}",
+    "openByAlert": "Casos abiertos por nivel de alerta",
+    "pending": "Pendientes humanos",
+    "pendingDecide": "Por decidir",
+    "pendingLegal": "En revisión legal",
+    "pendingGenerate": "Listos para generar",
+    "pendingReview": "En revisión / aprobación",
+    "accelerating": "Publicaciones que más aceleran (48 h)",
+    "repeated": "Narrativas repetidas",
+    "repeatedItem": "{count} páginas",
+    "recent": "Casos recientes",
+    "byStatus": "Casos por estado",
+    "noData": "Sin datos todavía."
   },
   "kb": {
     "title": "Base de conocimiento",
@@ -676,5 +745,75 @@
     "done": "Publicación capturada",
     "duplicate": "Esta publicación ya estaba capturada; se agregaron sus datos.",
     "another": "Capturar otra"
+  },
+  "cases": {
+    "title": "Casos",
+    "subtitle": "Cada publicación capturada abre un expediente: clasificación, interpretación, estrategia sugerida y puntaje de riesgo. Una persona decide.",
+    "openOnly": "Solo abiertos",
+    "allStatus": "Todos los estados",
+    "allFlows": "Todos los flujos",
+    "allTopics": "Todos los temas",
+    "orderRecent": "Más recientes",
+    "orderAlert": "Por alerta",
+    "orderRisk": "Por riesgo",
+    "code": "Caso",
+    "post": "Publicación",
+    "status": "Estado",
+    "risk": "Riesgo",
+    "riskScore": "Riesgo {score}/100",
+    "legal": "Legal",
+    "canalizar": "Canalizar a atención",
+    "original": "Publicación original",
+    "classification": "Clasificación",
+    "editClassification": "Corregir clasificación",
+    "confidence": "Confianza {value}",
+    "recommendation": "Recomendación",
+    "why": "Por qué",
+    "interpretation": "Interpretación",
+    "narrative": "Narrativa",
+    "claims": "Afirmaciones",
+    "noClaims": "Sin afirmaciones verificables.",
+    "missingContext": "Qué falta",
+    "askKbOwner": "Dato faltante: pedir al dueño de la base",
+    "comments": "Qué dice la gente (temas agregados)",
+    "repeated": "El tema se repite en otras páginas",
+    "notRepeated": "No se detectó el mismo tema en otras páginas en la ventana de tiempo.",
+    "strategy": "Estrategia sugerida",
+    "alternatives": "Alternativas",
+    "recommendedStyle": "Estilo recomendado",
+    "learning": "Contexto de aprendizaje",
+    "sample": "Muestra: {n} casos en este tema (mínimo {min})",
+    "insufficient": "Muestra insuficiente",
+    "riskBreakdown": "Puntaje de riesgo de la respuesta",
+    "riskHelp": "Calculado con reglas y pesos configurables; no lo calcula la IA.",
+    "decision": "Decisión",
+    "decisionHelp": "La app recomienda; una persona decide.",
+    "decide": "Decidir",
+    "respond": "Responder",
+    "account": "Cuenta destino (fija el formato)",
+    "style": "Estilo",
+    "styleDefault": "Por defecto: {style} ({source})",
+    "recommendedTag": "recomendado",
+    "confirmStrategy": "Estrategia",
+    "confirmRespond": "Confirmar: responder",
+    "reasonFor": "Motivo para {decision}",
+    "legalPanel": "Revisión legal",
+    "legalHelp": "Las acusaciones exigen revisión de legal antes de generar o publicar una respuesta pública.",
+    "legalRelease": "Liberar",
+    "legalBlock": "Bloquear",
+    "legalNote": "Nota de legal",
+    "goGenerate": "Ir a generación",
+    "close": "Descartar caso",
+    "reopen": "Reabrir",
+    "timeline": "Bitácora del caso",
+    "decidedBy": "Decidió {name}",
+    "closedReason": "Motivo de cierre",
+    "reinterpret": "Volver a interpretar",
+    "sourceStyleSource": {
+      "persona": "elegido",
+      "cuenta": "de la cuenta",
+      "formato": "del formato",
+      "cliente": "del cliente"
+    }
   }
 }

@@ -1395,6 +1395,176 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Cases */
+        get: operations["list_cases_cases_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Case */
+        get: operations["get_case_cases__case_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/classification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Edit Classification */
+        patch: operations["edit_classification_cases__case_id__classification_patch"];
+        trace?: never;
+    };
+    "/cases/{case_id}/reinterpret": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reinterpret */
+        post: operations["reinterpret_cases__case_id__reinterpret_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide */
+        post: operations["decide_cases__case_id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/legal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Legal */
+        post: operations["legal_cases__case_id__legal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close */
+        post: operations["close_cases__case_id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reopen */
+        post: operations["reopen_cases__case_id__reopen_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign */
+        post: operations["assign_cases__case_id__assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Dashboard */
+        get: operations["dashboard_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -1451,6 +1621,29 @@ export interface components {
              * @default
              */
             notes: string;
+        };
+        /** AccountOption */
+        AccountOption: {
+            /** Id */
+            id: number;
+            /** Handle */
+            handle: string;
+            /** Display Name */
+            display_name: string;
+            /** Account Type */
+            account_type: string;
+            /** Network */
+            network: string;
+            /** Format Slug */
+            format_slug: string;
+            /** Format Name */
+            format_name: string;
+            /** Allowed Styles */
+            allowed_styles: string[];
+            /** Default Style */
+            default_style: string | null;
+            /** Default Source */
+            default_source: string;
         };
         /** AccountOut */
         AccountOut: {
@@ -1628,6 +1821,11 @@ export interface components {
              */
             created_at: string;
         };
+        /** AssignIn */
+        AssignIn: {
+            /** User Id */
+            user_id: number | null;
+        };
         /** AuditOut */
         AuditOut: {
             /** Id */
@@ -1798,6 +1996,205 @@ export interface components {
              */
             updated_at: string;
         };
+        /** CaseDetail */
+        CaseDetail: {
+            /** Id */
+            id: number;
+            /** Code */
+            code: string;
+            /** Status */
+            status: string;
+            /** Flow */
+            flow: string | null;
+            /** Topic Slug */
+            topic_slug: string | null;
+            /** Message Type */
+            message_type: string | null;
+            /** Stance */
+            stance: string | null;
+            /** Alert Level */
+            alert_level: string | null;
+            /** Decision */
+            decision: string | null;
+            /** Strategy */
+            strategy: string | null;
+            /** Strategy Suggested */
+            strategy_suggested: string | null;
+            /** Style Slug */
+            style_slug: string | null;
+            /** Risk Score */
+            risk_score: number | null;
+            /** Legal Required */
+            legal_required: boolean;
+            /** Legal Status */
+            legal_status: string;
+            /** Canalizar A Atencion */
+            canalizar_a_atencion: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Post Id */
+            post_id: number;
+            /**
+             * Post Text
+             * @default
+             */
+            post_text: string;
+            /** Source Name */
+            source_name?: string | null;
+            /** Network */
+            network?: string | null;
+            /** Alert Ratio */
+            alert_ratio?: number | null;
+            /** Recommendation */
+            recommendation?: string | null;
+            /** Assigned To Name */
+            assigned_to_name?: string | null;
+            /**
+             * Pieces Count
+             * @default 0
+             */
+            pieces_count: number;
+            /** Decision Reason */
+            decision_reason: string;
+            /** Decided At */
+            decided_at: string | null;
+            /** Decided By Name */
+            decided_by_name?: string | null;
+            /** Strategy Justification */
+            strategy_justification: string;
+            /** Strategy Alternatives */
+            strategy_alternatives: {
+                [key: string]: unknown;
+            }[];
+            /** Style Choice */
+            style_choice: {
+                [key: string]: unknown;
+            };
+            /** Recommended Style */
+            recommended_style: {
+                [key: string]: unknown;
+            };
+            /** Account Id */
+            account_id: number | null;
+            /** Risk Breakdown */
+            risk_breakdown: {
+                [key: string]: unknown;
+            }[];
+            /** Legal Note */
+            legal_note: string;
+            /** Legal At */
+            legal_at: string | null;
+            /** Learning Context */
+            learning_context: {
+                [key: string]: unknown;
+            };
+            /** Closed Reason */
+            closed_reason: string;
+            /** Rating */
+            rating: string | null;
+            /** Rating Note */
+            rating_note: string;
+            post: components["schemas"]["PostDetail"];
+            classification: components["schemas"]["ClassificationOut"] | null;
+            interpretation: components["schemas"]["InterpretationOut"] | null;
+            /**
+             * Facts
+             * @default []
+             */
+            facts: components["schemas"]["FactOut"][];
+            /**
+             * Strategy Candidates
+             * @default []
+             */
+            strategy_candidates: string[];
+            /**
+             * Account Options
+             * @default []
+             */
+            account_options: components["schemas"]["AccountOption"][];
+            /**
+             * Timeline
+             * @default []
+             */
+            timeline: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** CaseListItem */
+        CaseListItem: {
+            /** Id */
+            id: number;
+            /** Code */
+            code: string;
+            /** Status */
+            status: string;
+            /** Flow */
+            flow: string | null;
+            /** Topic Slug */
+            topic_slug: string | null;
+            /** Message Type */
+            message_type: string | null;
+            /** Stance */
+            stance: string | null;
+            /** Alert Level */
+            alert_level: string | null;
+            /** Decision */
+            decision: string | null;
+            /** Strategy */
+            strategy: string | null;
+            /** Strategy Suggested */
+            strategy_suggested: string | null;
+            /** Style Slug */
+            style_slug: string | null;
+            /** Risk Score */
+            risk_score: number | null;
+            /** Legal Required */
+            legal_required: boolean;
+            /** Legal Status */
+            legal_status: string;
+            /** Canalizar A Atencion */
+            canalizar_a_atencion: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Post Id */
+            post_id: number;
+            /**
+             * Post Text
+             * @default
+             */
+            post_text: string;
+            /** Source Name */
+            source_name?: string | null;
+            /** Network */
+            network?: string | null;
+            /** Alert Ratio */
+            alert_ratio?: number | null;
+            /** Recommendation */
+            recommendation?: string | null;
+            /** Assigned To Name */
+            assigned_to_name?: string | null;
+            /**
+             * Pieces Count
+             * @default 0
+             */
+            pieces_count: number;
+        };
         /** CheckResult */
         CheckResult: {
             /** Source Id */
@@ -1819,6 +2216,59 @@ export interface components {
             page: number;
             /** Text */
             text: string;
+        };
+        /** ClaimOut */
+        ClaimOut: {
+            /** Id */
+            id: number;
+            /** Text */
+            text: string;
+            /** Verdict */
+            verdict: string;
+            /** Fact Ids */
+            fact_ids: number[];
+            /** Explanation */
+            explanation: string;
+            /** Missing Data */
+            missing_data: string | null;
+        };
+        /** ClassificationOut */
+        ClassificationOut: {
+            /** Stance */
+            stance: string;
+            /** Topic Slug */
+            topic_slug: string;
+            /** Message Type */
+            message_type: string;
+            /** Alert Level */
+            alert_level: string | null;
+            /** Alert Ratio */
+            alert_ratio: number | null;
+            /** Velocity */
+            velocity: number | null;
+            /** Recommendation */
+            recommendation: string;
+            /** Confidence */
+            confidence: number;
+            /** Explanation */
+            explanation: string;
+            /** Canalizar A Atencion */
+            canalizar_a_atencion: boolean;
+            /** Edited At */
+            edited_at: string | null;
+            /** Ai Run Id */
+            ai_run_id: number | null;
+        };
+        /** ClassificationPatch */
+        ClassificationPatch: {
+            /** Stance */
+            stance?: ("a_favor" | "en_contra" | "neutral") | null;
+            /** Topic Slug */
+            topic_slug?: string | null;
+            /** Message Type */
+            message_type?: ("opinion" | "dato_falso" | "dato_sacado_de_contexto" | "acusacion_o_difamacion" | "queja_ciudadana_legitima") | null;
+            /** Recommendation */
+            recommendation?: ("responder" | "monitorear" | "ignorar") | null;
         };
         /** ClientIn */
         ClientIn: {
@@ -1962,6 +2412,54 @@ export interface components {
             requires_real_photo?: boolean | null;
             /** Active */
             active?: boolean | null;
+        };
+        /** DashboardOut */
+        DashboardOut: {
+            /** By Alert */
+            by_alert: {
+                [key: string]: number;
+            };
+            /** By Status */
+            by_status: {
+                [key: string]: number;
+            };
+            /** Matrix */
+            matrix: {
+                [key: string]: unknown;
+            }[];
+            /** Accelerating */
+            accelerating: {
+                [key: string]: unknown;
+            }[];
+            /** Repeated */
+            repeated: {
+                [key: string]: unknown;
+            }[];
+            /** Pending */
+            pending: {
+                [key: string]: number;
+            };
+            /** Recent Cases */
+            recent_cases: components["schemas"]["CaseListItem"][];
+        };
+        /** DecideIn */
+        DecideIn: {
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "responder" | "monitorear" | "ignorar" | "canalizar";
+            /**
+             * Reason
+             * @default
+             */
+            reason: string;
+            /** Strategy */
+            strategy?: ("desmentir" | "contextualizar" | "reencuadrar" | "contrastar" | "amplificar" | "agradecer") | null;
+            /** Style Slug */
+            style_slug?: string | null;
+            /** Account Id */
+            account_id?: number | null;
         };
         /** DirectiveFields */
         DirectiveFields: {
@@ -2575,6 +3073,29 @@ export interface components {
                 [key: string]: unknown;
             }[];
         };
+        /** InterpretationOut */
+        InterpretationOut: {
+            /** Summary */
+            summary: string;
+            /** Narrative */
+            narrative: string;
+            /** Missing Context */
+            missing_context: {
+                [key: string]: unknown;
+            }[];
+            /** Comments Summary */
+            comments_summary: {
+                [key: string]: unknown;
+            }[];
+            /** Repeated In */
+            repeated_in: {
+                [key: string]: unknown;
+            }[];
+            /** Claims */
+            claims: components["schemas"]["ClaimOut"][];
+            /** Ai Run Id */
+            ai_run_id: number | null;
+        };
         /** KeyMessageIn */
         KeyMessageIn: {
             /** Topic Id */
@@ -2611,6 +3132,16 @@ export interface components {
             priority: number;
             /** Active */
             active: boolean;
+        };
+        /** LegalIn */
+        LegalIn: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "liberar" | "bloquear";
+            /** Note */
+            note: string;
         };
         /** LoginIn */
         LoginIn: {
@@ -2700,6 +3231,17 @@ export interface components {
         Page_AuditOut_: {
             /** Items */
             items: components["schemas"]["AuditOut"][];
+            /** Total */
+            total: number;
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+        };
+        /** Page[CaseListItem] */
+        Page_CaseListItem_: {
+            /** Items */
+            items: components["schemas"]["CaseListItem"][];
             /** Total */
             total: number;
             /** Page */
@@ -2849,6 +3391,11 @@ export interface components {
             case_id?: number | null;
             /** Case Code */
             case_code?: string | null;
+        };
+        /** ReasonIn */
+        ReasonIn: {
+            /** Reason */
+            reason: string;
         };
         /** ResolvePreviewIn */
         ResolvePreviewIn: {
@@ -6969,6 +7516,338 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_cases_cases_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                flow?: string | null;
+                alert_level?: string | null;
+                topic?: string | null;
+                stance?: string | null;
+                q?: string | null;
+                open_only?: boolean;
+                order?: string;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_CaseListItem_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_case_cases__case_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_classification_cases__case_id__classification_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClassificationPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reinterpret_cases__case_id__reinterpret_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_cases__case_id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecideIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legal_cases__case_id__legal_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LegalIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_cases__case_id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reopen_cases__case_id__reopen_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_cases__case_id__assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardOut"];
                 };
             };
         };

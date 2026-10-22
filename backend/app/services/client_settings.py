@@ -55,8 +55,8 @@ class ClientSettings(BaseModel):
     source_review_interval_days: int = 30
     sources_last_reviewed_at: str | None = None
     coordinated_window_hours: int = 72
-    coordinated_similarity: float = 0.55
-    repeated_similarity: float = 0.45
+    coordinated_similarity: float = 0.75
+    repeated_similarity: float = 0.5
     neutral_label_flow_b: str = "DATO"
     alert_label_flow_a: str = "ALERTA · CONTEXTO"
     comparativa_closing: str = "Mismo periodo, misma base: compare usted."
