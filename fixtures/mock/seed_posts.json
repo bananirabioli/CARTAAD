@@ -1,0 +1,648 @@
+{
+ "sources": [
+  {
+   "key": "noticias_valle",
+   "name": "Noticias Ficticias del Valle",
+   "network": "facebook",
+   "handle": "@noticiasficticiasvalle",
+   "source_type": "medio",
+   "priority": "alta",
+   "baseline": 60,
+   "history_days": 25
+  },
+  {
+   "key": "diario_digital",
+   "name": "Diario Digital Ejemplo",
+   "network": "x",
+   "handle": "@diariodigitalej",
+   "source_type": "medio",
+   "priority": "alta",
+   "baseline": 45,
+   "history_days": 25
+  },
+  {
+   "key": "radio_comunitaria",
+   "name": "Radio Comunitaria Ejemplo",
+   "network": "facebook",
+   "handle": "@radiocomunitariaej",
+   "source_type": "medio",
+   "priority": "media",
+   "baseline": 15,
+   "history_days": 25
+  },
+  {
+   "key": "vecinos_centro",
+   "name": "Vecinos Unidos Colonia Centro",
+   "network": "facebook",
+   "handle": "@vecinoscentroej",
+   "source_type": "pagina_ciudadana",
+   "priority": "alta",
+   "baseline": 8,
+   "history_days": 25
+  },
+  {
+   "key": "colonia_norte",
+   "name": "Colonia Norte Informa",
+   "network": "facebook",
+   "handle": "@colonianorteinforma",
+   "source_type": "pagina_ciudadana",
+   "priority": "media",
+   "baseline": 5,
+   "history_days": 25
+  },
+  {
+   "key": "mamas_sur",
+   "name": "Mamás de la Colonia Sur",
+   "network": "facebook",
+   "handle": "@mamascoloniasur",
+   "source_type": "pagina_ciudadana",
+   "priority": "media",
+   "baseline": 6,
+   "history_days": 25
+  },
+  {
+   "key": "opinador",
+   "name": "El Opinador del Valle",
+   "network": "tiktok",
+   "handle": "@elopinadordelvalle",
+   "source_type": "influencer",
+   "priority": "alta",
+   "baseline": 120,
+   "history_days": 25
+  },
+  {
+   "key": "datos_sabor",
+   "name": "Datos con Sabor",
+   "network": "instagram",
+   "handle": "@datosconsabor",
+   "source_type": "influencer",
+   "priority": "media",
+   "baseline": 30,
+   "history_days": 25
+  },
+  {
+   "key": "partido_azul",
+   "name": "Partido Azul · Comité Municipal",
+   "network": "facebook",
+   "handle": "@partidoazulmunicipal",
+   "source_type": "actor_politico",
+   "priority": "alta",
+   "baseline": 25,
+   "history_days": 25
+  },
+  {
+   "key": "bancada_verde",
+   "name": "Bancada Verde Limón",
+   "network": "x",
+   "handle": "@bancadaverdelimon",
+   "source_type": "actor_politico",
+   "priority": "media",
+   "baseline": 12,
+   "history_days": 25
+  },
+  {
+   "key": "ciudadanos_agua",
+   "name": "Ciudadanos por el Agua",
+   "network": "x",
+   "handle": "@ciudadanosagua",
+   "source_type": "pagina_ciudadana",
+   "priority": "baja",
+   "baseline": 4,
+   "history_days": 25
+  },
+  {
+   "key": "memes_valle",
+   "name": "Memes del Valle",
+   "network": "instagram",
+   "handle": "@memesdelvalle",
+   "source_type": "influencer",
+   "priority": "baja",
+   "baseline": 50,
+   "history_days": 6
+  }
+ ],
+ "posts": [
+  {
+   "source": "opinador",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "critico",
+   "hours_ago": 5,
+   "text": "El municipio no ha tapado ni un solo bache en todo el año. Cero obras, puras promesas. La Avenida Central está destrozada y nadie hace nada.",
+   "comments": [
+    "Ya ni salgo en carro por los hoyos",
+    "La Avenida Central es del estado, no?",
+    "Mi calle sí la arreglaron hace un mes",
+    "Siempre lo mismo, puro cuento",
+    "Que pongan fechas"
+   ]
+  },
+  {
+   "source": "noticias_valle",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "dato_sacado_de_contexto",
+   "alert": "alto",
+   "hours_ago": 8,
+   "text": "Apenas 47.5 km de calles repavimentadas en seis meses: solo una fracción de la red vial. Mientras que el presupuesto vial es de 182 millones de pesos.",
+   "comments": [
+    "¿Y cuánto es la red completa?",
+    "Eso es poquito",
+    "El presupuesto se va en otras cosas",
+    "Pues algo es algo"
+   ]
+  },
+  {
+   "source": "vecinos_centro",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "queja_ciudadana_legitima",
+   "alert": "medio",
+   "hours_ago": 10,
+   "text": "Llevamos tres semanas con un bache enorme frente a la escuela de la Calle Hidalgo Ejemplo. Ya lo reportamos y nadie viene. Los niños pasan ahí todos los días.",
+   "comments": [
+    "Yo también lo reporté",
+    "Es peligrosísimo en la noche",
+    "Pongan señalamiento por lo menos"
+   ]
+  },
+  {
+   "source": "partido_azul",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "acusacion_o_difamacion",
+   "alert": "alto",
+   "hours_ago": 6,
+   "text": "El presupuesto de bacheo se lo roban: corrupción pura en la Dirección de Obras. Exigimos que se investigue el desvío.",
+   "comments": [
+    "Que lo demuestren",
+    "Siempre dicen lo mismo",
+    "Ojalá investiguen"
+   ]
+  },
+  {
+   "source": "datos_sabor",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 30,
+   "text": "Opinión: el bacheo en la ciudad deja mucho que desear, se ve parchado y feo.",
+   "comments": [
+    "Coincido",
+    "A mí me parece que va mejorando"
+   ]
+  },
+  {
+   "source": "colonia_norte",
+   "topic": "baches",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 12,
+   "text": "Por fin repavimentaron la calle principal de la Colonia Norte. Quedó muy bien, gracias a la cuadrilla que trabajó toda la noche.",
+   "comments": [
+    "Ya era hora",
+    "Se agradece",
+    "Ahora sigan con la calle de atrás"
+   ]
+  },
+  {
+   "source": "radio_comunitaria",
+   "topic": "baches",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 20,
+   "text": "Aviso: cierre parcial en la Avenida Central por trabajos de repavimentación del programa estatal este fin de semana.",
+   "comments": [
+    "Gracias por avisar"
+   ]
+  },
+  {
+   "source": "memes_valle",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "opinion",
+   "alert": "sin_linea_base",
+   "hours_ago": 4,
+   "text": "Nuevo deporte extremo en el Valle: esquivar baches en la Avenida Central. Ya ni en videojuego.",
+   "comments": [
+    "Jajaja tal cual",
+    "Es del estado esa avenida"
+   ]
+  },
+  {
+   "source": "diario_digital",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "medio",
+   "hours_ago": 14,
+   "text": "Nunca han invertido en vialidades: el municipio no ha puesto ni un peso para calles este año.",
+   "comments": [
+    "Fuente?",
+    "Eso no es cierto, yo vi la obra"
+   ]
+  },
+  {
+   "source": "mamas_sur",
+   "topic": "baches",
+   "stance": "en_contra",
+   "message_type": "queja_ciudadana_legitima",
+   "alert": "bajo",
+   "hours_ago": 26,
+   "text": "Desde hace dos meses mi calle en la Colonia Sur tiene un hoyo que se llena de agua. Ya puse folio y no han venido.",
+   "comments": [
+    "A nosotros nos pasó igual",
+    "Pásanos el folio y lo compartimos"
+   ]
+  },
+  {
+   "source": "noticias_valle",
+   "topic": "seguridad",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "alto",
+   "hours_ago": 9,
+   "text": "La inseguridad se disparó 100% en el último año y el municipio no tiene ni una patrulla en la calle.",
+   "comments": [
+    "Yo sí he visto patrullas",
+    "Cada vez peor",
+    "Fuente?"
+   ]
+  },
+  {
+   "source": "vecinos_centro",
+   "topic": "seguridad",
+   "stance": "en_contra",
+   "message_type": "queja_ciudadana_legitima",
+   "alert": "medio",
+   "hours_ago": 11,
+   "text": "En mi colonia llevamos una semana sin luminarias en la Calle Hidalgo Ejemplo, de noche está oscurísimo. Ya reportamos con folio.",
+   "comments": [
+    "Peligroso",
+    "Que pongan lámparas ya"
+   ]
+  },
+  {
+   "source": "bancada_verde",
+   "topic": "seguridad",
+   "stance": "en_contra",
+   "message_type": "dato_sacado_de_contexto",
+   "alert": "medio",
+   "hours_ago": 16,
+   "text": "Solo 142 patrullas para todo el municipio, mientras que la población no deja de crecer.",
+   "comments": [
+    "¿Cuántas había antes?",
+    "Faltan más"
+   ]
+  },
+  {
+   "source": "datos_sabor",
+   "topic": "seguridad",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "alto",
+   "hours_ago": 7,
+   "text": "Qué bueno ver luminarias nuevas en las colonias: bien hecho, se siente más seguro caminar de noche.",
+   "comments": [
+    "Sí se nota",
+    "En mi calle también"
+   ]
+  },
+  {
+   "source": "opinador",
+   "topic": "seguridad",
+   "stance": "en_contra",
+   "message_type": "acusacion_o_difamacion",
+   "alert": "critico",
+   "hours_ago": 3,
+   "text": "La policía municipal está coludida con los delincuentes, es un fraude total y el alcalde lo encubre.",
+   "comments": [
+    "Grave lo que dices",
+    "Pruebas?",
+    "Siempre hay que sospechar"
+   ]
+  },
+  {
+   "source": "radio_comunitaria",
+   "topic": "seguridad",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 22,
+   "text": "Este sábado habrá jornada de proximidad policial en la plaza principal de la Colonia Centro.",
+   "comments": [
+    "Ahí estaremos"
+   ]
+  },
+  {
+   "source": "partido_azul",
+   "topic": "seguridad",
+   "stance": "en_contra",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 40,
+   "text": "La seguridad es un desastre y el gobierno municipal está más preocupado por la imagen que por la gente.",
+   "comments": [
+    "Totalmente",
+    "Ya van a empezar las campañas"
+   ]
+  },
+  {
+   "source": "mamas_sur",
+   "topic": "seguridad",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 13,
+   "text": "Gracias a la patrulla de proximidad que recorre la escuela a la hora de salida. Se agradece mucho.",
+   "comments": [
+    "Sí, se nota",
+    "Que no se acabe"
+   ]
+  },
+  {
+   "source": "ciudadanos_agua",
+   "topic": "agua",
+   "stance": "en_contra",
+   "message_type": "queja_ciudadana_legitima",
+   "alert": "alto",
+   "hours_ago": 6,
+   "text": "Llevamos cuatro días sin agua en la Colonia Norte y la fuga de la esquina sigue tirando agua. Ya reportamos y nadie viene.",
+   "comments": [
+    "Igual aquí",
+    "Esto es urgente",
+    "Hay pipas?"
+   ]
+  },
+  {
+   "source": "noticias_valle",
+   "topic": "agua",
+   "stance": "en_contra",
+   "message_type": "dato_sacado_de_contexto",
+   "alert": "medio",
+   "hours_ago": 15,
+   "text": "Apenas el 62% de las fugas se reparan en menos de 48 horas: casi la mitad tarda más.",
+   "comments": [
+    "Es mucho",
+    "Comparado con antes?"
+   ]
+  },
+  {
+   "source": "opinador",
+   "topic": "agua",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "alto",
+   "hours_ago": 8,
+   "text": "El municipio no ha invertido nada en agua potable; la red se cae a pedazos y no existe ningún plan.",
+   "comments": [
+    "Mi calle sí tiene tubería nueva",
+    "Puro discurso"
+   ]
+  },
+  {
+   "source": "bancada_verde",
+   "topic": "agua",
+   "stance": "en_contra",
+   "message_type": "acusacion_o_difamacion",
+   "alert": "medio",
+   "hours_ago": 18,
+   "text": "Las pipas de agua se las roban para venderlas; el organismo operador es un nido de corrupción.",
+   "comments": [
+    "Que investiguen",
+    "Siempre lo mismo"
+   ]
+  },
+  {
+   "source": "colonia_norte",
+   "topic": "agua",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 12,
+   "text": "Excelente: repararon en un día la fuga de la calle principal de la Colonia Norte. Buen trabajo de la cuadrilla.",
+   "comments": [
+    "Así sí",
+    "Bravo"
+   ]
+  },
+  {
+   "source": "radio_comunitaria",
+   "topic": "agua",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 24,
+   "text": "Aviso de la comisión estatal: habrá baja presión de agua en algunas colonias por mantenimiento del acueducto.",
+   "comments": [
+    "Gracias"
+   ]
+  },
+  {
+   "source": "datos_sabor",
+   "topic": "agua",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 35,
+   "text": "Dato curioso: la red de agua de la ciudad mide más de mil kilómetros. ¿Sabías quién la mantiene?",
+   "comments": [
+    "No sabía"
+   ]
+  },
+  {
+   "source": "diario_digital",
+   "topic": "agua",
+   "stance": "en_contra",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 10,
+   "text": "El servicio de agua sigue siendo un desastre en la zona oriente; nadie da respuestas.",
+   "comments": [
+    "Así es",
+    "Aquí igual"
+   ]
+  },
+  {
+   "source": "partido_azul",
+   "topic": "obra_publica",
+   "stance": "en_contra",
+   "message_type": "dato_falso",
+   "alert": "alto",
+   "hours_ago": 7,
+   "text": "El Puente Vecinal Norte está abandonado: cero avance desde que se anunció y nadie da explicaciones.",
+   "comments": [
+    "Yo paso diario y sí trabajan",
+    "Ojalá lo terminen"
+   ]
+  },
+  {
+   "source": "noticias_valle",
+   "topic": "obra_publica",
+   "stance": "en_contra",
+   "message_type": "dato_sacado_de_contexto",
+   "alert": "medio",
+   "hours_ago": 17,
+   "text": "Solo 14 parques rehabilitados este año, mientras que el Gobierno Estatal presume obras en todo el estado.",
+   "comments": [
+    "¿Cuántos parques hay?",
+    "Algo es algo"
+   ]
+  },
+  {
+   "source": "vecinos_centro",
+   "topic": "obra_publica",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "alto",
+   "hours_ago": 5,
+   "text": "Gracias por rehabilitar el Parque Las Flores: quedó muy bien y los niños ya pueden jugar. Felicidades a quienes trabajaron.",
+   "comments": [
+    "Hermoso",
+    "Ojalá lo cuiden",
+    "Bravo"
+   ]
+  },
+  {
+   "source": "datos_sabor",
+   "topic": "obra_publica",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 9,
+   "text": "El avance del Puente Vecinal Norte se ve muy bien. Por fin una obra que sí avanza.",
+   "comments": [
+    "Sí se ve el avance",
+    "Cuándo lo terminan?"
+   ]
+  },
+  {
+   "source": "bancada_verde",
+   "topic": "obra_publica",
+   "stance": "en_contra",
+   "message_type": "acusacion_o_difamacion",
+   "alert": "bajo",
+   "hours_ago": 28,
+   "text": "La licitación del puente fue un fraude arreglado para sus amigos.",
+   "comments": [
+    "Pruebas?",
+    "Ya ni sorprende"
+   ]
+  },
+  {
+   "source": "opinador",
+   "topic": "obra_publica",
+   "stance": "en_contra",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 11,
+   "text": "Mucha obra de relumbrón y poca de la que de verdad necesita la gente. Prioridades equivocadas.",
+   "comments": [
+    "Totalmente",
+    "Depende de la colonia"
+   ]
+  },
+  {
+   "source": "radio_comunitaria",
+   "topic": "obra_publica",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 19,
+   "text": "Este lunes inicia la segunda etapa de rehabilitación de la Avenida Central, obra del programa estatal de infraestructura.",
+   "comments": [
+    "Buena noticia"
+   ]
+  },
+  {
+   "source": "memes_valle",
+   "topic": "obra_publica",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "sin_linea_base",
+   "hours_ago": 3,
+   "text": "El Parque Las Flores ahora sí parece parque y no terreno baldío. Aplausos.",
+   "comments": [
+    "Jaja sí",
+    "Bonito"
+   ]
+  },
+  {
+   "source": "mamas_sur",
+   "topic": "obra_publica",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 30,
+   "text": "¿Alguien sabe hasta cuándo dura la obra de la calle de la escuela en la Colonia Sur?",
+   "comments": [
+    "Dicen que dos semanas"
+   ]
+  },
+  {
+   "source": "colonia_norte",
+   "topic": "obra_publica",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 36,
+   "text": "Se agradece la nueva banqueta frente al mercado de la Colonia Norte.",
+   "comments": [
+    "Sí quedó bien"
+   ]
+  },
+  {
+   "source": "diario_digital",
+   "topic": "obra_publica",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 13,
+   "text": "Según el informe semestral, el Puente Vecinal Norte reporta avance físico de obra; la meta es concluir este año.",
+   "comments": [
+    "Ojalá"
+   ]
+  },
+  {
+   "source": "ciudadanos_agua",
+   "topic": "obra_publica",
+   "stance": "en_contra",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 48,
+   "text": "Las obras siempre en las mismas colonias, a la periferia nunca le toca.",
+   "comments": [
+    "Así es"
+   ]
+  },
+  {
+   "source": "partido_azul",
+   "topic": "agua",
+   "stance": "a_favor",
+   "message_type": "opinion",
+   "alert": "bajo",
+   "hours_ago": 44,
+   "text": "Reconocemos la reparación de la fuga en la Colonia Norte; así debería ser siempre.",
+   "comments": [
+    "Bien"
+   ]
+  },
+  {
+   "source": "opinador",
+   "topic": "seguridad",
+   "stance": "neutral",
+   "message_type": "opinion",
+   "alert": "medio",
+   "hours_ago": 15,
+   "text": "Pregunta seria: ¿quién investiga los delitos, el municipio o la fiscalía? Muchos no lo saben.",
+   "comments": [
+    "La fiscalía",
+    "Buena pregunta"
+   ]
+  }
+ ]
+}

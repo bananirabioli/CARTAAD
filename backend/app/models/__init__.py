@@ -13,3 +13,4 @@ from app.models.kb import (  # noqa: F401
 )
 from app.models.ops import AiRun, RestrictionMode  # noqa: F401
 from app.models.styles import CreativeFormatCompat, CreativeType, Directive, Format, Style, Tag, TagDimension  # noqa: F401
+from app.models.monitoring import Comment, InteractionSnapshot, MonitoredSource, OwnedAccount, Post  # noqa: F401

@@ -1,0 +1,43 @@
+{
+ "places": [
+  "Colonia Centro",
+  "Colonia Norte",
+  "Colonia Sur",
+  "Avenida Central",
+  "Calle Hidalgo Ejemplo",
+  "el mercado municipal",
+  "la plaza principal"
+ ],
+ "templates": {
+  "medio": [
+   "Vecinos de {place} reportan problemas de {topic}; el municipio aún no responde.",
+   "Aviso: trabajos de {topic} en {place} esta semana.",
+   "Según vecinos de {place}, el tema de {topic} sigue sin resolverse."
+  ],
+  "pagina_ciudadana": [
+   "Llevamos días con problemas de {topic} en {place}. Ya reportamos y nadie viene.",
+   "Gracias a quienes atendieron lo de {topic} en {place}, quedó muy bien.",
+   "¿Alguien sabe quién atiende lo de {topic} en {place}?"
+  ],
+  "influencer": [
+   "Opinión: lo de {topic} en {place} es un desastre y nadie hace nada.",
+   "Por fin algo bien hecho con {topic} en {place}. Bravo.",
+   "Dato rápido sobre {topic}: ¿sabías quién se encarga en {place}?"
+  ],
+  "actor_politico": [
+   "El gobierno municipal tiene abandonado el tema de {topic} en {place}.",
+   "Exigimos transparencia sobre {topic} en {place}.",
+   "Reconocemos el avance en {topic} en {place}; así debería ser siempre."
+  ]
+ },
+ "comments": [
+  "Así es",
+  "Ya era hora",
+  "Fuente?",
+  "En mi calle igual",
+  "Que lo arreglen pronto",
+  "Se agradece",
+  "Puro cuento",
+  "Buena noticia"
+ ]
+}

@@ -50,6 +50,8 @@ class Settings(BaseSettings):
 
     renderer: str = "pillow"  # playwright | pillow
 
+    webhook_token: str | None = None  # /ingest/webhook (future WhatsApp/Telegram bot); disabled when empty
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -208,6 +208,46 @@
       "guion_dueto": "B4 · Guion de dueto",
       "carrusel_resultados": "B5 · Carrusel de resultados",
       "pieza_aliados": "B6 · Pieza para aliados"
+    },
+    "network": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "x": "X",
+      "tiktok": "TikTok",
+      "otra": "Otra"
+    },
+    "source_type": {
+      "medio": "Medio",
+      "influencer": "Influencer",
+      "pagina_ciudadana": "Página ciudadana",
+      "actor_politico": "Actor político"
+    },
+    "priority": {
+      "alta": "Alta",
+      "media": "Media",
+      "baja": "Baja"
+    },
+    "alert_level": {
+      "bajo": "Bajo",
+      "medio": "Medio",
+      "alto": "Alto",
+      "critico": "Crítico",
+      "sin_linea_base": "Línea base insuficiente"
+    },
+    "origin": {
+      "automatica": "Automática",
+      "manual": "Manual"
+    },
+    "account_type": {
+      "propia": "Propia",
+      "aliada": "Aliada",
+      "voceria": "Vocería"
+    },
+    "adapter": {
+      "mock": "Mock (sintético)",
+      "file": "Importación de archivo",
+      "social_listening": "Social listening (API)",
+      "manual": "Solo manual"
     }
   },
   "common": {
@@ -552,5 +592,89 @@
   },
   "hardRules": {
     "help": "Viven en código (guardrails/hard_rules.py). Ningún estilo, directriz, configuración o instrucción del copiloto puede anularlas."
+  },
+  "monitoring": {
+    "title": "Monitoreo",
+    "subtitle": "Páginas y cuentas vigiladas, con su línea base de interacciones por hora. Se monitorean publicaciones de páginas; nunca se perfila a quien comenta (HR-03).",
+    "tabs": {
+      "sources": "Fuentes",
+      "posts": "Publicaciones capturadas"
+    },
+    "newSource": "Nueva fuente",
+    "importCsv": "Importar CSV",
+    "importHelp": "Columnas: name, network, handle, url, source_type, priority, active, check_frequency_minutes, notes.",
+    "importPosts": "Importar publicaciones",
+    "importPostsHelp": "Exportación CSV o JSON de una herramienta de social listening: source (handle o nombre), network, text, published_at, url, likes, comments, shares, comments_text (separados por |).",
+    "reviewed": "Marcar lista como revisada",
+    "checkNow": "Revisar ahora",
+    "checked": "{created} nuevas, {updated} actualizadas",
+    "name": "Nombre",
+    "handle": "Cuenta",
+    "url": "URL",
+    "network": "Red",
+    "type": "Tipo",
+    "priority": "Prioridad",
+    "frequency": "Frecuencia (min)",
+    "adapter": "Adaptador",
+    "active": "Activa",
+    "baseline": "Línea base",
+    "baselinePerHour": "{value} interacciones/h",
+    "baselineInsufficient": "Insuficiente",
+    "lastChecked": "Última revisión",
+    "posts": "Publicaciones",
+    "notes": "Notas",
+    "allNetworks": "Todas las redes",
+    "allTypes": "Todos los tipos",
+    "allPriorities": "Todas las prioridades",
+    "allLevels": "Todos los niveles",
+    "allOrigins": "Todos los orígenes",
+    "orderRecent": "Más recientes",
+    "orderVelocity": "Mayor velocidad",
+    "orderRatio": "Mayor aceleración",
+    "published": "Publicada",
+    "source": "Fuente",
+    "text": "Texto",
+    "alert": "Alerta",
+    "velocity": "Velocidad",
+    "velocityValue": "{value}/h",
+    "ratio": "×{value}",
+    "interactions": "Interacciones",
+    "origin": "Origen",
+    "case": "Caso",
+    "snapshots": "Historial de interacciones",
+    "addSnapshot": "Registrar interacciones",
+    "likes": "Me gusta",
+    "comments": "Comentarios",
+    "shares": "Compartidos",
+    "commentsAgg": "Comentarios (texto agregado, sin autores)",
+    "imageText": "Texto leído de la imagen",
+    "visualContext": "Contexto visual",
+    "blurred": "Nombres difuminados",
+    "openCase": "Abrir caso",
+    "noCase": "Sin caso"
+  },
+  "capture": {
+    "title": "Captura manual",
+    "subtitle": "Sube la captura de pantalla y el copy. La IA lee la imagen (texto y contexto visual); puedes difuminar nombres antes de guardarla.",
+    "drop": "Arrastra aquí la captura o haz clic para elegirla",
+    "dropHint": "PNG, JPG o WEBP · máximo 8 MB",
+    "replace": "Cambiar imagen",
+    "copy": "Copy de la publicación",
+    "copyHint": "Pega el texto tal cual; si lo dejas vacío se usa el texto leído de la imagen.",
+    "url": "URL (opcional)",
+    "network": "Red",
+    "source": "Fuente monitoreada",
+    "sourceNone": "Sin fuente / nueva",
+    "newSource": "O nombre de una fuente nueva",
+    "newSourceType": "Tipo de la fuente nueva",
+    "blur": "Difuminar nombres en la captura",
+    "blurHint": "Difumina la franja de encabezado y la zona de comentarios, y reemplaza los @usuarios del texto por [nombre].",
+    "counts": "Interacciones visibles (opcional)",
+    "commentsText": "Comentarios relevantes (uno por línea, sin nombres)",
+    "submit": "Capturar",
+    "submitting": "Leyendo la captura…",
+    "done": "Publicación capturada",
+    "duplicate": "Esta publicación ya estaba capturada; se agregaron sus datos.",
+    "another": "Capturar otra"
   }
 }

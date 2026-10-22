@@ -3972,6 +3972,947 @@
     }
    }
   },
+  "/sources": {
+   "get": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "List Sources",
+    "operationId": "list_sources_sources_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "network",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Network"
+      }
+     },
+     {
+      "name": "source_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Source Type"
+      }
+     },
+     {
+      "name": "priority",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Priority"
+      }
+     },
+     {
+      "name": "active",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Active"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 1,
+       "title": "Page"
+      }
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 25,
+       "title": "Page Size"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_SourceOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Create Source",
+    "operationId": "create_source_sources_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SourceIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SourceOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sources/{source_id}": {
+   "get": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Get Source",
+    "operationId": "get_source_sources__source_id__get",
+    "parameters": [
+     {
+      "name": "source_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Source Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SourceOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Update Source",
+    "operationId": "update_source_sources__source_id__patch",
+    "parameters": [
+     {
+      "name": "source_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Source Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SourcePatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SourceOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sources/import": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Import Sources",
+    "description": "CSV columns: name, network, handle, url, source_type, priority, active, check_frequency_minutes, notes.",
+    "operationId": "import_sources_sources_import_post",
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_import_sources_sources_import_post"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportReport"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sources/{source_id}/check": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Check Source",
+    "operationId": "check_source_sources__source_id__check_post",
+    "parameters": [
+     {
+      "name": "source_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Source Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CheckResult"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/posts": {
+   "get": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "List Posts",
+    "operationId": "list_posts_posts_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "source_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Source Id"
+      }
+     },
+     {
+      "name": "alert_level",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Alert Level"
+      }
+     },
+     {
+      "name": "origin",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Origin"
+      }
+     },
+     {
+      "name": "network",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Network"
+      }
+     },
+     {
+      "name": "since",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date-time"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Since"
+      }
+     },
+     {
+      "name": "order",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(recent|velocity|ratio)$",
+       "default": "recent",
+       "title": "Order"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 1,
+       "title": "Page"
+      }
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 25,
+       "title": "Page Size"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_PostOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/posts/{post_id}": {
+   "get": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Get Post",
+    "operationId": "get_post_posts__post_id__get",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/posts/{post_id}/snapshots": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Add Post Snapshot",
+    "operationId": "add_post_snapshot_posts__post_id__snapshots_post",
+    "parameters": [
+     {
+      "name": "post_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Post Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SnapshotIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/posts/manual": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Manual Capture",
+    "operationId": "manual_capture_posts_manual_post",
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_manual_capture_posts_manual_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PostDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/posts/import": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Import Posts",
+    "description": "FileImportAdapter: CSV/JSON export from a listening tool. Rows are matched to sources by handle or name.",
+    "operationId": "import_posts_posts_import_post",
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_import_posts_posts_import_post"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportReport"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/ingest/webhook": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Ingest Webhook",
+    "description": "Future entry point for a WhatsApp/Telegram bot that forwards captures (stub).\n\nRequires WEBHOOK_TOKEN. Sender identities are never stored (HR-03): `extra` is discarded.",
+    "operationId": "ingest_webhook_ingest_webhook_post",
+    "parameters": [
+     {
+      "name": "x-webhook-token",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Webhook-Token"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WebhookIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "202": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": {
+          "type": "string"
+         },
+         "title": "Response Ingest Webhook Ingest Webhook Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/accounts": {
+   "get": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "List Accounts",
+    "operationId": "list_accounts_accounts_get",
+    "parameters": [
+     {
+      "name": "account_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Account Type"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/AccountOut"
+         },
+         "title": "Response List Accounts Accounts Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Create Account",
+    "operationId": "create_account_accounts_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AccountIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AccountOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/accounts/{account_id}": {
+   "patch": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Update Account",
+    "operationId": "update_account_accounts__account_id__patch",
+    "parameters": [
+     {
+      "name": "account_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Account Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AccountPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AccountOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/accounts/{account_id}/verify": {
+   "post": {
+    "tags": [
+     "monitoring"
+    ],
+    "summary": "Verify Account",
+    "operationId": "verify_account_accounts__account_id__verify_post",
+    "parameters": [
+     {
+      "name": "account_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Account Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AccountOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -4000,6 +4941,253 @@
  },
  "components": {
   "schemas": {
+   "AccountIn": {
+    "properties": {
+     "network": {
+      "type": "string",
+      "enum": [
+       "facebook",
+       "instagram",
+       "x",
+       "tiktok",
+       "otra"
+      ],
+      "title": "Network"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "account_type": {
+      "type": "string",
+      "enum": [
+       "propia",
+       "aliada",
+       "voceria"
+      ],
+      "title": "Account Type"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "default_style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Style Slug"
+     },
+     "registered": {
+      "type": "boolean",
+      "title": "Registered",
+      "default": true
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "network",
+     "handle",
+     "display_name",
+     "account_type",
+     "format_slug"
+    ],
+    "title": "AccountIn"
+   },
+   "AccountOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "network": {
+      "type": "string",
+      "title": "Network"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "account_type": {
+      "type": "string",
+      "enum": [
+       "propia",
+       "aliada",
+       "voceria"
+      ],
+      "title": "Account Type"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "default_style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Style Slug"
+     },
+     "registered": {
+      "type": "boolean",
+      "title": "Registered"
+     },
+     "verified": {
+      "type": "boolean",
+      "title": "Verified"
+     },
+     "verified_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified At"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "network",
+     "handle",
+     "display_name",
+     "account_type",
+     "format_slug",
+     "default_style_slug",
+     "registered",
+     "verified",
+     "verified_at",
+     "active",
+     "notes"
+    ],
+    "title": "AccountOut"
+   },
+   "AccountPatch": {
+    "properties": {
+     "display_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Display Name"
+     },
+     "account_type": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "propia",
+         "aliada",
+         "voceria"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Type"
+     },
+     "format_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Format Slug"
+     },
+     "default_style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Style Slug"
+     },
+     "registered": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Registered"
+     },
+     "active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Active"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "title": "AccountPatch"
+   },
    "ActorIn": {
     "properties": {
      "name": {
@@ -4465,6 +5653,161 @@
     ],
     "title": "Body_import_facts_kb_facts_import_post"
    },
+   "Body_import_posts_posts_import_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file"
+    ],
+    "title": "Body_import_posts_posts_import_post"
+   },
+   "Body_import_sources_sources_import_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file"
+    ],
+    "title": "Body_import_sources_sources_import_post"
+   },
+   "Body_manual_capture_posts_manual_post": {
+    "properties": {
+     "text": {
+      "type": "string",
+      "title": "Text",
+      "default": ""
+     },
+     "network": {
+      "type": "string",
+      "title": "Network",
+      "default": "facebook"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "source_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Id"
+     },
+     "source_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Name"
+     },
+     "source_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Type"
+     },
+     "blur_names": {
+      "type": "boolean",
+      "title": "Blur Names",
+      "default": false
+     },
+     "published_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Published At"
+     },
+     "likes": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Likes"
+     },
+     "comments": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Comments"
+     },
+     "shares": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shares"
+     },
+     "comments_text": {
+      "type": "string",
+      "title": "Comments Text",
+      "default": ""
+     },
+     "image": {
+      "anyOf": [
+       {
+        "type": "string",
+        "contentMediaType": "application/octet-stream"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Image"
+     }
+    },
+    "type": "object",
+    "title": "Body_manual_capture_posts_manual_post"
+   },
    "Body_upload_document_kb_documents_post": {
     "properties": {
      "file": {
@@ -4671,6 +6014,34 @@
     ],
     "title": "BriefOut"
    },
+   "CheckResult": {
+    "properties": {
+     "source_id": {
+      "type": "integer",
+      "title": "Source Id"
+     },
+     "created": {
+      "type": "integer",
+      "title": "Created"
+     },
+     "updated": {
+      "type": "integer",
+      "title": "Updated"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "source_id",
+     "created",
+     "updated",
+     "status"
+    ],
+    "title": "CheckResult"
+   },
    "ChunkOut": {
     "properties": {
      "id": {
@@ -4871,6 +6242,48 @@
     },
     "type": "object",
     "title": "ClientPatch"
+   },
+   "CommentOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "stance": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Stance"
+     },
+     "theme": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Theme"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "text",
+     "stance",
+     "theme"
+    ],
+    "title": "CommentOut"
    },
    "CompetenceIn": {
     "properties": {
@@ -7354,6 +8767,447 @@
     ],
     "title": "Page[FactOut]"
    },
+   "Page_PostOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/PostOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "page_size": {
+      "type": "integer",
+      "title": "Page Size"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "page",
+     "page_size"
+    ],
+    "title": "Page[PostOut]"
+   },
+   "Page_SourceOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/SourceOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "page_size": {
+      "type": "integer",
+      "title": "Page Size"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "page",
+     "page_size"
+    ],
+    "title": "Page[SourceOut]"
+   },
+   "PostDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "source_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Id"
+     },
+     "source_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Name"
+     },
+     "source_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Type"
+     },
+     "origin": {
+      "type": "string",
+      "title": "Origin"
+     },
+     "network": {
+      "type": "string",
+      "title": "Network"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "image_key": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Image Key"
+     },
+     "image_text": {
+      "type": "string",
+      "title": "Image Text"
+     },
+     "visual_context": {
+      "type": "string",
+      "title": "Visual Context"
+     },
+     "names_blurred": {
+      "type": "boolean",
+      "title": "Names Blurred"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Published At"
+     },
+     "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Captured At"
+     },
+     "velocity": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Velocity"
+     },
+     "alert_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Ratio"
+     },
+     "alert_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Level"
+     },
+     "total_interactions": {
+      "type": "integer",
+      "title": "Total Interactions"
+     },
+     "case_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Id"
+     },
+     "case_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Code"
+     },
+     "snapshots": {
+      "items": {
+       "$ref": "#/components/schemas/SnapshotOut"
+      },
+      "type": "array",
+      "title": "Snapshots",
+      "default": []
+     },
+     "comments": {
+      "items": {
+       "$ref": "#/components/schemas/CommentOut"
+      },
+      "type": "array",
+      "title": "Comments",
+      "default": []
+     },
+     "baseline_per_hour": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Baseline Per Hour"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "source_id",
+     "origin",
+     "network",
+     "text",
+     "image_key",
+     "image_text",
+     "visual_context",
+     "names_blurred",
+     "url",
+     "published_at",
+     "captured_at",
+     "velocity",
+     "alert_ratio",
+     "alert_level",
+     "total_interactions"
+    ],
+    "title": "PostDetail"
+   },
+   "PostOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "source_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Id"
+     },
+     "source_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Name"
+     },
+     "source_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Type"
+     },
+     "origin": {
+      "type": "string",
+      "title": "Origin"
+     },
+     "network": {
+      "type": "string",
+      "title": "Network"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "image_key": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Image Key"
+     },
+     "image_text": {
+      "type": "string",
+      "title": "Image Text"
+     },
+     "visual_context": {
+      "type": "string",
+      "title": "Visual Context"
+     },
+     "names_blurred": {
+      "type": "boolean",
+      "title": "Names Blurred"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Published At"
+     },
+     "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Captured At"
+     },
+     "velocity": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Velocity"
+     },
+     "alert_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Ratio"
+     },
+     "alert_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Level"
+     },
+     "total_interactions": {
+      "type": "integer",
+      "title": "Total Interactions"
+     },
+     "case_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Id"
+     },
+     "case_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Code"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "source_id",
+     "origin",
+     "network",
+     "text",
+     "image_key",
+     "image_text",
+     "visual_context",
+     "names_blurred",
+     "url",
+     "published_at",
+     "captured_at",
+     "velocity",
+     "alert_ratio",
+     "alert_level",
+     "total_interactions"
+    ],
+    "title": "PostOut"
+   },
    "ResolvePreviewIn": {
     "properties": {
      "style_slug": {
@@ -7664,6 +9518,453 @@
      "patch"
     ],
     "title": "SettingsPatch"
+   },
+   "SnapshotIn": {
+    "properties": {
+     "likes": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Likes"
+     },
+     "comments": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Comments"
+     },
+     "shares": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Shares"
+     },
+     "taken_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Taken At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "likes",
+     "comments",
+     "shares"
+    ],
+    "title": "SnapshotIn"
+   },
+   "SnapshotOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "taken_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Taken At"
+     },
+     "likes": {
+      "type": "integer",
+      "title": "Likes"
+     },
+     "comments": {
+      "type": "integer",
+      "title": "Comments"
+     },
+     "shares": {
+      "type": "integer",
+      "title": "Shares"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "taken_at",
+     "likes",
+     "comments",
+     "shares"
+    ],
+    "title": "SnapshotOut"
+   },
+   "SourceIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "minLength": 2,
+      "title": "Name"
+     },
+     "network": {
+      "type": "string",
+      "enum": [
+       "facebook",
+       "instagram",
+       "x",
+       "tiktok",
+       "otra"
+      ],
+      "title": "Network"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle",
+      "default": ""
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "source_type": {
+      "type": "string",
+      "enum": [
+       "medio",
+       "influencer",
+       "pagina_ciudadana",
+       "actor_politico"
+      ],
+      "title": "Source Type"
+     },
+     "priority": {
+      "type": "string",
+      "enum": [
+       "alta",
+       "media",
+       "baja"
+      ],
+      "title": "Priority",
+      "default": "media"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+     },
+     "check_frequency_minutes": {
+      "type": "integer",
+      "maximum": 1440.0,
+      "minimum": 5.0,
+      "title": "Check Frequency Minutes",
+      "default": 60
+     },
+     "adapter": {
+      "type": "string",
+      "enum": [
+       "mock",
+       "file",
+       "social_listening",
+       "manual"
+      ],
+      "title": "Adapter",
+      "default": "mock"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "network",
+     "source_type"
+    ],
+    "title": "SourceIn"
+   },
+   "SourceOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "network": {
+      "type": "string",
+      "enum": [
+       "facebook",
+       "instagram",
+       "x",
+       "tiktok",
+       "otra"
+      ],
+      "title": "Network"
+     },
+     "handle": {
+      "type": "string",
+      "title": "Handle"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "source_type": {
+      "type": "string",
+      "enum": [
+       "medio",
+       "influencer",
+       "pagina_ciudadana",
+       "actor_politico"
+      ],
+      "title": "Source Type"
+     },
+     "priority": {
+      "type": "string",
+      "enum": [
+       "alta",
+       "media",
+       "baja"
+      ],
+      "title": "Priority"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     },
+     "check_frequency_minutes": {
+      "type": "integer",
+      "title": "Check Frequency Minutes"
+     },
+     "adapter": {
+      "type": "string",
+      "title": "Adapter"
+     },
+     "baseline_per_hour": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Baseline Per Hour"
+     },
+     "baseline_since": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Baseline Since"
+     },
+     "last_checked_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Checked At"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "baseline_ok": {
+      "type": "boolean",
+      "title": "Baseline Ok",
+      "default": false
+     },
+     "posts_count": {
+      "type": "integer",
+      "title": "Posts Count",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "network",
+     "handle",
+     "url",
+     "source_type",
+     "priority",
+     "active",
+     "check_frequency_minutes",
+     "adapter",
+     "baseline_per_hour",
+     "baseline_since",
+     "last_checked_at",
+     "notes",
+     "created_at"
+    ],
+    "title": "SourceOut"
+   },
+   "SourcePatch": {
+    "properties": {
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "network": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "facebook",
+         "instagram",
+         "x",
+         "tiktok",
+         "otra"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Network"
+     },
+     "handle": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Handle"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "source_type": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "medio",
+         "influencer",
+         "pagina_ciudadana",
+         "actor_politico"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Type"
+     },
+     "priority": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "alta",
+         "media",
+         "baja"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Priority"
+     },
+     "active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Active"
+     },
+     "check_frequency_minutes": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 1440.0,
+        "minimum": 5.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Check Frequency Minutes"
+     },
+     "adapter": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "mock",
+         "file",
+         "social_listening",
+         "manual"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Adapter"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "title": "SourcePatch"
    },
    "StyleIn": {
     "properties": {
@@ -9109,6 +11410,74 @@
      "role"
     ],
     "title": "ViewAsIn"
+   },
+   "WebhookIn": {
+    "properties": {
+     "channel": {
+      "type": "string",
+      "enum": [
+       "whatsapp",
+       "telegram",
+       "otro"
+      ],
+      "title": "Channel",
+      "default": "otro"
+     },
+     "client_slug": {
+      "type": "string",
+      "title": "Client Slug"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text",
+      "default": ""
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "network": {
+      "type": "string",
+      "enum": [
+       "facebook",
+       "instagram",
+       "x",
+       "tiktok",
+       "otra"
+      ],
+      "title": "Network",
+      "default": "otra"
+     },
+     "image_base64": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Image Base64"
+     },
+     "extra": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Extra",
+      "default": {}
+     }
+    },
+    "type": "object",
+    "required": [
+     "client_slug"
+    ],
+    "title": "WebhookIn"
    }
   }
  }
