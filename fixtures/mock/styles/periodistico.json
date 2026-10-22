@@ -1,0 +1,43 @@
+{
+  "openers": {
+    "desmentir": [
+      "Verificación: lo que circula sobre {topic} frente a los registros oficiales.",
+      "Verificación: qué dicen los documentos sobre {topic}."
+    ],
+    "contextualizar": [
+      "Lo que se sabe sobre {topic}: datos y fuentes.",
+      "Claves para entender lo que se dice de {topic}."
+    ],
+    "reencuadrar": [
+      "Claves para entender {topic}.",
+      "Más allá de la publicación: el contexto de {topic}."
+    ],
+    "contrastar": [
+      "Comparativa: {topic} con la misma base y el mismo periodo."
+    ],
+    "amplificar": [
+      "Avances en {topic}: lo que dicen los registros.",
+      "Vecinos documentan avances en {topic}."
+    ],
+    "agradecer": [
+      "Vecinos documentan avances en {topic}."
+    ]
+  },
+  "false_opener": "Verificación: la afirmación difundida sobre {topic} no coincide con los registros oficiales.",
+  "empathy": "El problema reportado por vecinos es real y está documentado.",
+  "fact_prefix": [
+    "Según {issuer}, ",
+    "De acuerdo con {issuer}, "
+  ],
+  "no_fact": "El dato oficial aún no está disponible; esta nota se actualizará cuando se publique.",
+  "mandatory_template": "Contexto: {phrase}.",
+  "closers": {
+    "A": "Fuentes: documentos oficiales citados en la nota.",
+    "B": "Fuentes: documentos oficiales citados en la nota."
+  },
+  "headline": {
+    "A": "Lo que se sabe sobre {topic}",
+    "B": "Avances en {topic}"
+  },
+  "question": "¿Qué dicen los documentos?"
+}

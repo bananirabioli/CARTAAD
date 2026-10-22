@@ -1,0 +1,55 @@
+{
+  "$defs": {
+    "RedTeamNoteOut": {
+      "properties": {
+        "kind": {
+          "enum": [
+            "replica",
+            "punto_debil"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "baja",
+            "media",
+            "alta"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "target": {
+          "default": "",
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "severity",
+        "text"
+      ],
+      "title": "RedTeamNoteOut",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "notes": {
+      "items": {
+        "$ref": "#/$defs/RedTeamNoteOut"
+      },
+      "title": "Notes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "notes"
+  ],
+  "title": "RedTeamOut",
+  "type": "object"
+}

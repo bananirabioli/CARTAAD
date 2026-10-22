@@ -1,0 +1,49 @@
+{
+  "openers": {
+    "desmentir": [
+      "En el teatrino de {topic}, la historia que circula trae el guion al revés.",
+      "Se abre el telón de {topic}: el guion que circula no es el de la obra.",
+      "Función de {topic}: alguien cambió el guion y olvidó los datos.",
+      "En el teatrino de {topic}, el guion que circula ya no engaña ni al apuntador."
+    ],
+    "contextualizar": [
+      "Función de hoy sobre {topic}: a la obra le faltaba un acto.",
+      "Se abre el telón de {topic}: el letrero que nadie leyó.",
+      "En el teatrino de {topic}, cada figura busca su letrero.",
+      "El guion de {topic} tenía páginas pegadas; aquí van."
+    ],
+    "reencuadrar": [
+      "En el teatrino de {topic}, cada figura señala hacia otro lado.",
+      "Se abre el telón de {topic}: todos piden aplausos, nadie lee el letrero.",
+      "Función de {topic}: el público ya trae los datos.",
+      "En el teatrino de {topic}, la figura del letrero equivocado vuelve a escena."
+    ],
+    "contrastar": [
+      "En el teatrino de {topic}, dos figuras comparan sus letreros.",
+      "Función doble de {topic}: mismo escenario, mismos datos."
+    ],
+    "amplificar": [
+      "En el teatrino de {topic}, por fin una escena con buenas noticias."
+    ],
+    "agradecer": [
+      "Aplausos para el público que compartió la función de {topic}."
+    ]
+  },
+  "false_opener": "Se abre el telón de {topic}: el guion que circula no coincide con los registros.",
+  "empathy": "Fuera de broma: el problema reportado es real.",
+  "fact_prefix": [
+    "El letrero dice: ",
+    "Nota del apuntador: "
+  ],
+  "no_fact": "El apuntador todavía busca el dato oficial; sin dato no hay función.",
+  "mandatory_template": "Moraleja: {phrase}.",
+  "closers": {
+    "A": "Fin del acto: los datos están en la fuente.",
+    "B": "Telón: la función sigue."
+  },
+  "headline": {
+    "A": "Función de hoy: {topic}",
+    "B": "Escena con buenas noticias"
+  },
+  "question": "¿Y el letrero, quién lo leyó?"
+}

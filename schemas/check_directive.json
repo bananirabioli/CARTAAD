@@ -1,0 +1,42 @@
+{
+  "$defs": {
+    "DirectiveConflictOut": {
+      "properties": {
+        "directive_code": {
+          "title": "Directive Code",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "severity": {
+          "default": "advertencia",
+          "enum": [
+            "advertencia",
+            "bloqueante"
+          ],
+          "title": "Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "directive_code",
+        "explanation"
+      ],
+      "title": "DirectiveConflictOut",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "conflicts": {
+      "items": {
+        "$ref": "#/$defs/DirectiveConflictOut"
+      },
+      "title": "Conflicts",
+      "type": "array"
+    }
+  },
+  "title": "CheckDirectiveOut",
+  "type": "object"
+}

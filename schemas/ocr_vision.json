@@ -1,0 +1,28 @@
+{
+  "properties": {
+    "extracted_text": {
+      "description": "Texto legible en la captura, tal cual.",
+      "title": "Extracted Text",
+      "type": "string"
+    },
+    "visual_context": {
+      "description": "Descripción breve del contexto visual (sin identificar personas).",
+      "title": "Visual Context",
+      "type": "string"
+    },
+    "detected_names": {
+      "description": "Nombres o handles visibles (para difuminar), no se almacenan.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Detected Names",
+      "type": "array"
+    }
+  },
+  "required": [
+    "extracted_text",
+    "visual_context"
+  ],
+  "title": "OcrVisionOut",
+  "type": "object"
+}

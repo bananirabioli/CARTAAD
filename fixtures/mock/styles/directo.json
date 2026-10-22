@@ -1,0 +1,48 @@
+{
+  "openers": {
+    "desmentir": [
+      "Dato incorrecto sobre {topic}.",
+      "Eso no es lo que dicen los datos sobre {topic}.",
+      "Corrección: lo que circula sobre {topic} no coincide con los registros."
+    ],
+    "contextualizar": [
+      "Falta contexto sobre {topic}.",
+      "A lo que circula sobre {topic} le falta la mitad de la historia.",
+      "Lo que circula sobre {topic} omite datos clave."
+    ],
+    "reencuadrar": [
+      "El punto sobre {topic} es otro.",
+      "Hablemos de {topic} con datos, no con impresiones.",
+      "Sobre {topic}, los datos cuentan otra historia."
+    ],
+    "contrastar": [
+      "Los números de {topic}, lado a lado.",
+      "Comparemos los datos de {topic} con la misma base.",
+      "Mismo periodo, misma base: así quedan los datos de {topic}."
+    ],
+    "amplificar": [
+      "Así avanza el trabajo en {topic}.",
+      "Los datos de {topic} respaldan lo que se ve."
+    ],
+    "agradecer": [
+      "Gracias por mostrar el avance en {topic}."
+    ]
+  },
+  "false_opener": "Falso. Lo que circula sobre {topic} contradice los registros oficiales.",
+  "empathy": "La molestia es válida.",
+  "fact_prefix": [
+    "El dato: ",
+    "Fuente oficial: "
+  ],
+  "no_fact": "Falta el dato oficial; no respondemos con cifras sin fuente.",
+  "mandatory_template": "Lo decimos claro: {phrase}.",
+  "closers": {
+    "A": "Revise la fuente antes de compartir.",
+    "B": "Los datos están publicados."
+  },
+  "headline": {
+    "A": "Dato incorrecto",
+    "B": "Avances en {topic}"
+  },
+  "question": "¿Revisó la fuente?"
+}

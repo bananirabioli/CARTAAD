@@ -1,0 +1,39 @@
+{
+  "openers": {
+    "desmentir": [
+      "Gracias por su interés en {topic}; le compartimos la información correcta."
+    ],
+    "contextualizar": [
+      "Gracias por poner atención en {topic}."
+    ],
+    "reencuadrar": [
+      "Gracias por abrir la conversación sobre {topic}."
+    ],
+    "contrastar": [
+      "Gracias por mirar con atención lo que pasa en {topic}."
+    ],
+    "amplificar": [
+      "Qué gusto ver a vecinas y vecinos compartiendo los avances en {topic}."
+    ],
+    "agradecer": [
+      "Gracias por compartir cómo se ve el avance en {topic} en su colonia."
+    ]
+  },
+  "false_opener": "Gracias por su interés en {topic}; le compartimos la información correcta.",
+  "empathy": "Gracias por avisarnos.",
+  "fact_prefix": [
+    "Su publicación coincide con el registro: ",
+    "Un dato más: "
+  ],
+  "no_fact": "En cuanto tengamos el dato oficial, se lo compartimos.",
+  "mandatory_template": "Juntos: {phrase}.",
+  "closers": {
+    "A": "Gracias por ayudarnos a mejorar.",
+    "B": "El mérito es de quienes cuidan su colonia."
+  },
+  "headline": {
+    "A": "Gracias por avisar",
+    "B": "Gracias, vecinas y vecinos"
+  },
+  "question": "¿Nos comparte más fotos?"
+}

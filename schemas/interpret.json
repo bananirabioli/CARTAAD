@@ -1,0 +1,134 @@
+{
+  "$defs": {
+    "ClaimOut": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "cierta",
+            "falsa",
+            "incompleta",
+            "no_verificable"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        },
+        "fact_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "missing_data": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Qué dato falta en la base para verificarla.",
+          "title": "Missing Data"
+        }
+      },
+      "required": [
+        "text",
+        "verdict",
+        "explanation"
+      ],
+      "title": "ClaimOut",
+      "type": "object"
+    },
+    "CommentThemeOut": {
+      "properties": {
+        "theme": {
+          "title": "Theme",
+          "type": "string"
+        },
+        "share": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Share",
+          "type": "number"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "theme",
+        "share",
+        "summary"
+      ],
+      "title": "CommentThemeOut",
+      "type": "object"
+    },
+    "MissingContextOut": {
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "needs_kb_owner": {
+          "default": true,
+          "title": "Needs Kb Owner",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "title": "MissingContextOut",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    },
+    "narrative": {
+      "title": "Narrative",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/ClaimOut"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "missing_context": {
+      "items": {
+        "$ref": "#/$defs/MissingContextOut"
+      },
+      "title": "Missing Context",
+      "type": "array"
+    },
+    "comments_summary": {
+      "items": {
+        "$ref": "#/$defs/CommentThemeOut"
+      },
+      "title": "Comments Summary",
+      "type": "array"
+    }
+  },
+  "required": [
+    "summary",
+    "narrative",
+    "claims"
+  ],
+  "title": "InterpretOut",
+  "type": "object"
+}

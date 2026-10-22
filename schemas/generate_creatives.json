@@ -1,0 +1,126 @@
+{
+  "$defs": {
+    "CreativeDraft": {
+      "properties": {
+        "creative_slug": {
+          "title": "Creative Slug",
+          "type": "string"
+        },
+        "why": {
+          "title": "Why",
+          "type": "string"
+        },
+        "adaptation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adaptation"
+        },
+        "slots": {
+          "items": {
+            "$ref": "#/$defs/SlotValue"
+          },
+          "title": "Slots",
+          "type": "array"
+        },
+        "slides": {
+          "items": {
+            "$ref": "#/$defs/SlideValue"
+          },
+          "title": "Slides",
+          "type": "array"
+        },
+        "image_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Image Ids",
+          "type": "array"
+        },
+        "missing_inputs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Inputs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "creative_slug",
+        "why"
+      ],
+      "title": "CreativeDraft",
+      "type": "object"
+    },
+    "SlideValue": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "fact_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "text"
+      ],
+      "title": "SlideValue",
+      "type": "object"
+    },
+    "SlotValue": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
+        "fact_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "SlotValue",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "creatives": {
+      "items": {
+        "$ref": "#/$defs/CreativeDraft"
+      },
+      "title": "Creatives",
+      "type": "array"
+    }
+  },
+  "required": [
+    "creatives"
+  ],
+  "title": "GenerateCreativesOut",
+  "type": "object"
+}

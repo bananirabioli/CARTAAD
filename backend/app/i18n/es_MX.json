@@ -9,7 +9,8 @@
     "demo_only": "Esta función solo está disponible en modo demo.",
     "demo_user_missing": "No hay usuario demo con el rol {role}.",
     "invalid_value": "Valor no válido: {detail}",
-    "conflict": "Conflicto: {detail}"
+    "conflict": "Conflicto: {detail}",
+    "ai_error": "La IA no pudo completar la tarea."
   },
   "hard_rules": {
     "HR-01": {
@@ -84,5 +85,82 @@
   },
   "reminders": {
     "sources_review": "Toca curar la lista de páginas monitoreadas (cada {days} días)."
+  },
+  "styles": {
+    "dimension": {
+      "tono": "tono",
+      "registro": "registro",
+      "intencion": "intención",
+      "humor": "humor",
+      "audiencia": "audiencia",
+      "riesgo": "riesgo",
+      "intensidad": "intensidad"
+    },
+    "choice": {
+      "persona": "Estilo «{style}» elegido por la persona.",
+      "cuenta": "Estilo «{style}» por defecto de la cuenta destino.",
+      "formato": "Estilo «{style}» por defecto del formato {format}.",
+      "cliente": "Estilo «{style}» por defecto del cliente."
+    },
+    "resolver": {
+      "max_below_style": "La intensidad máxima {value} queda por debajo del mínimo del estilo ({style_min}).",
+      "intensity_out_of_style": "La directriz exige intensidad {value} y el estilo permite {min}–{max}: se respeta el estilo.",
+      "overridden_by_veda": "Anulada: el modo veda exige una leyenda que contiene el término.",
+      "overridden": "«{term}» quedó sin efecto: prevalece {winner} (nivel {level}).",
+      "tie": "Empate sin resolver entre {a} y {b} sobre «{term}»: se conserva la prohibición."
+    },
+    "errors": {
+      "not_editable": "Solo se editan borradores o versiones en revisión; edita para crear una nueva versión.",
+      "legal_required": "Un estilo de riesgo alto o que requiere legal necesita la aprobación de legal antes de activarse.",
+      "hard_rule": "El estilo contradice una regla dura: {detail}",
+      "base_readonly": "Las plantillas base son de solo lectura; clónalas para modificarlas.",
+      "slug_exists": "Ya existe un estilo con el identificador «{slug}».",
+      "bad_status": "Transición no permitida desde «{status}»."
+    },
+    "test": {
+      "sample_post": "Llevan meses sin atender el tema y nadie da la cara. Puras promesas, cero resultados."
+    }
+  },
+  "directives": {
+    "check": {
+      "wins_by_level": "Prevalece {code} por precedencia (nivel {level}).",
+      "wins_by_priority": "Prevalece {code} por prioridad ({priority}).",
+      "wins_generic": "Prevalece {code} por precedencia.",
+      "tie": "{a} y {b} tienen el mismo nivel y la misma prioridad ({priority}): una persona debe resolverlo antes de activar.",
+      "vocab_clash": "{req_code} exige «{term}» y {pro_code} prohíbe «{pro}», con alcance que se traslapa.",
+      "intensity_clash": "{rq_code} exige intensidad {rq} y {mx_code} limita la intensidad a {mx}.",
+      "veda_clash": "Choca con el modo veda «{name}» ({when}): {what}.",
+      "veda_wins": "Advertencia: mientras el modo veda esté vigente, prevalece la veda.",
+      "style_intensity": "Exige intensidad {value} y el estilo «{style}» permite {min}–{max}.",
+      "style_intensity_fix": "Cambia el alcance de la directriz o usa un estilo con mayor intensidad máxima.",
+      "style_vocab": "Exige «{term}», que el estilo «{style}» prohíbe.",
+      "ai_needs_human": "Sugerido por IA: requiere confirmación humana."
+    },
+    "errors": {
+      "hard_rule": "La directriz viola una regla dura y no se puede activar.",
+      "blocking": "La directriz tiene un conflicto bloqueante: resuélvelo antes de activarla.",
+      "bad_status": "Transición no permitida desde «{status}».",
+      "forbidden_type": "Tu rol no puede activar directrices de tipo «{dtype}».",
+      "finding_missing": "No se encontró el hallazgo indicado."
+    }
+  },
+  "validators": {
+    "compat": {
+      "not_in_matrix": "La combinación no está en la matriz creativo × formato.",
+      "matrix_none": "El creativo «{creative}» no está permitido en el formato «{format}»: {note}",
+      "style_not_allowed": "El estilo «{style}» no está permitido en el formato «{format}».",
+      "veda_format": "El formato «{format}» está bloqueado por el modo veda «{name}».",
+      "veda_creative": "El creativo «{creative}» está bloqueado por el modo veda «{name}».",
+      "unregistered_account": "La cuenta destino no está registrada y verificada."
+    },
+    "style": {
+      "prohibited_term": "Vocabulario prohibido: «{term}» ({source}).",
+      "mandatory_missing": "Falta el vocabulario obligatorio «{term}».",
+      "too_long": "Longitud {length} caracteres; el estilo sugiere máximo {max}.",
+      "too_short": "Longitud {length} caracteres; el estilo sugiere mínimo {min}.",
+      "emoji": "El estilo no usa emoji.",
+      "caps": "Mayúsculas sostenidas: {words}.",
+      "legend_missing": "Falta la leyenda obligatoria: «{legend}»."
+    }
   }
 }

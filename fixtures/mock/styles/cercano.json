@@ -1,0 +1,44 @@
+{
+  "openers": {
+    "desmentir": [
+      "Le contamos lo que sí está pasando con {topic}.",
+      "Aclaramos lo que circula sobre {topic}, con datos."
+    ],
+    "contextualizar": [
+      "Sabemos que el tema de {topic} le importa todos los días. Le contamos el contexto.",
+      "Hablemos claro sobre {topic}: esto es lo que falta saber."
+    ],
+    "reencuadrar": [
+      "Vamos a lo importante sobre {topic}.",
+      "Pongamos el tema de {topic} en su lugar, con datos."
+    ],
+    "contrastar": [
+      "Comparemos con calma lo que se hizo en {topic}.",
+      "Veamos el tema de {topic} lado a lado, sin adornos."
+    ],
+    "amplificar": [
+      "¡Qué bueno que se note el trabajo en {topic}! Le contamos más.",
+      "Se nota el avance en {topic}, y hay más que contar."
+    ],
+    "agradecer": [
+      "Gracias por compartir lo que pasa en su colonia con {topic}."
+    ]
+  },
+  "false_opener": "Eso que circula sobre {topic} no es así. Le contamos lo que sí pasa.",
+  "empathy": "Entendemos la molestia: tiene razón en querer respuestas.",
+  "fact_prefix": [
+    "Le contamos: ",
+    "Un dato: "
+  ],
+  "no_fact": "Todavía estamos reuniendo el dato oficial; en cuanto lo tengamos, se lo compartimos.",
+  "mandatory_template": "En pocas palabras: {phrase}.",
+  "closers": {
+    "A": "Si en su calle hay un problema, repórtelo y le damos seguimiento.",
+    "B": "Gracias por estar al pendiente de su colonia."
+  },
+  "headline": {
+    "A": "Lo que sí pasa con {topic}",
+    "B": "Avances en {topic}"
+  },
+  "question": "¿Sabía quién se encarga de {topic}?"
+}

@@ -1,0 +1,61 @@
+{
+  "$defs": {
+    "StrategyAlternative": {
+      "properties": {
+        "strategy": {
+          "enum": [
+            "desmentir",
+            "contextualizar",
+            "reencuadrar",
+            "contrastar",
+            "amplificar",
+            "agradecer"
+          ],
+          "title": "Strategy",
+          "type": "string"
+        },
+        "why": {
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "strategy",
+        "why"
+      ],
+      "title": "StrategyAlternative",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "strategy": {
+      "enum": [
+        "desmentir",
+        "contextualizar",
+        "reencuadrar",
+        "contrastar",
+        "amplificar",
+        "agradecer"
+      ],
+      "title": "Strategy",
+      "type": "string"
+    },
+    "justification": {
+      "title": "Justification",
+      "type": "string"
+    },
+    "alternatives": {
+      "items": {
+        "$ref": "#/$defs/StrategyAlternative"
+      },
+      "title": "Alternatives",
+      "type": "array"
+    }
+  },
+  "required": [
+    "strategy",
+    "justification"
+  ],
+  "title": "RecommendStrategyOut",
+  "type": "object"
+}

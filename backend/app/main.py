@@ -4,13 +4,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app import models  # noqa: F401
-from app.api import admin, auth, files, kb
+from app.api import admin, auth, files, kb, styles
 from app.config import get_settings
 from app.errors import install_handlers
 
 logger = logging.getLogger("cartaad")
 
-ROUTERS = [auth.router, admin.router, files.router, kb.router]
+ROUTERS = [auth.router, admin.router, files.router, kb.router, styles.router]
 
 
 @asynccontextmanager

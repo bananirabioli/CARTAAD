@@ -2333,6 +2333,1645 @@
     }
    }
   },
+  "/tags": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Tags",
+    "operationId": "list_tags_tags_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/TagDimensionOut"
+         },
+         "type": "array",
+         "title": "Response List Tags Tags Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Create Dimension",
+    "operationId": "create_dimension_tags_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TagDimensionIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TagDimensionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/tags/{dimension_id}/values": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Add Tag",
+    "operationId": "add_tag_tags__dimension_id__values_post",
+    "parameters": [
+     {
+      "name": "dimension_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dimension Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TagIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TagDimensionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/tags/{dimension_id}/values/{tag_id}": {
+   "delete": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Delete Tag",
+    "operationId": "delete_tag_tags__dimension_id__values__tag_id__delete",
+    "parameters": [
+     {
+      "name": "dimension_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dimension Id"
+      }
+     },
+     {
+      "name": "tag_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Tag Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Message"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Styles",
+    "operationId": "list_styles_styles_get",
+    "parameters": [
+     {
+      "name": "include_base",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Include Base"
+      }
+     },
+     {
+      "name": "all_versions",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "All Versions"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/StyleOut"
+         },
+         "title": "Response List Styles Styles Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Create Style",
+    "operationId": "create_style_styles_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StyleIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/{style_id}": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Get Style",
+    "operationId": "get_style_styles__style_id__get",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Update Style",
+    "operationId": "update_style_styles__style_id__patch",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StylePatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/{style_id}/clone": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Clone Style",
+    "description": "Clone a base template or a client style. Without `new_slug` it creates the next version of the same slug.",
+    "operationId": "clone_style_styles__style_id__clone_post",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     },
+     {
+      "name": "new_slug",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^[a-z0-9_]+$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "New Slug"
+      }
+     }
+    ],
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/{style_id}/transition": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Transition Style",
+    "operationId": "transition_style_styles__style_id__transition_post",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StyleTransitionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/{style_id}/legal-approve": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Legal Approve Style",
+    "operationId": "legal_approve_style_styles__style_id__legal_approve_post",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/{style_id}/test": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Test Style",
+    "operationId": "test_style_styles__style_id__test_post",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StyleTestIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleTestOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/{style_id}/export": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Export Style",
+    "operationId": "export_style_styles__style_id__export_get",
+    "parameters": [
+     {
+      "name": "style_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Style Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Export Style Styles  Style Id  Export Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/import": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Import Style",
+    "operationId": "import_style_styles_import_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "additionalProperties": true,
+        "type": "object",
+        "title": "Body"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StyleOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/styles/resolve-preview": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Resolve Preview",
+    "operationId": "resolve_preview_styles_resolve_preview_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ResolvePreviewIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Resolve Preview Styles Resolve Preview Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Directives",
+    "operationId": "list_directives_directives_get",
+    "parameters": [
+     {
+      "name": "all_versions",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "All Versions"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "name": "dtype",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Dtype"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DirectiveOut"
+         },
+         "title": "Response List Directives Directives Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Create Directive",
+    "operationId": "create_directive_directives_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DirectiveFields"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DirectiveOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives/{directive_id}": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Get Directive",
+    "operationId": "get_directive_directives__directive_id__get",
+    "parameters": [
+     {
+      "name": "directive_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Directive Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DirectiveOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Update Directive",
+    "operationId": "update_directive_directives__directive_id__patch",
+    "parameters": [
+     {
+      "name": "directive_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Directive Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DirectivePatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DirectiveOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives/{directive_id}/versions": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Directive Versions",
+    "operationId": "directive_versions_directives__directive_id__versions_get",
+    "parameters": [
+     {
+      "name": "directive_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Directive Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DirectiveOut"
+         },
+         "title": "Response Directive Versions Directives  Directive Id  Versions Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives/{directive_id}/check": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Recheck Directive",
+    "operationId": "recheck_directive_directives__directive_id__check_post",
+    "parameters": [
+     {
+      "name": "directive_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Directive Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DirectiveOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives/{directive_id}/findings": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Decide Finding",
+    "description": "Confirm or dismiss an AI-suggested conflict (human confirmation required by 6.10).",
+    "operationId": "decide_finding_directives__directive_id__findings_post",
+    "parameters": [
+     {
+      "name": "directive_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Directive Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FindingDecisionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DirectiveOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives/{directive_id}/transition": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Transition Directive",
+    "operationId": "transition_directive_directives__directive_id__transition_post",
+    "parameters": [
+     {
+      "name": "directive_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Directive Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DirectiveTransitionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DirectiveOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/directives/recheck-all": {
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Recheck All",
+    "operationId": "recheck_all_directives_recheck_all_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/DirectiveOut"
+         },
+         "type": "array",
+         "title": "Response Recheck All Directives Recheck All Post"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/catalog/formats": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Formats",
+    "operationId": "list_formats_catalog_formats_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/FormatOut"
+         },
+         "type": "array",
+         "title": "Response List Formats Catalog Formats Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/catalog/formats/{format_id}": {
+   "patch": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Update Format",
+    "operationId": "update_format_catalog_formats__format_id__patch",
+    "parameters": [
+     {
+      "name": "format_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Format Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FormatPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FormatOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/catalog/creatives": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Creatives",
+    "operationId": "list_creatives_catalog_creatives_get",
+    "parameters": [
+     {
+      "name": "flow",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Flow"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/CreativeTypeOut"
+         },
+         "title": "Response List Creatives Catalog Creatives Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/catalog/creatives/{creative_id}": {
+   "patch": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Update Creative",
+    "operationId": "update_creative_catalog_creatives__creative_id__patch",
+    "parameters": [
+     {
+      "name": "creative_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Creative Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CreativeTypePatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CreativeTypeOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/catalog/matrix": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Get Matrix",
+    "operationId": "get_matrix_catalog_matrix_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MatrixOut"
+        }
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Set Matrix Cell",
+    "operationId": "set_matrix_cell_catalog_matrix_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MatrixCell"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MatrixCell"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/veda": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Restrictions",
+    "operationId": "list_restrictions_veda_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/RestrictionOut"
+         },
+         "type": "array",
+         "title": "Response List Restrictions Veda Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Create Restriction",
+    "operationId": "create_restriction_veda_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RestrictionIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RestrictionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/veda/{restriction_id}": {
+   "put": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Update Restriction",
+    "operationId": "update_restriction_veda__restriction_id__put",
+    "parameters": [
+     {
+      "name": "restriction_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Restriction Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RestrictionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RestrictionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/ai-runs": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "List Ai Runs",
+    "operationId": "list_ai_runs_ai_runs_get",
+    "parameters": [
+     {
+      "name": "step",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Step"
+      }
+     },
+     {
+      "name": "case_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Case Id"
+      }
+     },
+     {
+      "name": "piece_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Piece Id"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 1,
+       "title": "Page"
+      }
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Page Size"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_AiRunOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/ai-runs/{run_id}": {
+   "get": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Get Ai Run",
+    "operationId": "get_ai_run_ai_runs__run_id__get",
+    "parameters": [
+     {
+      "name": "run_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Run Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AiRunDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -2471,6 +4110,257 @@
      "notes"
     ],
     "title": "ActorOut"
+   },
+   "AiRunDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "step": {
+      "type": "string",
+      "title": "Step"
+     },
+     "prompt_version": {
+      "type": "string",
+      "title": "Prompt Version"
+     },
+     "provider": {
+      "type": "string",
+      "title": "Provider"
+     },
+     "model": {
+      "type": "string",
+      "title": "Model"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "error": {
+      "type": "string",
+      "title": "Error"
+     },
+     "attempts": {
+      "type": "integer",
+      "title": "Attempts"
+     },
+     "latency_ms": {
+      "type": "integer",
+      "title": "Latency Ms"
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Version"
+     },
+     "applied_directives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Applied Directives"
+     },
+     "case_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Id"
+     },
+     "piece_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Piece Id"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "input": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Input"
+     },
+     "output": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Output"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "step",
+     "prompt_version",
+     "provider",
+     "model",
+     "status",
+     "error",
+     "attempts",
+     "latency_ms",
+     "style_slug",
+     "style_version",
+     "applied_directives",
+     "case_id",
+     "piece_id",
+     "created_at",
+     "input",
+     "output"
+    ],
+    "title": "AiRunDetail"
+   },
+   "AiRunOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "step": {
+      "type": "string",
+      "title": "Step"
+     },
+     "prompt_version": {
+      "type": "string",
+      "title": "Prompt Version"
+     },
+     "provider": {
+      "type": "string",
+      "title": "Provider"
+     },
+     "model": {
+      "type": "string",
+      "title": "Model"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "error": {
+      "type": "string",
+      "title": "Error"
+     },
+     "attempts": {
+      "type": "integer",
+      "title": "Attempts"
+     },
+     "latency_ms": {
+      "type": "integer",
+      "title": "Latency Ms"
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Version"
+     },
+     "applied_directives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Applied Directives"
+     },
+     "case_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Id"
+     },
+     "piece_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Piece Id"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "step",
+     "prompt_version",
+     "provider",
+     "model",
+     "status",
+     "error",
+     "attempts",
+     "latency_ms",
+     "style_slug",
+     "style_version",
+     "applied_directives",
+     "case_id",
+     "piece_id",
+     "created_at"
+    ],
+    "title": "AiRunOut"
    },
    "AuditOut": {
     "properties": {
@@ -3055,6 +4945,593 @@
      "legal_basis"
     ],
     "title": "CompetenceOut"
+   },
+   "CreativeTypeOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description"
+     },
+     "required_slots": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Required Slots"
+     },
+     "template": {
+      "type": "string",
+      "title": "Template"
+     },
+     "requires_fact": {
+      "type": "boolean",
+      "title": "Requires Fact"
+     },
+     "requires_consent": {
+      "type": "boolean",
+      "title": "Requires Consent"
+     },
+     "requires_real_photo": {
+      "type": "boolean",
+      "title": "Requires Real Photo"
+     },
+     "text_only": {
+      "type": "boolean",
+      "title": "Text Only"
+     },
+     "is_comparison": {
+      "type": "boolean",
+      "title": "Is Comparison"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "code",
+     "flow",
+     "name",
+     "description",
+     "required_slots",
+     "template",
+     "requires_fact",
+     "requires_consent",
+     "requires_real_photo",
+     "text_only",
+     "is_comparison",
+     "active"
+    ],
+    "title": "CreativeTypeOut"
+   },
+   "CreativeTypePatch": {
+    "properties": {
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "description": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Description"
+     },
+     "required_slots": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Required Slots"
+     },
+     "requires_fact": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requires Fact"
+     },
+     "requires_consent": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requires Consent"
+     },
+     "requires_real_photo": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requires Real Photo"
+     },
+     "active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Active"
+     }
+    },
+    "type": "object",
+    "title": "CreativeTypePatch"
+   },
+   "DirectiveFields": {
+    "properties": {
+     "dtype": {
+      "type": "string",
+      "enum": [
+       "narrativa",
+       "estilo",
+       "linea_roja",
+       "leyenda",
+       "vocabulario",
+       "prioridad_tematica"
+      ],
+      "title": "Dtype"
+     },
+     "title": {
+      "type": "string",
+      "minLength": 3,
+      "title": "Title"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text",
+      "default": ""
+     },
+     "structured": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Structured",
+      "default": {}
+     },
+     "scope": {
+      "additionalProperties": {
+       "items": {},
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Scope",
+      "default": {}
+     },
+     "mandatory": {
+      "type": "string",
+      "enum": [
+       "obligatoria",
+       "sugerida"
+      ],
+      "title": "Mandatory",
+      "default": "sugerida"
+     },
+     "priority": {
+      "type": "integer",
+      "maximum": 100.0,
+      "minimum": 1.0,
+      "title": "Priority",
+      "default": 50
+     },
+     "valid_from": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid From"
+     },
+     "valid_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid Until"
+     }
+    },
+    "type": "object",
+    "required": [
+     "dtype",
+     "title"
+    ],
+    "title": "DirectiveFields"
+   },
+   "DirectiveOut": {
+    "properties": {
+     "dtype": {
+      "type": "string",
+      "enum": [
+       "narrativa",
+       "estilo",
+       "linea_roja",
+       "leyenda",
+       "vocabulario",
+       "prioridad_tematica"
+      ],
+      "title": "Dtype"
+     },
+     "title": {
+      "type": "string",
+      "minLength": 3,
+      "title": "Title"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text",
+      "default": ""
+     },
+     "structured": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Structured",
+      "default": {}
+     },
+     "scope": {
+      "additionalProperties": {
+       "items": {},
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Scope",
+      "default": {}
+     },
+     "mandatory": {
+      "type": "string",
+      "enum": [
+       "obligatoria",
+       "sugerida"
+      ],
+      "title": "Mandatory",
+      "default": "sugerida"
+     },
+     "priority": {
+      "type": "integer",
+      "maximum": 100.0,
+      "minimum": 1.0,
+      "title": "Priority",
+      "default": 50
+     },
+     "valid_from": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid From"
+     },
+     "valid_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid Until"
+     },
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "version": {
+      "type": "integer",
+      "title": "Version"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "borrador",
+       "en_revision",
+       "activa",
+       "archivada",
+       "rechazada"
+      ],
+      "title": "Status"
+     },
+     "conflict_status": {
+      "type": "string",
+      "title": "Conflict Status"
+     },
+     "conflict_report": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Conflict Report"
+     },
+     "rejection_reason": {
+      "type": "string",
+      "title": "Rejection Reason"
+     },
+     "created_by_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Created By Name"
+     },
+     "approved_by_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved By Name"
+     },
+     "approved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved At"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "in_force": {
+      "type": "boolean",
+      "title": "In Force",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "dtype",
+     "title",
+     "id",
+     "code",
+     "version",
+     "status",
+     "conflict_status",
+     "conflict_report",
+     "rejection_reason",
+     "approved_at",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "DirectiveOut"
+   },
+   "DirectivePatch": {
+    "properties": {
+     "dtype": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "narrativa",
+         "estilo",
+         "linea_roja",
+         "leyenda",
+         "vocabulario",
+         "prioridad_tematica"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dtype"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "text": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     },
+     "structured": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Structured"
+     },
+     "scope": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "items": {},
+         "type": "array"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Scope"
+     },
+     "mandatory": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "obligatoria",
+         "sugerida"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mandatory"
+     },
+     "priority": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 100.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Priority"
+     },
+     "valid_from": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid From"
+     },
+     "valid_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid Until"
+     }
+    },
+    "type": "object",
+    "title": "DirectivePatch"
+   },
+   "DirectiveTransitionIn": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "borrador",
+       "en_revision",
+       "activa",
+       "archivada",
+       "rechazada"
+      ],
+      "title": "Status"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "status"
+    ],
+    "title": "DirectiveTransitionIn"
    },
    "DocumentDetail": {
     "properties": {
@@ -3954,6 +6431,162 @@
     "type": "object",
     "title": "FactPatch"
    },
+   "FindingDecisionIn": {
+    "properties": {
+     "finding_id": {
+      "type": "string",
+      "title": "Finding Id"
+     },
+     "confirmed": {
+      "type": "boolean",
+      "title": "Confirmed"
+     }
+    },
+    "type": "object",
+    "required": [
+     "finding_id",
+     "confirmed"
+    ],
+    "title": "FindingDecisionIn"
+   },
+   "FormatOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description"
+     },
+     "default_style_slug": {
+      "type": "string",
+      "title": "Default Style Slug"
+     },
+     "allowed_style_slugs": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Allowed Style Slugs"
+     },
+     "template": {
+      "type": "string",
+      "title": "Template"
+     },
+     "options": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Options"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "code",
+     "name",
+     "description",
+     "default_style_slug",
+     "allowed_style_slugs",
+     "template",
+     "options",
+     "active"
+    ],
+    "title": "FormatOut"
+   },
+   "FormatPatch": {
+    "properties": {
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "description": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Description"
+     },
+     "default_style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Default Style Slug"
+     },
+     "allowed_style_slugs": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Allowed Style Slugs"
+     },
+     "options": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Options"
+     },
+     "active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Active"
+     }
+    },
+    "type": "object",
+    "title": "FormatPatch"
+   },
    "GovLevelIn": {
     "properties": {
      "slug": {
@@ -4484,6 +7117,71 @@
     ],
     "title": "LoginIn"
    },
+   "MatrixCell": {
+    "properties": {
+     "creative_slug": {
+      "type": "string",
+      "title": "Creative Slug"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "level": {
+      "type": "string",
+      "enum": [
+       "full",
+       "partial",
+       "none"
+      ],
+      "title": "Level"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "creative_slug",
+     "format_slug",
+     "level"
+    ],
+    "title": "MatrixCell"
+   },
+   "MatrixOut": {
+    "properties": {
+     "creatives": {
+      "items": {
+       "$ref": "#/components/schemas/CreativeTypeOut"
+      },
+      "type": "array",
+      "title": "Creatives"
+     },
+     "formats": {
+      "items": {
+       "$ref": "#/components/schemas/FormatOut"
+      },
+      "type": "array",
+      "title": "Formats"
+     },
+     "cells": {
+      "items": {
+       "$ref": "#/components/schemas/MatrixCell"
+      },
+      "type": "array",
+      "title": "Cells"
+     }
+    },
+    "type": "object",
+    "required": [
+     "creatives",
+     "formats",
+     "cells"
+    ],
+    "title": "MatrixOut"
+   },
    "MeOut": {
     "properties": {
      "user": {
@@ -4563,6 +7261,37 @@
     "type": "object",
     "title": "Message"
    },
+   "Page_AiRunOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/AiRunOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "page_size": {
+      "type": "integer",
+      "title": "Page Size"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "page",
+     "page_size"
+    ],
+    "title": "Page[AiRunOut]"
+   },
    "Page_AuditOut_": {
     "properties": {
      "items": {
@@ -4624,6 +7353,232 @@
      "page_size"
     ],
     "title": "Page[FactOut]"
+   },
+   "ResolvePreviewIn": {
+    "properties": {
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "topic": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic"
+     },
+     "format_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Format Slug"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "flow": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flow"
+     },
+     "intensity": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Intensity"
+     }
+    },
+    "type": "object",
+    "required": [
+     "style_slug"
+    ],
+    "title": "ResolvePreviewIn"
+   },
+   "RestrictionIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+     },
+     "starts_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Starts At"
+     },
+     "ends_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ends At"
+     },
+     "blocked_formats": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Blocked Formats",
+      "default": []
+     },
+     "blocked_creatives": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Blocked Creatives",
+      "default": []
+     },
+     "mandatory_legends": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Mandatory Legends",
+      "default": []
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "name"
+    ],
+    "title": "RestrictionIn"
+   },
+   "RestrictionOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     },
+     "starts_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Starts At"
+     },
+     "ends_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ends At"
+     },
+     "blocked_formats": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Blocked Formats"
+     },
+     "blocked_creatives": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Blocked Creatives"
+     },
+     "mandatory_legends": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Mandatory Legends"
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     },
+     "in_effect": {
+      "type": "boolean",
+      "title": "In Effect",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "active",
+     "starts_at",
+     "ends_at",
+     "blocked_formats",
+     "blocked_creatives",
+     "mandatory_legends",
+     "reason"
+    ],
+    "title": "RestrictionOut"
    },
    "SearchHit": {
     "properties": {
@@ -4709,6 +7664,1035 @@
      "patch"
     ],
     "title": "SettingsPatch"
+   },
+   "StyleIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description",
+      "default": ""
+     },
+     "tags": {
+      "additionalProperties": {
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Tags",
+      "default": {}
+     },
+     "free_tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Free Tags",
+      "default": []
+     },
+     "intensity_min": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Intensity Min",
+      "default": 1
+     },
+     "intensity_max": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Intensity Max",
+      "default": 2
+     },
+     "voice": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Voice",
+      "default": {
+       "persona": "nosotros_institucional",
+       "trato": "usted",
+       "idioma": "es-MX"
+      }
+     },
+     "guidelines": {
+      "additionalProperties": {
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Guidelines",
+      "default": {
+       "haz": [],
+       "evita": []
+      }
+     },
+     "preferred_vocab": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Preferred Vocab",
+      "default": []
+     },
+     "prohibited_vocab": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Prohibited Vocab",
+      "default": []
+     },
+     "length": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Length",
+      "default": {
+       "copy_principal": {
+        "max": 280,
+        "min": 120,
+        "unidad": "caracteres"
+       }
+      }
+     },
+     "emoji_usage": {
+      "type": "string",
+      "enum": [
+       "ninguno",
+       "moderado"
+      ],
+      "title": "Emoji Usage",
+      "default": "ninguno"
+     },
+     "caps_usage": {
+      "type": "string",
+      "enum": [
+       "normal",
+       "solo_rotulos"
+      ],
+      "title": "Caps Usage",
+      "default": "normal"
+     },
+     "good_examples": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Good Examples",
+      "default": []
+     },
+     "bad_examples": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Bad Examples",
+      "default": []
+     },
+     "visual_guide": {
+      "type": "string",
+      "title": "Visual Guide",
+      "default": ""
+     },
+     "palette": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Palette",
+      "default": []
+     },
+     "allowed_formats": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Allowed Formats",
+      "default": []
+     },
+     "risk": {
+      "type": "string",
+      "enum": [
+       "bajo",
+       "medio",
+       "alto"
+      ],
+      "title": "Risk",
+      "default": "bajo"
+     },
+     "requires_legal": {
+      "type": "boolean",
+      "title": "Requires Legal",
+      "default": false
+     },
+     "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Slug"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "slug"
+    ],
+    "title": "StyleIn"
+   },
+   "StyleOut": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description",
+      "default": ""
+     },
+     "tags": {
+      "additionalProperties": {
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Tags",
+      "default": {}
+     },
+     "free_tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Free Tags",
+      "default": []
+     },
+     "intensity_min": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Intensity Min",
+      "default": 1
+     },
+     "intensity_max": {
+      "type": "integer",
+      "maximum": 5.0,
+      "minimum": 1.0,
+      "title": "Intensity Max",
+      "default": 2
+     },
+     "voice": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Voice",
+      "default": {
+       "persona": "nosotros_institucional",
+       "trato": "usted",
+       "idioma": "es-MX"
+      }
+     },
+     "guidelines": {
+      "additionalProperties": {
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Guidelines",
+      "default": {
+       "haz": [],
+       "evita": []
+      }
+     },
+     "preferred_vocab": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Preferred Vocab",
+      "default": []
+     },
+     "prohibited_vocab": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Prohibited Vocab",
+      "default": []
+     },
+     "length": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Length",
+      "default": {
+       "copy_principal": {
+        "max": 280,
+        "min": 120,
+        "unidad": "caracteres"
+       }
+      }
+     },
+     "emoji_usage": {
+      "type": "string",
+      "enum": [
+       "ninguno",
+       "moderado"
+      ],
+      "title": "Emoji Usage",
+      "default": "ninguno"
+     },
+     "caps_usage": {
+      "type": "string",
+      "enum": [
+       "normal",
+       "solo_rotulos"
+      ],
+      "title": "Caps Usage",
+      "default": "normal"
+     },
+     "good_examples": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Good Examples",
+      "default": []
+     },
+     "bad_examples": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Bad Examples",
+      "default": []
+     },
+     "visual_guide": {
+      "type": "string",
+      "title": "Visual Guide",
+      "default": ""
+     },
+     "palette": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Palette",
+      "default": []
+     },
+     "allowed_formats": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Allowed Formats",
+      "default": []
+     },
+     "risk": {
+      "type": "string",
+      "enum": [
+       "bajo",
+       "medio",
+       "alto"
+      ],
+      "title": "Risk",
+      "default": "bajo"
+     },
+     "requires_legal": {
+      "type": "boolean",
+      "title": "Requires Legal",
+      "default": false
+     },
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "client_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Client Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "version": {
+      "type": "integer",
+      "title": "Version"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "borrador",
+       "revision",
+       "activo",
+       "archivado"
+      ],
+      "title": "Status"
+     },
+     "parent_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Parent Id"
+     },
+     "change_note": {
+      "type": "string",
+      "title": "Change Note"
+     },
+     "legal_approved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Legal Approved At"
+     },
+     "legal_approved_by_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Legal Approved By Name"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "is_base": {
+      "type": "boolean",
+      "title": "Is Base",
+      "default": false
+     },
+     "versions": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Versions",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "id",
+     "client_id",
+     "slug",
+     "version",
+     "status",
+     "parent_id",
+     "change_note",
+     "legal_approved_at",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "StyleOut"
+   },
+   "StylePatch": {
+    "properties": {
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "description": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Description"
+     },
+     "tags": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "items": {
+          "type": "string"
+         },
+         "type": "array"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Tags"
+     },
+     "free_tags": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Free Tags"
+     },
+     "intensity_min": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 5.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Intensity Min"
+     },
+     "intensity_max": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 5.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Intensity Max"
+     },
+     "voice": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Voice"
+     },
+     "guidelines": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "items": {
+          "type": "string"
+         },
+         "type": "array"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Guidelines"
+     },
+     "preferred_vocab": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Preferred Vocab"
+     },
+     "prohibited_vocab": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prohibited Vocab"
+     },
+     "length": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Length"
+     },
+     "emoji_usage": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "ninguno",
+         "moderado"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Emoji Usage"
+     },
+     "caps_usage": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "normal",
+         "solo_rotulos"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Caps Usage"
+     },
+     "good_examples": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Good Examples"
+     },
+     "bad_examples": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bad Examples"
+     },
+     "visual_guide": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Visual Guide"
+     },
+     "palette": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Palette"
+     },
+     "allowed_formats": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Allowed Formats"
+     },
+     "risk": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "bajo",
+         "medio",
+         "alto"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Risk"
+     },
+     "requires_legal": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requires Legal"
+     },
+     "change_note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Change Note"
+     }
+    },
+    "type": "object",
+    "title": "StylePatch"
+   },
+   "StyleTestIn": {
+    "properties": {
+     "text": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     },
+     "flow": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flow"
+     }
+    },
+    "type": "object",
+    "title": "StyleTestIn"
+   },
+   "StyleTestOut": {
+    "properties": {
+     "sample": {
+      "type": "string",
+      "title": "Sample"
+     },
+     "topic": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "segments": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Segments"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "why": {
+      "type": "string",
+      "title": "Why"
+     },
+     "missing_data": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Missing Data"
+     },
+     "lint_status": {
+      "type": "string",
+      "title": "Lint Status"
+     },
+     "findings": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Findings"
+     },
+     "resolved": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Resolved"
+     },
+     "style_block": {
+      "type": "string",
+      "title": "Style Block"
+     },
+     "ai_run_id": {
+      "type": "integer",
+      "title": "Ai Run Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "sample",
+     "topic",
+     "strategy",
+     "flow",
+     "segments",
+     "text",
+     "why",
+     "missing_data",
+     "lint_status",
+     "findings",
+     "resolved",
+     "style_block",
+     "ai_run_id"
+    ],
+    "title": "StyleTestOut"
+   },
+   "StyleTransitionIn": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "borrador",
+       "revision",
+       "activo",
+       "archivado"
+      ],
+      "title": "Status"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "status"
+    ],
+    "title": "StyleTransitionIn"
+   },
+   "TagDimensionIn": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "categorical",
+       "numeric"
+      ],
+      "title": "Kind",
+      "default": "categorical"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "TagDimensionIn"
+   },
+   "TagDimensionOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "min_value": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Min Value"
+     },
+     "max_value": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Value"
+     },
+     "tags": {
+      "items": {
+       "$ref": "#/components/schemas/TagOut"
+      },
+      "type": "array",
+      "title": "Tags"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "kind",
+     "min_value",
+     "max_value",
+     "tags"
+    ],
+    "title": "TagDimensionOut"
+   },
+   "TagIn": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "TagIn"
+   },
+   "TagOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "ord": {
+      "type": "integer",
+      "title": "Ord"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "ord"
+    ],
+    "title": "TagOut"
    },
    "TopicIn": {
     "properties": {

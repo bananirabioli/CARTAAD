@@ -1,0 +1,42 @@
+{
+  "openers": {
+    "desmentir": [
+      "Expliquemos paso a paso qué pasa con {topic}.",
+      "Vamos por partes para aclarar {topic}."
+    ],
+    "contextualizar": [
+      "¿Quién se encarga de qué en {topic}? Vamos por partes.",
+      "Para entender el tema de {topic} hay que ver quién hace qué."
+    ],
+    "reencuadrar": [
+      "Pensemos el tema de {topic} como una casa con varios dueños: cada uno cuida una parte.",
+      "Un ejemplo sencillo para entender {topic}."
+    ],
+    "contrastar": [
+      "Veamos los datos de {topic} en dos columnas, con la misma regla para ambas."
+    ],
+    "amplificar": [
+      "Así se logra un avance en {topic}, paso a paso."
+    ],
+    "agradecer": [
+      "Gracias por compartirlo: así se ve el trabajo en {topic} cuando todos participan."
+    ]
+  },
+  "false_opener": "Lo que circula sobre {topic} no coincide con los datos. Veamos por qué, paso a paso.",
+  "empathy": "Es normal que esto genere dudas.",
+  "fact_prefix": [
+    "Primero, el dato: ",
+    "Después: "
+  ],
+  "no_fact": "Nos falta el dato oficial para completar la explicación.",
+  "mandatory_template": "La clave: {phrase}.",
+  "closers": {
+    "A": "Si quiere saber a quién reportar, le decimos cómo.",
+    "B": "Así, paso a paso, se construye el avance."
+  },
+  "headline": {
+    "A": "¿Quién hace qué en {topic}?",
+    "B": "Paso a paso: {topic}"
+  },
+  "question": "¿Quién se encarga de {topic}?"
+}

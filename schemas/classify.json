@@ -1,0 +1,64 @@
+{
+  "properties": {
+    "stance": {
+      "enum": [
+        "a_favor",
+        "en_contra",
+        "neutral"
+      ],
+      "title": "Stance",
+      "type": "string"
+    },
+    "topic": {
+      "description": "slug de uno de los temas del cliente, o 'otro'",
+      "title": "Topic",
+      "type": "string"
+    },
+    "message_type": {
+      "enum": [
+        "opinion",
+        "dato_falso",
+        "dato_sacado_de_contexto",
+        "acusacion_o_difamacion",
+        "queja_ciudadana_legitima"
+      ],
+      "title": "Message Type",
+      "type": "string"
+    },
+    "recommendation": {
+      "enum": [
+        "responder",
+        "monitorear",
+        "ignorar"
+      ],
+      "title": "Recommendation",
+      "type": "string"
+    },
+    "confidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "explanation": {
+      "description": "Por qué esta clasificación y recomendación; si responder amplificaría el ataque, decirlo.",
+      "title": "Explanation",
+      "type": "string"
+    },
+    "canalizar_a_atencion": {
+      "default": false,
+      "title": "Canalizar A Atencion",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "stance",
+    "topic",
+    "message_type",
+    "recommendation",
+    "confidence",
+    "explanation"
+  ],
+  "title": "ClassifyOut",
+  "type": "object"
+}

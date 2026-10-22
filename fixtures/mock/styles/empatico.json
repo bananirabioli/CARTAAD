@@ -1,0 +1,39 @@
+{
+  "openers": {
+    "desmentir": [
+      "Entendemos su preocupación por {topic} y queremos darle la información completa."
+    ],
+    "contextualizar": [
+      "Tiene razón en preocuparse por {topic}."
+    ],
+    "reencuadrar": [
+      "Lo que vive con {topic} importa, y queremos explicarle qué se está haciendo."
+    ],
+    "contrastar": [
+      "Su pregunta sobre {topic} es justa; le mostramos los datos completos."
+    ],
+    "amplificar": [
+      "Nos alegra que note mejoras en {topic}."
+    ],
+    "agradecer": [
+      "Gracias por tomarse el tiempo de contarnos sobre {topic}."
+    ]
+  },
+  "false_opener": "Entendemos la preocupación por {topic}; la información que circula no coincide con los registros, y se la explicamos.",
+  "empathy": "Lamentamos la afectación que esto le causa.",
+  "fact_prefix": [
+    "Le compartimos lo que sabemos: ",
+    "Para que tenga el dato completo: "
+  ],
+  "no_fact": "Todavía no tenemos el dato oficial; le avisaremos en cuanto esté.",
+  "mandatory_template": "Queremos ser claros: {phrase}.",
+  "closers": {
+    "A": "Ya canalizamos su caso al área de atención ciudadana para darle seguimiento.",
+    "B": "Seguiremos trabajando y contándole los avances."
+  },
+  "headline": {
+    "A": "Le escuchamos: {topic}",
+    "B": "Seguimos con {topic}"
+  },
+  "question": "¿Nos cuenta dónde ocurre?"
+}

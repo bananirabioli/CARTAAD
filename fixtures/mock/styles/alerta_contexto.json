@@ -1,0 +1,44 @@
+{
+  "openers": {
+    "desmentir": [
+      "A esta publicación sobre {topic} le falta contexto.",
+      "Esta publicación sobre {topic} no coincide con los datos.",
+      "Esta publicación sobre {topic} omite información verificable."
+    ],
+    "contextualizar": [
+      "Contexto: a esta publicación sobre {topic} le falta información.",
+      "Contexto: esta publicación sobre {topic} muestra solo una parte.",
+      "Contexto: esta publicación sobre {topic} omite datos verificables."
+    ],
+    "reencuadrar": [
+      "Contexto: lo relevante sobre {topic} es otra cosa.",
+      "Contexto: el centro del tema de {topic} no es el que se muestra."
+    ],
+    "contrastar": [
+      "Contexto: estos son los datos comparables sobre {topic}."
+    ],
+    "amplificar": [
+      "Dato: esta publicación sobre {topic} coincide con los registros."
+    ],
+    "agradecer": [
+      "Dato: la publicación sobre {topic} refleja lo registrado."
+    ]
+  },
+  "false_opener": "Falso: esta publicación sobre {topic} contradice los datos oficiales.",
+  "empathy": "Contexto: el problema reportado es real.",
+  "fact_prefix": [
+    "Dato: ",
+    "Lo que falta: "
+  ],
+  "no_fact": "Dato faltante: se solicitó la cifra oficial antes de responder.",
+  "mandatory_template": "Contexto: {phrase}.",
+  "closers": {
+    "A": "Antes de compartir, revise la fuente.",
+    "B": "Fuente disponible."
+  },
+  "headline": {
+    "A": "Falta contexto",
+    "B": "Dato verificado"
+  },
+  "question": "¿Qué le falta a esta publicación?"
+}

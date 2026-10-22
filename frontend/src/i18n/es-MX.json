@@ -91,6 +91,123 @@
       "procesado": "Procesado",
       "sin_texto": "Sin texto extraíble",
       "error": "Error"
+    },
+    "style_status": {
+      "borrador": "Borrador",
+      "revision": "En revisión",
+      "activo": "Activo",
+      "archivado": "Archivado"
+    },
+    "directive_status": {
+      "borrador": "Borrador",
+      "en_revision": "En revisión",
+      "activa": "Activa",
+      "archivada": "Archivada",
+      "rechazada": "Rechazada"
+    },
+    "directive_type": {
+      "narrativa": "Narrativa",
+      "estilo": "Estilo",
+      "linea_roja": "Línea roja",
+      "leyenda": "Leyenda",
+      "vocabulario": "Vocabulario",
+      "prioridad_tematica": "Prioridad temática"
+    },
+    "mandatory": {
+      "obligatoria": "Obligatoria",
+      "sugerida": "Sugerida"
+    },
+    "conflict_status": {
+      "sin_conflicto": "Sin conflicto",
+      "advertencia": "Advertencia",
+      "resuelto_por_prioridad": "Resuelto por prioridad",
+      "conflicto_bloqueante": "Conflicto bloqueante",
+      "rechazada_por_regla_dura": "Rechazada por regla dura"
+    },
+    "risk": {
+      "bajo": "Riesgo bajo",
+      "medio": "Riesgo medio",
+      "alto": "Riesgo alto"
+    },
+    "compat": {
+      "full": "Compatible",
+      "partial": "Con adaptación",
+      "none": "No permitido"
+    },
+    "level": {
+      "regla_dura": "Regla dura",
+      "modo_veda": "Modo veda",
+      "linea_roja": "Línea roja",
+      "obligatoria": "Obligatoria",
+      "estilo": "Guía del estilo",
+      "sugerida": "Sugerida",
+      "ajuste": "Ajuste"
+    },
+    "effect": {
+      "aplicada": "Aplicada",
+      "parcial": "Parcial",
+      "conflicto": "En conflicto"
+    },
+    "flow": {
+      "A": "Flujo A · defensa/contexto",
+      "B": "Flujo B · amplificación"
+    },
+    "strategy": {
+      "desmentir": "Desmentir",
+      "contextualizar": "Contextualizar",
+      "reencuadrar": "Reencuadrar",
+      "contrastar": "Contrastar",
+      "amplificar": "Amplificar",
+      "agradecer": "Agradecer"
+    },
+    "segment_type": {
+      "asercion_factual": "Aserción factual",
+      "opinion_marcada": "Opinión marcada",
+      "pregunta": "Pregunta",
+      "llamado": "Llamado",
+      "saludo": "Saludo"
+    },
+    "lint": {
+      "ok": "Cumple el estilo",
+      "warn": "Cumple con avisos",
+      "block": "Bloqueado"
+    },
+    "finding_kind": {
+      "directiva": "Otra directriz",
+      "veda": "Modo veda",
+      "estilo": "Límite de estilo",
+      "ia": "Sugerido por IA"
+    },
+    "finding_severity": {
+      "bloqueante": "Bloqueante",
+      "advertencia": "Advertencia",
+      "resuelto": "Resuelto"
+    },
+    "format": {
+      "formato_contexto": "F1 · Contexto",
+      "formato_historieta": "F2 · Historieta",
+      "formato_titeres": "F3 · Show de títeres",
+      "formato_comparativa": "F4 · La comparativa",
+      "formato_voz_pueblo": "F5 · La voz del pueblo",
+      "formato_clasico": "F6 · El clásico post"
+    },
+    "creative": {
+      "contexto_responsabilidad": "A1 · Contexto",
+      "infografia": "A2 · Infografía",
+      "pregunta_minimalista": "A3 · Pregunta minimalista",
+      "mito_vs_realidad": "A4 · Mito vs realidad",
+      "dato_duro": "A5 · Dato duro",
+      "antes_despues": "A6 · Antes y después",
+      "linea_tiempo": "A7 · Línea del tiempo",
+      "carrusel_explicativo": "A8 · Carrusel explicativo",
+      "guion_video": "A9 · Guion de video",
+      "voz_ciudadana": "A10 · Voz ciudadana",
+      "repost_contexto": "B1 · Repost con contexto",
+      "agradecimiento": "B2 · Agradecimiento",
+      "lo_que_no_se_vio": "B3 · Lo que no se vio",
+      "guion_dueto": "B4 · Guion de dueto",
+      "carrusel_resultados": "B5 · Carrusel de resultados",
+      "pieza_aliados": "B6 · Pieza para aliados"
     }
   },
   "common": {
@@ -287,5 +404,153 @@
       "sentiment": "Δ sentimiento",
       "date": "Fecha"
     }
+  },
+  "styles": {
+    "title": "Estilos y directrices",
+    "subtitle": "Un estilo es un tono de comunicación definido por etiquetas y directrices. Las directrices del equipo se verifican contra las reglas duras, entre sí, contra el modo veda y contra los límites del estilo.",
+    "tabs": {
+      "styles": "Estilos",
+      "directives": "Directrices",
+      "matrix": "Matriz creativo × formato",
+      "tags": "Etiquetas",
+      "hardRules": "Reglas duras"
+    },
+    "showBase": "Ver plantillas base",
+    "base": "Plantilla base",
+    "clone": "Clonar",
+    "cloneAs": "Clonar como nuevo estilo",
+    "newSlug": "Identificador del nuevo estilo",
+    "import": "Importar JSON",
+    "importTitle": "Importar estilo desde JSON",
+    "importHelp": "Pega el JSON exportado de un estilo. Se crea como borrador.",
+    "export": "Exportar JSON",
+    "new": "Nuevo estilo",
+    "edit": "Editar",
+    "editActiveHint": "Editar un estilo activo crea una nueva versión en borrador.",
+    "intensity": "Intensidad {min}–{max}",
+    "requiresLegal": "Requiere legal",
+    "legalApproved": "Aprobado por legal: {name}",
+    "legalApprove": "Aprobar (legal)",
+    "toReview": "Enviar a revisión",
+    "activate": "Activar",
+    "archive": "Archivar",
+    "toDraft": "Volver a borrador",
+    "versions": "Versiones",
+    "test": "Probar estilo",
+    "testHelp": "Genera una muestra corta sobre un texto de prueba con el mismo resolver, directrices y linter que la generación real.",
+    "testText": "Texto de prueba (opcional)",
+    "testRun": "Generar muestra",
+    "testResult": "Muestra",
+    "detectedTopic": "Tema detectado: {topic}",
+    "why": "Por qué",
+    "appliedDirectives": "Directrices aplicadas",
+    "styleBlock": "Bloque de estilo inyectado en el prompt",
+    "findings": "Hallazgos del linter",
+    "noFindings": "Sin hallazgos.",
+    "missingData": "Dato faltante",
+    "fields": {
+      "slug": "Identificador",
+      "name": "Nombre",
+      "description": "Descripción",
+      "tags": "Etiquetas por dimensión",
+      "freeTags": "Etiquetas libres (coma)",
+      "intensityMin": "Intensidad mínima",
+      "intensityMax": "Intensidad máxima",
+      "persona": "Persona gramatical",
+      "trato": "Trato",
+      "haz": "Haz (una por línea)",
+      "evita": "Evita (una por línea)",
+      "preferred": "Vocabulario preferido (coma)",
+      "prohibited": "Vocabulario prohibido (coma)",
+      "lengthMin": "Longitud mínima (caracteres)",
+      "lengthMax": "Longitud máxima (caracteres)",
+      "emoji": "Uso de emoji",
+      "caps": "Uso de mayúsculas",
+      "good": "Ejemplos buenos (uno por línea)",
+      "bad": "Ejemplos malos (uno por línea)",
+      "visualGuide": "Guía visual (diseño propio)",
+      "palette": "Paleta (hex, coma)",
+      "formats": "Formatos permitidos",
+      "risk": "Riesgo",
+      "requiresLegal": "Requiere revisión de legal",
+      "changeNote": "Nota del cambio"
+    },
+    "options": {
+      "nosotros_institucional": "Nosotros institucional",
+      "primera_singular": "Primera persona singular",
+      "impersonal": "Impersonal",
+      "usted": "Usted",
+      "tu": "Tú",
+      "ninguno": "Ninguno",
+      "moderado": "Moderado",
+      "normal": "Normal",
+      "solo_rotulos": "Solo rótulos"
+    },
+    "visualGuideHint": "Siempre de diseño propio; nunca referencias a obras, marcas o personajes de terceros (HR-10)."
+  },
+  "directives": {
+    "new": "Nueva directriz",
+    "code": "Clave",
+    "type": "Tipo",
+    "titleField": "Título",
+    "text": "Texto de la directriz",
+    "mandatory": "Obligatoriedad",
+    "priority": "Prioridad (1–100)",
+    "validFrom": "Vigente desde",
+    "validUntil": "Vigente hasta",
+    "status": "Estado",
+    "conflicts": "Conflictos",
+    "inForce": "En vigor",
+    "notInForce": "Fuera de vigencia",
+    "scope": "Alcance",
+    "scopeAll": "Todo el cliente",
+    "scopeTopics": "Temas",
+    "scopeFormats": "Formatos",
+    "scopeStyles": "Estilos",
+    "scopeFlows": "Flujos",
+    "structured": "Campos estructurados",
+    "prohibited": "Vocabulario prohibido (coma)",
+    "required": "Vocabulario obligatorio (coma)",
+    "legend": "Texto de leyenda",
+    "maxIntensity": "Intensidad máxima",
+    "requiredIntensity": "Intensidad requerida",
+    "priorityTopics": "Temas prioritarios (slugs, coma)",
+    "report": "Reporte de conflictos",
+    "checkedAt": "Verificado {date}",
+    "hardRuleHit": "Viola {rule}: «{snippet}»",
+    "resolution": "Resolución",
+    "aiSuggested": "Sugerido por IA",
+    "confirm": "Confirmar conflicto",
+    "dismiss": "Descartar",
+    "confirmed": "Confirmado por una persona",
+    "recheck": "Volver a verificar",
+    "recheckAll": "Verificar todas",
+    "submit": "Enviar a revisión",
+    "activate": "Activar",
+    "archive": "Archivar",
+    "reject": "Rechazar",
+    "toDraft": "Volver a borrador",
+    "versions": "Versiones",
+    "precedence": "Precedencia al generar: reglas duras > modo veda > líneas rojas > obligatorias > guía del estilo > sugeridas > ajustes del caso. Lo de abajo nunca anula lo de arriba.",
+    "createdBy": "Propuesta por {name}",
+    "approvedBy": "Activada por {name}",
+    "rejectionReason": "Motivo del rechazo"
+  },
+  "matrix": {
+    "help": "✓ compatible · ◐ compatible con adaptación (el generador explica qué cambió) · ✗ no permitido (no se ofrece ni se genera).",
+    "creative": "Creativo",
+    "editCell": "Editar celda",
+    "level": "Compatibilidad",
+    "note": "Adaptación o motivo"
+  },
+  "tags": {
+    "help": "Valores controlados que describen estilos, filtran la bandeja y la medición, y guían al copiloto.",
+    "add": "Agregar valor",
+    "newDimension": "Nueva dimensión",
+    "slug": "Identificador",
+    "name": "Nombre"
+  },
+  "hardRules": {
+    "help": "Viven en código (guardrails/hard_rules.py). Ningún estilo, directriz, configuración o instrucción del copiloto puede anularlas."
   }
 }

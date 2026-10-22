@@ -81,3 +81,25 @@ Registro de desviaciones o precisiones respecto al stack propuesto. Cada entrada
 
 - **Decisión:** `hashlib.pbkdf2_hmac` (SHA-256) con sal; sesión firmada con `itsdangerous` en cookie `httponly`.
 - **Por qué:** auth simple sin dependencias extra, adecuada para usuarios semilla de una beta.
+
+## D-13 · `AnthropicProvider` con salidas estructuradas nativas
+
+- **Decisión:** `client.messages.parse(output_format=<modelo Pydantic>)` por paso; la imagen de la captura va como bloque
+  base64. El modelo sale de `LLM_MODEL` (sin valor por defecto en código). `stop_reason == "refusal"` se registra en
+  `AiRun` como `refused` y se muestra al usuario; no hay *fallback* automático a otro modelo porque el modelo es
+  configurable por entorno (se puede agregar cuando se fije uno).
+- **Por qué:** validación garantizada contra el mismo esquema que usa el `MockProvider`; un reintento con el error de
+  validación como retroalimentación si aun así no cumple.
+
+## D-14 · Alcance estricto y severidad de directrices sugeridas
+
+- **Decisión:** una directriz con alcance (temas, formatos, cuentas, estilos, flujos) solo aplica cuando el contexto de
+  generación trae un valor que coincide; sin valor no aplica. El vocabulario prohibido por una directriz *sugerida*
+  produce aviso (no bloqueo) en el linter; el del estilo, las líneas rojas y las obligatorias bloquean.
+- **Por qué:** "Probar estilo" no conoce el formato y no debe arrastrar leyendas de un formato concreto; "sugerida"
+  conserva su significado.
+
+## D-15 · El modo veda existe desde M2
+
+- **Decisión:** el modelo `RestrictionMode` se adelantó a M2 porque el verificador de directrices debe detectar choques
+  con vedas vigentes o programadas. La gestión en pantalla llega en M6.

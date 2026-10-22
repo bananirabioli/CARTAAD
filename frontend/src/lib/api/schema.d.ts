@@ -671,6 +671,495 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Tags */
+        get: operations["list_tags_tags_get"];
+        put?: never;
+        /** Create Dimension */
+        post: operations["create_dimension_tags_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tags/{dimension_id}/values": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Tag */
+        post: operations["add_tag_tags__dimension_id__values_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tags/{dimension_id}/values/{tag_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Tag */
+        delete: operations["delete_tag_tags__dimension_id__values__tag_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Styles */
+        get: operations["list_styles_styles_get"];
+        put?: never;
+        /** Create Style */
+        post: operations["create_style_styles_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/{style_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Style */
+        get: operations["get_style_styles__style_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Style */
+        patch: operations["update_style_styles__style_id__patch"];
+        trace?: never;
+    };
+    "/styles/{style_id}/clone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Clone Style
+         * @description Clone a base template or a client style. Without `new_slug` it creates the next version of the same slug.
+         */
+        post: operations["clone_style_styles__style_id__clone_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/{style_id}/transition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transition Style */
+        post: operations["transition_style_styles__style_id__transition_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/{style_id}/legal-approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Legal Approve Style */
+        post: operations["legal_approve_style_styles__style_id__legal_approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/{style_id}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Test Style */
+        post: operations["test_style_styles__style_id__test_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/{style_id}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Style */
+        get: operations["export_style_styles__style_id__export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import Style */
+        post: operations["import_style_styles_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/styles/resolve-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resolve Preview */
+        post: operations["resolve_preview_styles_resolve_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/directives": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Directives */
+        get: operations["list_directives_directives_get"];
+        put?: never;
+        /** Create Directive */
+        post: operations["create_directive_directives_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/directives/{directive_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Directive */
+        get: operations["get_directive_directives__directive_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Directive */
+        patch: operations["update_directive_directives__directive_id__patch"];
+        trace?: never;
+    };
+    "/directives/{directive_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Directive Versions */
+        get: operations["directive_versions_directives__directive_id__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/directives/{directive_id}/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Recheck Directive */
+        post: operations["recheck_directive_directives__directive_id__check_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/directives/{directive_id}/findings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Decide Finding
+         * @description Confirm or dismiss an AI-suggested conflict (human confirmation required by 6.10).
+         */
+        post: operations["decide_finding_directives__directive_id__findings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/directives/{directive_id}/transition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transition Directive */
+        post: operations["transition_directive_directives__directive_id__transition_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/directives/recheck-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Recheck All */
+        post: operations["recheck_all_directives_recheck_all_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalog/formats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Formats */
+        get: operations["list_formats_catalog_formats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalog/formats/{format_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Format */
+        patch: operations["update_format_catalog_formats__format_id__patch"];
+        trace?: never;
+    };
+    "/catalog/creatives": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Creatives */
+        get: operations["list_creatives_catalog_creatives_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalog/creatives/{creative_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Creative */
+        patch: operations["update_creative_catalog_creatives__creative_id__patch"];
+        trace?: never;
+    };
+    "/catalog/matrix": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Matrix */
+        get: operations["get_matrix_catalog_matrix_get"];
+        /** Set Matrix Cell */
+        put: operations["set_matrix_cell_catalog_matrix_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/veda": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Restrictions */
+        get: operations["list_restrictions_veda_get"];
+        put?: never;
+        /** Create Restriction */
+        post: operations["create_restriction_veda_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/veda/{restriction_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Restriction */
+        put: operations["update_restriction_veda__restriction_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ai-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Ai Runs */
+        get: operations["list_ai_runs_ai_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ai-runs/{run_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Ai Run */
+        get: operations["get_ai_run_ai_runs__run_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -736,6 +1225,90 @@ export interface components {
             is_own: boolean;
             /** Notes */
             notes: string;
+        };
+        /** AiRunDetail */
+        AiRunDetail: {
+            /** Id */
+            id: number;
+            /** Step */
+            step: string;
+            /** Prompt Version */
+            prompt_version: string;
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+            /** Status */
+            status: string;
+            /** Error */
+            error: string;
+            /** Attempts */
+            attempts: number;
+            /** Latency Ms */
+            latency_ms: number;
+            /** Style Slug */
+            style_slug: string | null;
+            /** Style Version */
+            style_version: number | null;
+            /** Applied Directives */
+            applied_directives: {
+                [key: string]: unknown;
+            }[];
+            /** Case Id */
+            case_id: number | null;
+            /** Piece Id */
+            piece_id: number | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Input */
+            input: {
+                [key: string]: unknown;
+            };
+            /** Output */
+            output: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** AiRunOut */
+        AiRunOut: {
+            /** Id */
+            id: number;
+            /** Step */
+            step: string;
+            /** Prompt Version */
+            prompt_version: string;
+            /** Provider */
+            provider: string;
+            /** Model */
+            model: string;
+            /** Status */
+            status: string;
+            /** Error */
+            error: string;
+            /** Attempts */
+            attempts: number;
+            /** Latency Ms */
+            latency_ms: number;
+            /** Style Slug */
+            style_slug: string | null;
+            /** Style Version */
+            style_version: number | null;
+            /** Applied Directives */
+            applied_directives: {
+                [key: string]: unknown;
+            }[];
+            /** Case Id */
+            case_id: number | null;
+            /** Piece Id */
+            piece_id: number | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** AuditOut */
         AuditOut: {
@@ -950,6 +1523,220 @@ export interface components {
             description: string;
             /** Legal Basis */
             legal_basis: string;
+        };
+        /** CreativeTypeOut */
+        CreativeTypeOut: {
+            /** Id */
+            id: number;
+            /** Slug */
+            slug: string;
+            /** Code */
+            code: string;
+            /** Flow */
+            flow: string;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Required Slots */
+            required_slots: string[];
+            /** Template */
+            template: string;
+            /** Requires Fact */
+            requires_fact: boolean;
+            /** Requires Consent */
+            requires_consent: boolean;
+            /** Requires Real Photo */
+            requires_real_photo: boolean;
+            /** Text Only */
+            text_only: boolean;
+            /** Is Comparison */
+            is_comparison: boolean;
+            /** Active */
+            active: boolean;
+        };
+        /** CreativeTypePatch */
+        CreativeTypePatch: {
+            /** Name */
+            name?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Required Slots */
+            required_slots?: string[] | null;
+            /** Requires Fact */
+            requires_fact?: boolean | null;
+            /** Requires Consent */
+            requires_consent?: boolean | null;
+            /** Requires Real Photo */
+            requires_real_photo?: boolean | null;
+            /** Active */
+            active?: boolean | null;
+        };
+        /** DirectiveFields */
+        DirectiveFields: {
+            /**
+             * Dtype
+             * @enum {string}
+             */
+            dtype: "narrativa" | "estilo" | "linea_roja" | "leyenda" | "vocabulario" | "prioridad_tematica";
+            /** Title */
+            title: string;
+            /**
+             * Text
+             * @default
+             */
+            text: string;
+            /**
+             * Structured
+             * @default {}
+             */
+            structured: {
+                [key: string]: unknown;
+            };
+            /**
+             * Scope
+             * @default {}
+             */
+            scope: {
+                [key: string]: unknown[];
+            };
+            /**
+             * Mandatory
+             * @default sugerida
+             * @enum {string}
+             */
+            mandatory: "obligatoria" | "sugerida";
+            /**
+             * Priority
+             * @default 50
+             */
+            priority: number;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid Until */
+            valid_until?: string | null;
+        };
+        /** DirectiveOut */
+        DirectiveOut: {
+            /**
+             * Dtype
+             * @enum {string}
+             */
+            dtype: "narrativa" | "estilo" | "linea_roja" | "leyenda" | "vocabulario" | "prioridad_tematica";
+            /** Title */
+            title: string;
+            /**
+             * Text
+             * @default
+             */
+            text: string;
+            /**
+             * Structured
+             * @default {}
+             */
+            structured: {
+                [key: string]: unknown;
+            };
+            /**
+             * Scope
+             * @default {}
+             */
+            scope: {
+                [key: string]: unknown[];
+            };
+            /**
+             * Mandatory
+             * @default sugerida
+             * @enum {string}
+             */
+            mandatory: "obligatoria" | "sugerida";
+            /**
+             * Priority
+             * @default 50
+             */
+            priority: number;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid Until */
+            valid_until?: string | null;
+            /** Id */
+            id: number;
+            /** Code */
+            code: string;
+            /** Version */
+            version: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "borrador" | "en_revision" | "activa" | "archivada" | "rechazada";
+            /** Conflict Status */
+            conflict_status: string;
+            /** Conflict Report */
+            conflict_report: {
+                [key: string]: unknown;
+            };
+            /** Rejection Reason */
+            rejection_reason: string;
+            /** Created By Name */
+            created_by_name?: string | null;
+            /** Approved By Name */
+            approved_by_name?: string | null;
+            /** Approved At */
+            approved_at: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * In Force
+             * @default false
+             */
+            in_force: boolean;
+        };
+        /** DirectivePatch */
+        DirectivePatch: {
+            /** Dtype */
+            dtype?: ("narrativa" | "estilo" | "linea_roja" | "leyenda" | "vocabulario" | "prioridad_tematica") | null;
+            /** Title */
+            title?: string | null;
+            /** Text */
+            text?: string | null;
+            /** Structured */
+            structured?: {
+                [key: string]: unknown;
+            } | null;
+            /** Scope */
+            scope?: {
+                [key: string]: unknown[];
+            } | null;
+            /** Mandatory */
+            mandatory?: ("obligatoria" | "sugerida") | null;
+            /** Priority */
+            priority?: number | null;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid Until */
+            valid_until?: string | null;
+        };
+        /** DirectiveTransitionIn */
+        DirectiveTransitionIn: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "borrador" | "en_revision" | "activa" | "archivada" | "rechazada";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** DocumentDetail */
         DocumentDetail: {
@@ -1201,6 +1988,55 @@ export interface components {
             /** Notes */
             notes?: string | null;
         };
+        /** FindingDecisionIn */
+        FindingDecisionIn: {
+            /** Finding Id */
+            finding_id: string;
+            /** Confirmed */
+            confirmed: boolean;
+        };
+        /** FormatOut */
+        FormatOut: {
+            /** Id */
+            id: number;
+            /** Slug */
+            slug: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Default Style Slug */
+            default_style_slug: string;
+            /** Allowed Style Slugs */
+            allowed_style_slugs: string[];
+            /** Template */
+            template: string;
+            /** Options */
+            options: {
+                [key: string]: unknown;
+            };
+            /** Active */
+            active: boolean;
+        };
+        /** FormatPatch */
+        FormatPatch: {
+            /** Name */
+            name?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Default Style Slug */
+            default_style_slug?: string | null;
+            /** Allowed Style Slugs */
+            allowed_style_slugs?: string[] | null;
+            /** Options */
+            options?: {
+                [key: string]: unknown;
+            } | null;
+            /** Active */
+            active?: boolean | null;
+        };
         /** GovLevelIn */
         GovLevelIn: {
             /** Slug */
@@ -1395,6 +2231,32 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** MatrixCell */
+        MatrixCell: {
+            /** Creative Slug */
+            creative_slug: string;
+            /** Format Slug */
+            format_slug: string;
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "full" | "partial" | "none";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
+        /** MatrixOut */
+        MatrixOut: {
+            /** Creatives */
+            creatives: components["schemas"]["CreativeTypeOut"][];
+            /** Formats */
+            formats: components["schemas"]["FormatOut"][];
+            /** Cells */
+            cells: components["schemas"]["MatrixCell"][];
+        };
         /** MeOut */
         MeOut: {
             user: components["schemas"]["UserOut"];
@@ -1432,6 +2294,17 @@ export interface components {
              */
             message: string;
         };
+        /** Page[AiRunOut] */
+        Page_AiRunOut_: {
+            /** Items */
+            items: components["schemas"]["AiRunOut"][];
+            /** Total */
+            total: number;
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+        };
         /** Page[AuditOut] */
         Page_AuditOut_: {
             /** Items */
@@ -1453,6 +2326,81 @@ export interface components {
             page: number;
             /** Page Size */
             page_size: number;
+        };
+        /** ResolvePreviewIn */
+        ResolvePreviewIn: {
+            /** Style Slug */
+            style_slug: string;
+            /** Topic */
+            topic?: string | null;
+            /** Format Slug */
+            format_slug?: string | null;
+            /** Account Id */
+            account_id?: number | null;
+            /** Flow */
+            flow?: ("A" | "B") | null;
+            /** Intensity */
+            intensity?: number | null;
+        };
+        /** RestrictionIn */
+        RestrictionIn: {
+            /** Name */
+            name: string;
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+            /** Starts At */
+            starts_at?: string | null;
+            /** Ends At */
+            ends_at?: string | null;
+            /**
+             * Blocked Formats
+             * @default []
+             */
+            blocked_formats: string[];
+            /**
+             * Blocked Creatives
+             * @default []
+             */
+            blocked_creatives: string[];
+            /**
+             * Mandatory Legends
+             * @default []
+             */
+            mandatory_legends: string[];
+            /**
+             * Reason
+             * @default
+             */
+            reason: string;
+        };
+        /** RestrictionOut */
+        RestrictionOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Active */
+            active: boolean;
+            /** Starts At */
+            starts_at: string | null;
+            /** Ends At */
+            ends_at: string | null;
+            /** Blocked Formats */
+            blocked_formats: string[];
+            /** Blocked Creatives */
+            blocked_creatives: string[];
+            /** Mandatory Legends */
+            mandatory_legends: string[];
+            /** Reason */
+            reason: string;
+            /**
+             * In Effect
+             * @default false
+             */
+            in_effect: boolean;
         };
         /** SearchHit */
         SearchHit: {
@@ -1495,6 +2443,455 @@ export interface components {
             patch: {
                 [key: string]: unknown;
             };
+        };
+        /** StyleIn */
+        StyleIn: {
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Tags
+             * @default {}
+             */
+            tags: {
+                [key: string]: string[];
+            };
+            /**
+             * Free Tags
+             * @default []
+             */
+            free_tags: string[];
+            /**
+             * Intensity Min
+             * @default 1
+             */
+            intensity_min: number;
+            /**
+             * Intensity Max
+             * @default 2
+             */
+            intensity_max: number;
+            /**
+             * Voice
+             * @default {
+             *       "persona": "nosotros_institucional",
+             *       "trato": "usted",
+             *       "idioma": "es-MX"
+             *     }
+             */
+            voice: {
+                [key: string]: unknown;
+            };
+            /**
+             * Guidelines
+             * @default {
+             *       "haz": [],
+             *       "evita": []
+             *     }
+             */
+            guidelines: {
+                [key: string]: string[];
+            };
+            /**
+             * Preferred Vocab
+             * @default []
+             */
+            preferred_vocab: string[];
+            /**
+             * Prohibited Vocab
+             * @default []
+             */
+            prohibited_vocab: string[];
+            /**
+             * Length
+             * @default {
+             *       "copy_principal": {
+             *         "max": 280,
+             *         "min": 120,
+             *         "unidad": "caracteres"
+             *       }
+             *     }
+             */
+            length: {
+                [key: string]: unknown;
+            };
+            /**
+             * Emoji Usage
+             * @default ninguno
+             * @enum {string}
+             */
+            emoji_usage: "ninguno" | "moderado";
+            /**
+             * Caps Usage
+             * @default normal
+             * @enum {string}
+             */
+            caps_usage: "normal" | "solo_rotulos";
+            /**
+             * Good Examples
+             * @default []
+             */
+            good_examples: string[];
+            /**
+             * Bad Examples
+             * @default []
+             */
+            bad_examples: string[];
+            /**
+             * Visual Guide
+             * @default
+             */
+            visual_guide: string;
+            /**
+             * Palette
+             * @default []
+             */
+            palette: string[];
+            /**
+             * Allowed Formats
+             * @default []
+             */
+            allowed_formats: string[];
+            /**
+             * Risk
+             * @default bajo
+             * @enum {string}
+             */
+            risk: "bajo" | "medio" | "alto";
+            /**
+             * Requires Legal
+             * @default false
+             */
+            requires_legal: boolean;
+            /** Slug */
+            slug: string;
+        };
+        /** StyleOut */
+        StyleOut: {
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Tags
+             * @default {}
+             */
+            tags: {
+                [key: string]: string[];
+            };
+            /**
+             * Free Tags
+             * @default []
+             */
+            free_tags: string[];
+            /**
+             * Intensity Min
+             * @default 1
+             */
+            intensity_min: number;
+            /**
+             * Intensity Max
+             * @default 2
+             */
+            intensity_max: number;
+            /**
+             * Voice
+             * @default {
+             *       "persona": "nosotros_institucional",
+             *       "trato": "usted",
+             *       "idioma": "es-MX"
+             *     }
+             */
+            voice: {
+                [key: string]: unknown;
+            };
+            /**
+             * Guidelines
+             * @default {
+             *       "haz": [],
+             *       "evita": []
+             *     }
+             */
+            guidelines: {
+                [key: string]: string[];
+            };
+            /**
+             * Preferred Vocab
+             * @default []
+             */
+            preferred_vocab: string[];
+            /**
+             * Prohibited Vocab
+             * @default []
+             */
+            prohibited_vocab: string[];
+            /**
+             * Length
+             * @default {
+             *       "copy_principal": {
+             *         "max": 280,
+             *         "min": 120,
+             *         "unidad": "caracteres"
+             *       }
+             *     }
+             */
+            length: {
+                [key: string]: unknown;
+            };
+            /**
+             * Emoji Usage
+             * @default ninguno
+             * @enum {string}
+             */
+            emoji_usage: "ninguno" | "moderado";
+            /**
+             * Caps Usage
+             * @default normal
+             * @enum {string}
+             */
+            caps_usage: "normal" | "solo_rotulos";
+            /**
+             * Good Examples
+             * @default []
+             */
+            good_examples: string[];
+            /**
+             * Bad Examples
+             * @default []
+             */
+            bad_examples: string[];
+            /**
+             * Visual Guide
+             * @default
+             */
+            visual_guide: string;
+            /**
+             * Palette
+             * @default []
+             */
+            palette: string[];
+            /**
+             * Allowed Formats
+             * @default []
+             */
+            allowed_formats: string[];
+            /**
+             * Risk
+             * @default bajo
+             * @enum {string}
+             */
+            risk: "bajo" | "medio" | "alto";
+            /**
+             * Requires Legal
+             * @default false
+             */
+            requires_legal: boolean;
+            /** Id */
+            id: number;
+            /** Client Id */
+            client_id: number | null;
+            /** Slug */
+            slug: string;
+            /** Version */
+            version: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "borrador" | "revision" | "activo" | "archivado";
+            /** Parent Id */
+            parent_id: number | null;
+            /** Change Note */
+            change_note: string;
+            /** Legal Approved At */
+            legal_approved_at: string | null;
+            /** Legal Approved By Name */
+            legal_approved_by_name?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * Is Base
+             * @default false
+             */
+            is_base: boolean;
+            /**
+             * Versions
+             * @default []
+             */
+            versions: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** StylePatch */
+        StylePatch: {
+            /** Name */
+            name?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Tags */
+            tags?: {
+                [key: string]: string[];
+            } | null;
+            /** Free Tags */
+            free_tags?: string[] | null;
+            /** Intensity Min */
+            intensity_min?: number | null;
+            /** Intensity Max */
+            intensity_max?: number | null;
+            /** Voice */
+            voice?: {
+                [key: string]: unknown;
+            } | null;
+            /** Guidelines */
+            guidelines?: {
+                [key: string]: string[];
+            } | null;
+            /** Preferred Vocab */
+            preferred_vocab?: string[] | null;
+            /** Prohibited Vocab */
+            prohibited_vocab?: string[] | null;
+            /** Length */
+            length?: {
+                [key: string]: unknown;
+            } | null;
+            /** Emoji Usage */
+            emoji_usage?: ("ninguno" | "moderado") | null;
+            /** Caps Usage */
+            caps_usage?: ("normal" | "solo_rotulos") | null;
+            /** Good Examples */
+            good_examples?: string[] | null;
+            /** Bad Examples */
+            bad_examples?: string[] | null;
+            /** Visual Guide */
+            visual_guide?: string | null;
+            /** Palette */
+            palette?: string[] | null;
+            /** Allowed Formats */
+            allowed_formats?: string[] | null;
+            /** Risk */
+            risk?: ("bajo" | "medio" | "alto") | null;
+            /** Requires Legal */
+            requires_legal?: boolean | null;
+            /** Change Note */
+            change_note?: string | null;
+        };
+        /** StyleTestIn */
+        StyleTestIn: {
+            /** Text */
+            text?: string | null;
+            /** Flow */
+            flow?: ("A" | "B") | null;
+        };
+        /** StyleTestOut */
+        StyleTestOut: {
+            /** Sample */
+            sample: string;
+            /** Topic */
+            topic: string | null;
+            /** Strategy */
+            strategy: string;
+            /** Flow */
+            flow: string;
+            /** Segments */
+            segments: {
+                [key: string]: unknown;
+            }[];
+            /** Text */
+            text: string;
+            /** Why */
+            why: string;
+            /** Missing Data */
+            missing_data: string[];
+            /** Lint Status */
+            lint_status: string;
+            /** Findings */
+            findings: {
+                [key: string]: unknown;
+            }[];
+            /** Resolved */
+            resolved: {
+                [key: string]: unknown;
+            };
+            /** Style Block */
+            style_block: string;
+            /** Ai Run Id */
+            ai_run_id: number;
+        };
+        /** StyleTransitionIn */
+        StyleTransitionIn: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "borrador" | "revision" | "activo" | "archivado";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
+        /** TagDimensionIn */
+        TagDimensionIn: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /**
+             * Kind
+             * @default categorical
+             * @enum {string}
+             */
+            kind: "categorical" | "numeric";
+        };
+        /** TagDimensionOut */
+        TagDimensionOut: {
+            /** Id */
+            id: number;
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Kind */
+            kind: string;
+            /** Min Value */
+            min_value: number | null;
+            /** Max Value */
+            max_value: number | null;
+            /** Tags */
+            tags: components["schemas"]["TagOut"][];
+        };
+        /** TagIn */
+        TagIn: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+        };
+        /** TagOut */
+        TagOut: {
+            /** Id */
+            id: number;
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Ord */
+            ord: number;
         };
         /** TopicIn */
         TopicIn: {
@@ -3223,6 +4620,1107 @@ export interface operations {
                     "application/json": {
                         [key: string]: number;
                     };
+                };
+            };
+        };
+    };
+    list_tags_tags_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDimensionOut"][];
+                };
+            };
+        };
+    };
+    create_dimension_tags_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TagDimensionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDimensionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_tag_tags__dimension_id__values_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dimension_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TagIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagDimensionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_tag_tags__dimension_id__values__tag_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dimension_id: number;
+                tag_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_styles_styles_get: {
+        parameters: {
+            query?: {
+                include_base?: boolean;
+                all_versions?: boolean;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_style_styles_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StyleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_style_styles__style_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_style_styles__style_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StylePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    clone_style_styles__style_id__clone_post: {
+        parameters: {
+            query?: {
+                new_slug?: string | null;
+            };
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transition_style_styles__style_id__transition_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StyleTransitionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legal_approve_style_styles__style_id__legal_approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_style_styles__style_id__test_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StyleTestIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleTestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_style_styles__style_id__export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                style_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_style_styles_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolve_preview_styles_resolve_preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolvePreviewIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_directives_directives_get: {
+        parameters: {
+            query?: {
+                all_versions?: boolean;
+                status?: string | null;
+                dtype?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_directive_directives_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DirectiveFields"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_directive_directives__directive_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directive_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_directive_directives__directive_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directive_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DirectivePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    directive_versions_directives__directive_id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directive_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recheck_directive_directives__directive_id__check_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directive_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_finding_directives__directive_id__findings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directive_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FindingDecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transition_directive_directives__directive_id__transition_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directive_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DirectiveTransitionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recheck_all_directives_recheck_all_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectiveOut"][];
+                };
+            };
+        };
+    };
+    list_formats_catalog_formats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FormatOut"][];
+                };
+            };
+        };
+    };
+    update_format_catalog_formats__format_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                format_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FormatPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FormatOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_creatives_catalog_creatives_get: {
+        parameters: {
+            query?: {
+                flow?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeTypeOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_creative_catalog_creatives__creative_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                creative_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreativeTypePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeTypeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_matrix_catalog_matrix_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatrixOut"];
+                };
+            };
+        };
+    };
+    set_matrix_cell_catalog_matrix_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MatrixCell"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatrixCell"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_restrictions_veda_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RestrictionOut"][];
+                };
+            };
+        };
+    };
+    create_restriction_veda_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RestrictionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RestrictionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_restriction_veda__restriction_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                restriction_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RestrictionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RestrictionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_ai_runs_ai_runs_get: {
+        parameters: {
+            query?: {
+                step?: string | null;
+                case_id?: number | null;
+                piece_id?: number | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_AiRunOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_ai_run_ai_runs__run_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AiRunDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

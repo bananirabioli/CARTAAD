@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "Segment": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "asercion_factual",
+            "opinion_marcada",
+            "pregunta",
+            "llamado",
+            "saludo"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "fact_ids": {
+          "description": "Obligatorio (≥1) si type = asercion_factual.",
+          "items": {
+            "type": "integer"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "type"
+      ],
+      "title": "Segment",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "segments": {
+      "items": {
+        "$ref": "#/$defs/Segment"
+      },
+      "title": "Segments",
+      "type": "array"
+    },
+    "why": {
+      "title": "Why",
+      "type": "string"
+    },
+    "adaptation": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Adaptation"
+    },
+    "missing_data": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Data",
+      "type": "array"
+    }
+  },
+  "required": [
+    "segments",
+    "why"
+  ],
+  "title": "GenerateCopyOut",
+  "type": "object"
+}

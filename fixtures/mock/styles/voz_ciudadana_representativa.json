@@ -1,0 +1,43 @@
+{
+  "openers": {
+    "desmentir": [
+      "Como vecinos queremos los datos completos sobre {topic}.",
+      "Desde la colonia: lo que circula sobre {topic} no cuadra con lo que vemos."
+    ],
+    "contextualizar": [
+      "Quienes vivimos el tema de {topic} todos los días queremos saber qué falta.",
+      "En la colonia, el tema de {topic} se entiende mejor con el contexto completo."
+    ],
+    "reencuadrar": [
+      "Para quien abre su negocio temprano, lo importante de {topic} es otra cosa.",
+      "En la parada del camión se habla de {topic}, y esto es lo que importa."
+    ],
+    "contrastar": [
+      "Desde la banqueta, el tema de {topic} se ve mejor con los datos completos."
+    ],
+    "amplificar": [
+      "Se nota cuando mejora lo de {topic} en la colonia.",
+      "En la colonia se comenta el avance en {topic}."
+    ],
+    "agradecer": [
+      "En la colonia se agradece cuando avanza lo de {topic}."
+    ]
+  },
+  "false_opener": "Desde la colonia: lo que circula sobre {topic} no coincide con lo que dicen los datos.",
+  "empathy": "En la colonia entendemos la molestia.",
+  "fact_prefix": [
+    "Dicen los datos oficiales: ",
+    "Lo que muestran los registros: "
+  ],
+  "no_fact": "Faltan los datos oficiales para responder bien.",
+  "mandatory_template": "Al final, es {phrase}.",
+  "closers": {
+    "A": "Ilustración representativa: no corresponde a una persona real.",
+    "B": "Ilustración representativa: no corresponde a una persona real."
+  },
+  "headline": {
+    "A": "La voz de la colonia sobre {topic}",
+    "B": "Así se vive el tema de {topic} en la colonia"
+  },
+  "question": "¿Usted qué opina?"
+}

@@ -1,0 +1,44 @@
+{
+  "openers": {
+    "desmentir": [
+      "{client} precisa la información difundida sobre {topic}.",
+      "{client} corrige la información difundida sobre {topic}."
+    ],
+    "contextualizar": [
+      "{client} comparte el contexto completo sobre {topic}.",
+      "{client} informa el contexto que falta en lo difundido sobre {topic}."
+    ],
+    "reencuadrar": [
+      "{client} informa sobre {topic} con base en datos oficiales.",
+      "{client} precisa el alcance real del tema de {topic}."
+    ],
+    "contrastar": [
+      "{client} presenta datos comparables sobre {topic}.",
+      "Con datos del mismo periodo, {client} presenta la comparación sobre {topic}."
+    ],
+    "amplificar": [
+      "{client} comparte más información sobre los avances en {topic}.",
+      "{client} reconoce la difusión de los avances en {topic}."
+    ],
+    "agradecer": [
+      "{client} agradece a quienes compartieron los avances en {topic}."
+    ]
+  },
+  "false_opener": "{client} informa que la afirmación difundida sobre {topic} no corresponde con los registros oficiales.",
+  "empathy": "{client} reconoce la afectación reportada.",
+  "fact_prefix": [
+    "De acuerdo con {issuer}, ",
+    "Con base en {issuer}, "
+  ],
+  "no_fact": "El dato oficial se encuentra en revisión y se publicará con su fuente.",
+  "mandatory_template": "Este tema implica {phrase}.",
+  "closers": {
+    "A": "Los reportes ciudadanos se reciben por los canales oficiales de atención.",
+    "B": "Se seguirá informando sobre los avances con datos verificables."
+  },
+  "headline": {
+    "A": "Información oficial sobre {topic}",
+    "B": "Avances en {topic}"
+  },
+  "question": "¿Qué dicen los registros oficiales sobre {topic}?"
+}

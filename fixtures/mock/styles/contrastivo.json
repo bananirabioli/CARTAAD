@@ -1,0 +1,43 @@
+{
+  "openers": {
+    "desmentir": [
+      "Los datos comparables sobre {topic} dicen otra cosa.",
+      "La comparación difundida sobre {topic} no es equivalente."
+    ],
+    "contextualizar": [
+      "Pongamos los datos de {topic} en comparación justa: mismo periodo, misma base."
+    ],
+    "reencuadrar": [
+      "La comparación correcta sobre {topic} es esta.",
+      "Si se comparan los datos de {topic}, que sea con la misma regla."
+    ],
+    "contrastar": [
+      "Comparación sobre {topic}: mismo periodo, misma base.",
+      "Lado a lado, con la misma regla: {topic}.",
+      "Mismos criterios para ambos lados en {topic}."
+    ],
+    "amplificar": [
+      "La comparación confirma el avance en {topic}."
+    ],
+    "agradecer": [
+      "Gracias por mostrar la diferencia en {topic}."
+    ]
+  },
+  "false_opener": "La comparación difundida sobre {topic} no usa la misma base.",
+  "empathy": "La pregunta es legítima y merece una comparación justa.",
+  "fact_prefix": [
+    "De un lado: ",
+    "Del otro lado: "
+  ],
+  "no_fact": "Sin datos equivalentes no hay comparación justa; falta el dato.",
+  "mandatory_template": "Para comparar bien: {phrase}.",
+  "closers": {
+    "A": "{closing}",
+    "B": "{closing}"
+  },
+  "headline": {
+    "A": "Lado a lado: {topic}",
+    "B": "Lado a lado: {topic}"
+  },
+  "question": "¿Comparamos con la misma regla?"
+}
