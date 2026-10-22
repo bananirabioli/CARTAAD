@@ -16,3 +16,4 @@ from app.models.styles import CreativeFormatCompat, CreativeType, Directive, For
 from app.models.monitoring import Comment, InteractionSnapshot, MonitoredSource, OwnedAccount, Post  # noqa: F401
 from app.models.cases import Case, Claim, Classification, Interpretation  # noqa: F401
 from app.models.generation import ConsentRecord, FigureCheck, Piece, PieceVersion, Proposal, RedTeamNote, Review  # noqa: F401
+from app.models.publishing import AllyPackage, AllyShare, ScheduledPost  # noqa: F401

@@ -24,7 +24,8 @@ const MARK_CLASS: Record<string, string> = {
 };
 
 export function MatrixTab() {
-  const { can } = useSession();
+  const { can, me } = useSession();
+  const veda = me?.restriction as { blocked_formats?: string[]; blocked_creatives?: string[]; name?: string } | null;
   const { data, isLoading } = useApi<Schemas["MatrixOut"]>("/catalog/matrix");
   const [editing, setEditing] = useState<Schemas["MatrixCell"] | null>(null);
   if (isLoading || !data) return <Loading />;
@@ -38,9 +39,10 @@ export function MatrixTab() {
             <TableRow>
               <TableHead className="min-w-56">{t("matrix.creative")}</TableHead>
               {data.formats.map((f) => (
-                <TableHead key={f.slug} className="text-center text-xs">
+                <TableHead key={f.slug} className={cn("text-center text-xs", veda?.blocked_formats?.includes(f.slug) && "bg-veda/10")}>
                   {f.code}
                   <div className="font-normal text-muted-foreground">{f.name}</div>
+                  {veda?.blocked_formats?.includes(f.slug) ? <div className="font-normal text-veda">{t("cases.blockedByVeda")}</div> : null}
                 </TableHead>
               ))}
             </TableRow>

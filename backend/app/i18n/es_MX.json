@@ -260,5 +260,16 @@
   "generation": {
     "missing_fact": "Faltan insumos: no hay un dato duro con fuente sobre el tema.",
     "missing_photos": "Faltan insumos: no hay par de fotos reales «antes» y «después» con crédito."
+  },
+  "publishing": {
+    "not_approvable": "La pieza todavía no se puede aprobar.",
+    "package_expired": "El paquete no existe o ya venció.",
+    "blockers": {
+      "legal": "HR-10: la pieza requiere liberación de legal.",
+      "missing_inputs": "Faltan insumos: {items}",
+      "consent": "HR-07: falta el consentimiento adjunto del testimonio.",
+      "rejected_figures": "Hay cifras rechazadas por la persona verificadora.",
+      "render": "El render de la imagen está {status}."
+    }
   }
 }

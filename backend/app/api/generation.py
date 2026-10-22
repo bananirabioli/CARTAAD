@@ -4,12 +4,12 @@ from datetime import datetime
 
 from fastapi import APIRouter, Depends, File, Form, UploadFile
 from fastapi.responses import HTMLResponse
+from pydantic import BaseModel
 from sqlalchemy import select
 
 from app.api.deps import Ctx, get_ctx, owned, require
 from app.db import utcnow
 from app.errors import AppError
-from app.guardrails.hard_rules import HardRuleViolation, PieceGate, assert_approvable
 from app.models.cases import Case
 from app.models.core import User
 from app.models.generation import ConsentRecord, FigureCheck, Piece, Proposal, Review
@@ -34,37 +34,11 @@ from app.services import pieces as piece_svc
 from app.services.catalog import active_style, format_style_slugs, get_format, style_allowed_for_format
 from app.services.facts import fact_out
 from app.services.generation import start_generation
+from app.services.publishing import approval_blockers
+from app.services import publishing as pub_svc
 from app.storage import client_key, get_storage
 
 router = APIRouter(tags=["generation"])
-
-
-def gate_for(piece: Piece) -> PieceGate:
-    return PieceGate(
-        status=piece.status, current_version=piece.current_version, approved_version=piece.approved_version, figures_total=len(piece.figures),
-        figures_verified=sum(1 for f in piece.figures if f.status == "verificada"), blocking_findings=sum(1 for f in piece.validation if f.get("severity") == "block"),
-        legal_required=piece.legal_required, legal_status=piece.legal_status,
-    )
-
-
-def approval_blockers(db, piece: Piece) -> list[str]:  # noqa: ANN001
-    from app.models.styles import CreativeType
-
-    blockers = []
-    try:
-        assert_approvable(gate_for(piece))
-    except HardRuleViolation as exc:
-        blockers.append(f"{exc.rule_id}: {exc.message}")
-    if piece.legal_required and piece.legal_status != "liberada" and not any("legal" in b.lower() for b in blockers):
-        blockers.append("HR-10: la pieza requiere liberación de legal.")
-    if piece.missing_inputs:
-        blockers.append("; ".join(piece.missing_inputs))
-    ct = db.scalar(select(CreativeType).where(CreativeType.client_id == piece.client_id, CreativeType.slug == piece.creative_slug)) if piece.creative_slug else None
-    if ct and ct.requires_consent and not db.scalar(select(ConsentRecord.id).where(ConsentRecord.piece_id == piece.id)):
-        blockers.append("HR-07: falta el consentimiento adjunto del testimonio.")
-    if any(f.status == "rechazada" for f in piece.figures):
-        blockers.append("Hay cifras rechazadas por la persona verificadora.")
-    return blockers
 
 
 def piece_out(ctx: Ctx, piece: Piece, model: type[PieceOut] = PieceOut) -> PieceOut:
@@ -254,4 +228,29 @@ async def attach_consent(
     piece_svc.edit_piece(ctx.db, piece, ctx.user, {"slots": slots}, "testimonio real con consentimiento")
     ctx.db.commit()
     piece_svc.enqueue_pending_render(piece)
+    return piece_out(ctx, piece, PieceDetail)
+
+
+class _NoteIn(BaseModel):
+    note: str = ""
+
+
+class _ReasonIn(BaseModel):
+    reason: str
+
+
+@router.post("/pieces/{piece_id}/approve", response_model=PieceDetail)
+def approve(piece_id: int, body: _NoteIn, ctx: Ctx = Depends(require("piece.approve"))) -> PieceOut:
+    """HR-09: human approval only with every figure verified, legal released, consent attached and no blocking findings."""
+    piece = owned(ctx.db, Piece, piece_id, ctx.client_id)
+    pub_svc.approve(ctx.db, piece, ctx.user, body.note)
+    ctx.db.commit()
+    return piece_out(ctx, piece, PieceDetail)
+
+
+@router.post("/pieces/{piece_id}/discard", response_model=PieceDetail)
+def discard(piece_id: int, body: _ReasonIn, ctx: Ctx = Depends(require("piece.discard"))) -> PieceOut:
+    piece = owned(ctx.db, Piece, piece_id, ctx.client_id)
+    pub_svc.discard(ctx.db, piece, ctx.user, body.reason)
+    ctx.db.commit()
     return piece_out(ctx, piece, PieceDetail)

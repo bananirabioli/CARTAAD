@@ -41,9 +41,11 @@ function Section({ title, children, action, className }: { title: string; childr
 }
 
 function DecisionPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) {
-  const { can } = useSession();
+  const { can, me } = useSession();
   const accounts = c.account_options ?? [];
-  const [accountId, setAccountId] = useState<string>(accounts[0] ? String(accounts[0].id) : "");
+  const vedaFormats = ((me?.restriction as { blocked_formats?: string[] } | null)?.blocked_formats) ?? [];
+  const firstOk = accounts.find((a) => !vedaFormats.includes(a.format_slug));
+  const [accountId, setAccountId] = useState<string>(firstOk ? String(firstOk.id) : "");
   const account = accounts.find((a) => String(a.id) === accountId);
   const recommended = (c.recommended_style?.value as string | null) ?? null;
   const [style, setStyle] = useState<string>("");
@@ -81,11 +83,15 @@ function DecisionPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) 
               <Select value={accountId} onValueChange={setAccountId}>
                 <SelectTrigger className="w-full max-w-full min-w-0"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  {accounts.map((a) => (
-                    <SelectItem key={a.id} value={String(a.id)}>
-                      {a.display_name} · {a.format_name} · {tEnum("account_type", a.account_type)}
-                    </SelectItem>
-                  ))}
+                  {accounts.map((a) => {
+                    const blocked = vedaFormats.includes(a.format_slug);
+                    return (
+                      <SelectItem key={a.id} value={String(a.id)} disabled={blocked}>
+                        {a.display_name} · {a.format_name} · {tEnum("account_type", a.account_type)}
+                        {blocked ? ` · ${t("cases.blockedByVeda")}` : ""}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
             </div>

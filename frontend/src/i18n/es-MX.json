@@ -356,6 +356,16 @@
       "listo": "Render listo",
       "error": "Error de render",
       "no_aplica": "Solo texto"
+    },
+    "schedule_status": {
+      "programado": "Programado",
+      "publicado": "Publicado (simulado)",
+      "cancelado": "Cancelado",
+      "error": "Bloqueado al publicar"
+    },
+    "piece_kind": {
+      "copy": "Copy",
+      "creative": "Creativo"
     }
   },
   "common": {
@@ -865,7 +875,8 @@
       "cuenta": "de la cuenta",
       "formato": "del formato",
       "cliente": "del cliente"
-    }
+    },
+    "blockedByVeda": "bloqueado por modo veda"
   },
   "generation": {
     "title": "Generación",
@@ -958,6 +969,174 @@
   "inbox": {
     "approve": "Aprobar",
     "approved": "Pieza aprobada",
-    "discard": "Descartar"
+    "discard": "Descartar",
+    "title": "Bandeja de aprobación",
+    "subtitle": "Verifica cada cifra, revisa riesgo y red team, y aprueba o descarta. Ninguna pieza se programa sin aprobación humana (HR-09).",
+    "statusPending": "Pendientes",
+    "statusApproved": "Aprobadas",
+    "statusAll": "Todas",
+    "allStyles": "Todos los estilos",
+    "allKinds": "Copy y creativos",
+    "allLegal": "Legal: todas",
+    "legalPending": "Legal pendiente",
+    "tag": "Etiqueta (p. ej. estrategia:desmentir)",
+    "original": "Publicación original",
+    "interpretation": "Interpretación",
+    "approveConfirm": "Aprobar versión v{version}",
+    "noteOptional": "Nota (opcional)",
+    "discardReason": "Motivo del descarte",
+    "openEditor": "Abrir editor",
+    "blockers": "Pendientes para aprobar",
+    "ready": "Lista para aprobar"
+  },
+  "publishing": {
+    "title": "Publicación",
+    "subtitle": "Programación simulada solo hacia cuentas propias, aliadas o vocerías registradas (HR-02). La app no publica en redes reales.",
+    "tabs": {
+      "calendar": "Calendario",
+      "allies": "Paquetes para aliados",
+      "export": "Exportación"
+    },
+    "schedule": "Programar pieza",
+    "piece": "Pieza aprobada",
+    "copyPiece": "Copy que acompaña (opcional)",
+    "account": "Cuenta registrada",
+    "when": "Fecha y hora",
+    "noApproved": "No hay piezas aprobadas para programar.",
+    "publishNow": "Publicar ahora (simulado)",
+    "cancel": "Cancelar",
+    "text": "Texto que saldría",
+    "week": "Próximos 14 días",
+    "past": "Publicado y anteriores",
+    "newPackage": "Nuevo paquete",
+    "packageTitle": "Título",
+    "packageMessage": "Mensaje para aliados",
+    "packagePieces": "Piezas aprobadas incluidas",
+    "packageCase": "Caso",
+    "expiresIn": "Vence en (días)",
+    "link": "Enlace",
+    "copyLink": "Copiar enlace",
+    "expires": "Vence {date}",
+    "revoked": "Revocado",
+    "revoke": "Revocar",
+    "shares": "Compartido por",
+    "noShares": "Nadie lo ha marcado como compartido todavía.",
+    "exportHelp": "Descarga las piezas aprobadas (PNG + copy + spec JSON con estilo y etiquetas) para que diseño las pula.",
+    "exportCase": "Exportar caso",
+    "exportPiece": "Exportar pieza"
+  },
+  "ally": {
+    "title": "Paquete para aliados",
+    "from": "De: {client}",
+    "expires": "Disponible hasta {date}",
+    "suggested": "Copy sugerido",
+    "download": "Descargar todo (ZIP)",
+    "markShared": "Marcar como compartido",
+    "account": "Tu cuenta registrada",
+    "name": "Tu nombre",
+    "thanks": "¡Gracias! Quedó registrado.",
+    "onlyRegistered": "Solo cuentas aliadas o vocerías registradas por el equipo pueden marcar como compartido.",
+    "expired": "Este paquete no existe o ya venció."
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Clientes, usuarios y roles, cuentas con formato y estilo, modo veda, umbrales de alerta, pesos del riesgo, temas, catálogos y mapeo de estrategias. Todo editable sin tocar código.",
+    "tabs": {
+      "veda": "Modo veda",
+      "accounts": "Cuentas",
+      "thresholds": "Umbrales y pesos",
+      "topics": "Temas",
+      "catalog": "Formatos y creativos",
+      "users": "Usuarios",
+      "clients": "Clientes",
+      "ai": "Registro de IA"
+    },
+    "veda": {
+      "help": "El equipo gestiona la veda manualmente (la app no interpreta la ley). Mientras esté vigente: banner global, formatos y creativos bloqueados deshabilitados y leyendas obligatorias. Todo cambio queda en la bitácora.",
+      "new": "Nueva restricción",
+      "name": "Nombre",
+      "active": "Habilitada",
+      "startsAt": "Inicio",
+      "endsAt": "Fin",
+      "formats": "Formatos bloqueados",
+      "creatives": "Creativos bloqueados",
+      "legends": "Leyendas obligatorias (una por línea)",
+      "reason": "Motivo / referencia",
+      "inEffect": "Vigente ahora",
+      "scheduled": "Programada",
+      "disabled": "Deshabilitada",
+      "activateNow": "Activar ahora (demo)"
+    },
+    "accounts": {
+      "new": "Nueva cuenta",
+      "handle": "Cuenta",
+      "name": "Nombre visible",
+      "type": "Tipo",
+      "format": "Formato asignado",
+      "style": "Estilo por defecto (opcional)",
+      "registered": "Registrada por el equipo",
+      "verified": "Verificada",
+      "verify": "Verificar",
+      "help": "Cada cuenta propia tiene un formato asignado; el estilo por defecto de la cuenta anula el del formato. Solo se publica hacia cuentas registradas y verificadas (HR-02)."
+    },
+    "thresholds": {
+      "alert": "Umbrales de alerta (× línea base)",
+      "window": "Ventana de velocidad (horas)",
+      "baselineDays": "Días mínimos de historial para línea base",
+      "minSample": "Muestra mínima para recomendar",
+      "weights": "Pesos del puntaje de riesgo",
+      "validators": "Modo de validadores",
+      "strategyMapping": "Mapeo tipo de mensaje → estrategias",
+      "variantStyles": "Estilos de variantes por defecto",
+      "creatives": "Creativos por propuesta (mín–máx)",
+      "review": "Cada cuántos días revisar la lista de fuentes",
+      "save": "Guardar ajustes",
+      "block": "Bloquea",
+      "warn": "Avisa"
+    },
+    "topics": {
+      "new": "Nuevo tema",
+      "slug": "Identificador",
+      "name": "Nombre",
+      "keywords": "Palabras clave (coma)"
+    },
+    "catalog": {
+      "formats": "Formatos (líneas editoriales)",
+      "creatives": "Catálogo de creativos",
+      "defaultStyle": "Estilo por defecto",
+      "allowedStyles": "Estilos permitidos (coma)",
+      "options": "Opciones (JSON)",
+      "requiredSlots": "Slots requeridos (coma)",
+      "requiresFact": "Requiere dato",
+      "requiresConsent": "Requiere consentimiento",
+      "requiresPhoto": "Requiere foto real"
+    },
+    "users": {
+      "new": "Nuevo usuario",
+      "email": "Correo",
+      "name": "Nombre",
+      "role": "Rol",
+      "kbOwner": "Dueño de la base",
+      "password": "Contraseña",
+      "active": "Activo",
+      "clients": "Clientes con acceso"
+    },
+    "clients": {
+      "new": "Nuevo cliente",
+      "slug": "Identificador",
+      "name": "Nombre",
+      "type": "Tipo",
+      "tone": "Tono por defecto",
+      "defaultStyle": "Estilo por defecto",
+      "restrictions": "Restricciones"
+    },
+    "ai": {
+      "help": "Cada llamada a la IA queda registrada con versión de prompt, entrada, salida, latencia, estilo y directrices aplicadas.",
+      "step": "Paso",
+      "prompt": "Prompt",
+      "provider": "Proveedor",
+      "latency": "Latencia",
+      "status": "Estado"
+    }
   }
 }

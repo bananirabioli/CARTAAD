@@ -34,7 +34,14 @@ def recompute_baselines() -> int:
 
 @celery_app.task(name="app.tasks.publish_due_posts")
 def publish_due_posts() -> int:
-    return 0
+    """Simulated publication of due scheduled posts; gates (HR-02/04/09) are re-checked at publish time."""
+    from app.db import SessionLocal
+    from app.services.publishing import publish_due
+
+    with SessionLocal() as db:
+        n = publish_due(db)
+        db.commit()
+        return n
 
 
 @celery_app.task(name="app.tasks.process_document")

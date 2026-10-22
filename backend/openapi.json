@@ -6152,6 +6152,854 @@
     }
    }
   },
+  "/pieces/{piece_id}/approve": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Approve",
+    "description": "HR-09: human approval only with every figure verified, legal released, consent attached and no blocking findings.",
+    "operationId": "approve_pieces__piece_id__approve_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/_NoteIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/discard": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Discard",
+    "operationId": "discard_pieces__piece_id__discard_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/_ReasonIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/inbox": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Inbox",
+    "operationId": "inbox_inbox_get",
+    "parameters": [
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "description": "estado de pieza (coma)",
+       "title": "Status"
+      },
+      "description": "estado de pieza (coma)"
+     },
+     {
+      "name": "flow",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Flow"
+      }
+     },
+     {
+      "name": "alert_level",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Alert Level"
+      }
+     },
+     {
+      "name": "style",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Style"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     },
+     {
+      "name": "kind",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Kind"
+      }
+     },
+     {
+      "name": "case_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Case Id"
+      }
+     },
+     {
+      "name": "legal",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^(pendiente|liberada|bloqueada)$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Legal"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 1,
+       "title": "Page"
+      }
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 30,
+       "title": "Page Size"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_InboxItem_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/schedule": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "List Schedule",
+    "operationId": "list_schedule_schedule_get",
+    "parameters": [
+     {
+      "name": "since",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date-time"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Since"
+      }
+     },
+     {
+      "name": "until",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date-time"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Until"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ScheduledOut"
+         },
+         "title": "Response List Schedule Schedule Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Create Schedule",
+    "operationId": "create_schedule_schedule_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ScheduleIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ScheduledOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/schedule/{sp_id}/cancel": {
+   "post": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Cancel Schedule",
+    "operationId": "cancel_schedule_schedule__sp_id__cancel_post",
+    "parameters": [
+     {
+      "name": "sp_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Sp Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ScheduledOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/schedule/{sp_id}/publish-now": {
+   "post": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Publish Now",
+    "description": "Simulated publication (the prototype never posts to real networks).",
+    "operationId": "publish_now_schedule__sp_id__publish_now_post",
+    "parameters": [
+     {
+      "name": "sp_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Sp Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ScheduledOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/export.zip": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Export Piece",
+    "operationId": "export_piece_pieces__piece_id__export_zip_get",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/export.zip": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Export Case",
+    "operationId": "export_case_cases__case_id__export_zip_get",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/ally-packages": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "List Packages",
+    "operationId": "list_packages_ally_packages_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/AllyPackageOut"
+         },
+         "type": "array",
+         "title": "Response List Packages Ally Packages Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Create Package",
+    "operationId": "create_package_ally_packages_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AllyPackageIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AllyPackageOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/ally-packages/{pkg_id}/revoke": {
+   "post": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Revoke Package",
+    "operationId": "revoke_package_ally_packages__pkg_id__revoke_post",
+    "parameters": [
+     {
+      "name": "pkg_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Pkg Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AllyPackageOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/public/ally/{token}": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Public Package",
+    "operationId": "public_package_public_ally__token__get",
+    "parameters": [
+     {
+      "name": "token",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Token"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PublicPackage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/public/ally/{token}/shared": {
+   "post": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Public Share",
+    "operationId": "public_share_public_ally__token__shared_post",
+    "parameters": [
+     {
+      "name": "token",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Token"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ShareIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Message"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/public/ally/{token}/download.zip": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Public Download",
+    "operationId": "public_download_public_ally__token__download_zip_get",
+    "parameters": [
+     {
+      "name": "token",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Token"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/publishing/stats": {
+   "get": {
+    "tags": [
+     "publishing"
+    ],
+    "summary": "Publishing Stats",
+    "operationId": "publishing_stats_publishing_stats_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "integer"
+         },
+         "type": "object",
+         "title": "Response Publishing Stats Publishing Stats Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -6856,6 +7704,117 @@
      "created_at"
     ],
     "title": "AiRunOut"
+   },
+   "AllyPackageIn": {
+    "properties": {
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "title": {
+      "type": "string",
+      "minLength": 3,
+      "title": "Title"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message",
+      "default": ""
+     },
+     "piece_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Piece Ids"
+     },
+     "expires_in_days": {
+      "type": "integer",
+      "maximum": 60.0,
+      "minimum": 1.0,
+      "title": "Expires In Days",
+      "default": 7
+     }
+    },
+    "type": "object",
+    "required": [
+     "case_id",
+     "title",
+     "piece_ids"
+    ],
+    "title": "AllyPackageIn"
+   },
+   "AllyPackageOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "case_code": {
+      "type": "string",
+      "title": "Case Code"
+     },
+     "token": {
+      "type": "string",
+      "title": "Token"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message"
+     },
+     "piece_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Piece Ids"
+     },
+     "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Expires At"
+     },
+     "revoked": {
+      "type": "boolean",
+      "title": "Revoked"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "shares": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Shares",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "case_id",
+     "case_code",
+     "token",
+     "title",
+     "message",
+     "piece_ids",
+     "expires_at",
+     "revoked",
+     "created_at"
+    ],
+    "title": "AllyPackageOut"
    },
    "AssignIn": {
     "properties": {
@@ -11090,6 +12049,353 @@
     ],
     "title": "ImportReport"
    },
+   "InboxItem": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "proposal_id": {
+      "type": "integer",
+      "title": "Proposal Id"
+     },
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "creative_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Creative Slug"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "type": "integer",
+      "title": "Style Version"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "intensity": {
+      "type": "integer",
+      "title": "Intensity"
+     },
+     "effective_tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Effective Tags"
+     },
+     "applied_directives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Applied Directives"
+     },
+     "adaptation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Adaptation"
+     },
+     "why": {
+      "type": "string",
+      "title": "Why"
+     },
+     "content": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Content"
+     },
+     "missing_inputs": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Missing Inputs"
+     },
+     "renders": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Renders"
+     },
+     "render_status": {
+      "type": "string",
+      "title": "Render Status"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "validation": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Validation"
+     },
+     "validation_status": {
+      "type": "string",
+      "title": "Validation Status"
+     },
+     "compliance": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Compliance"
+     },
+     "risk_score": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Risk Score"
+     },
+     "risk_breakdown": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Risk Breakdown"
+     },
+     "red_team_summary": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Red Team Summary"
+     },
+     "legal_required": {
+      "type": "boolean",
+      "title": "Legal Required"
+     },
+     "legal_status": {
+      "type": "string",
+      "title": "Legal Status"
+     },
+     "legal_reason": {
+      "type": "string",
+      "title": "Legal Reason"
+     },
+     "legal_note": {
+      "type": "string",
+      "title": "Legal Note"
+     },
+     "current_version": {
+      "type": "integer",
+      "title": "Current Version"
+     },
+     "approved_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved Version"
+     },
+     "approved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved At"
+     },
+     "discard_reason": {
+      "type": "string",
+      "title": "Discard Reason"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "figures_total": {
+      "type": "integer",
+      "title": "Figures Total",
+      "default": 0
+     },
+     "figures_verified": {
+      "type": "integer",
+      "title": "Figures Verified",
+      "default": 0
+     },
+     "case_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Code"
+     },
+     "account_handle": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Handle"
+     },
+     "approvable": {
+      "type": "boolean",
+      "title": "Approvable",
+      "default": false
+     },
+     "approval_blockers": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Approval Blockers",
+      "default": []
+     },
+     "case_status": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Status"
+     },
+     "alert_level": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Alert Level"
+     },
+     "topic_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Slug"
+     },
+     "post_text": {
+      "type": "string",
+      "title": "Post Text",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "proposal_id",
+     "case_id",
+     "kind",
+     "creative_slug",
+     "format_slug",
+     "account_id",
+     "flow",
+     "style_slug",
+     "style_version",
+     "strategy",
+     "intensity",
+     "effective_tags",
+     "applied_directives",
+     "adaptation",
+     "why",
+     "content",
+     "missing_inputs",
+     "renders",
+     "render_status",
+     "status",
+     "validation",
+     "validation_status",
+     "compliance",
+     "risk_score",
+     "risk_breakdown",
+     "red_team_summary",
+     "legal_required",
+     "legal_status",
+     "legal_reason",
+     "legal_note",
+     "current_version",
+     "approved_version",
+     "approved_at",
+     "discard_reason",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "InboxItem"
+   },
    "InterpretationOut": {
     "properties": {
      "summary": {
@@ -11549,6 +12855,37 @@
      "page_size"
     ],
     "title": "Page[FactOut]"
+   },
+   "Page_InboxItem_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/InboxItem"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "page_size": {
+      "type": "integer",
+      "title": "Page Size"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "page",
+     "page_size"
+    ],
+    "title": "Page[InboxItem]"
    },
    "Page_PostOut_": {
     "properties": {
@@ -12813,6 +14150,98 @@
     ],
     "title": "ProposalOut"
    },
+   "PublicPackage": {
+    "properties": {
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message"
+     },
+     "client_name": {
+      "type": "string",
+      "title": "Client Name"
+     },
+     "suggested_copy": {
+      "type": "string",
+      "title": "Suggested Copy"
+     },
+     "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Expires At"
+     },
+     "pieces": {
+      "items": {
+       "$ref": "#/components/schemas/PublicPiece"
+      },
+      "type": "array",
+      "title": "Pieces"
+     },
+     "accounts": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Accounts"
+     },
+     "download_url": {
+      "type": "string",
+      "title": "Download Url"
+     }
+    },
+    "type": "object",
+    "required": [
+     "title",
+     "message",
+     "client_name",
+     "suggested_copy",
+     "expires_at",
+     "pieces",
+     "accounts",
+     "download_url"
+    ],
+    "title": "PublicPackage"
+   },
+   "PublicPiece": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "images": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Images"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "label",
+     "kind",
+     "images",
+     "text"
+    ],
+    "title": "PublicPiece"
+   },
    "ReasonIn": {
     "properties": {
      "reason": {
@@ -13104,6 +14533,146 @@
     ],
     "title": "RevertIn"
    },
+   "ScheduleIn": {
+    "properties": {
+     "piece_id": {
+      "type": "integer",
+      "title": "Piece Id"
+     },
+     "account_id": {
+      "type": "integer",
+      "title": "Account Id"
+     },
+     "scheduled_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Scheduled At"
+     },
+     "copy_piece_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Copy Piece Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "piece_id",
+     "account_id",
+     "scheduled_at"
+    ],
+    "title": "ScheduleIn"
+   },
+   "ScheduledOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "case_code": {
+      "type": "string",
+      "title": "Case Code"
+     },
+     "piece_id": {
+      "type": "integer",
+      "title": "Piece Id"
+     },
+     "piece_label": {
+      "type": "string",
+      "title": "Piece Label"
+     },
+     "copy_piece_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Copy Piece Id"
+     },
+     "account_id": {
+      "type": "integer",
+      "title": "Account Id"
+     },
+     "account_handle": {
+      "type": "string",
+      "title": "Account Handle"
+     },
+     "account_type": {
+      "type": "string",
+      "title": "Account Type"
+     },
+     "scheduled_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Scheduled At"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "error": {
+      "type": "string",
+      "title": "Error"
+     },
+     "published_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Published At"
+     },
+     "render": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Render"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "case_id",
+     "case_code",
+     "piece_id",
+     "piece_label",
+     "copy_piece_id",
+     "account_id",
+     "account_handle",
+     "account_type",
+     "scheduled_at",
+     "status",
+     "text",
+     "error",
+     "published_at"
+    ],
+    "title": "ScheduledOut"
+   },
    "SearchHit": {
     "properties": {
      "kind": {
@@ -13188,6 +14757,36 @@
      "patch"
     ],
     "title": "SettingsPatch"
+   },
+   "ShareIn": {
+    "properties": {
+     "account_id": {
+      "type": "integer",
+      "title": "Account Id"
+     },
+     "shared_by_name": {
+      "type": "string",
+      "minLength": 2,
+      "title": "Shared By Name"
+     },
+     "piece_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Piece Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "account_id",
+     "shared_by_name"
+    ],
+    "title": "ShareIn"
    },
    "SnapshotIn": {
     "properties": {
@@ -15366,6 +16965,30 @@
      "client_slug"
     ],
     "title": "WebhookIn"
+   },
+   "_NoteIn": {
+    "properties": {
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "title": "_NoteIn"
+   },
+   "_ReasonIn": {
+    "properties": {
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "reason"
+    ],
+    "title": "_ReasonIn"
    }
   }
  }
