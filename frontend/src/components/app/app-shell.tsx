@@ -28,7 +28,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { fmtDate, t, tEnum } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-import { Loading } from "./common";
+import { ErrorState, Loading } from "./common";
 import { SessionProvider, useSession } from "./session";
 
 type NavItem = { href: string; label: string; icon: React.ComponentType<{ className?: string }> };
@@ -224,7 +224,15 @@ function Topbar() {
 }
 
 function ShellBody({ children }: { children: React.ReactNode }) {
-  const { me, loading } = useSession();
+  const { me, loading, error, reload } = useSession();
+  // A 401 is already redirecting to /login; any other failure must not look like an endless load.
+  if (!me && error && error.status !== 401) {
+    return (
+      <div className="p-8">
+        <ErrorState error={error} onRetry={() => void reload()} />
+      </div>
+    );
+  }
   if (loading || !me) return <Loading className="p-8" />;
   return (
     <div className="flex min-h-screen">

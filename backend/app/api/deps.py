@@ -50,19 +50,25 @@ def accessible_client_ids(db: Session, user: User) -> list[int]:
 
 
 def resolve_client(request: Request, db: Session, user: User) -> Client:
-    raw = request.headers.get("x-client-id") or request.cookies.get(CLIENT_COOKIE)
     allowed = accessible_client_ids(db, user)
     if not allowed:
         raise AppError(403, "client_forbidden")
-    if raw is None:
-        client_id = allowed[0]
-    else:
+    header = request.headers.get("x-client-id")
+    if header:
+        # An explicit selection from an API caller must be valid.
         try:
-            client_id = int(raw)
+            client_id = int(header)
         except ValueError as exc:
             raise AppError(400, "client_required") from exc
         if client_id not in allowed:
             raise AppError(403, "client_forbidden")
+    else:
+        # The cookie only remembers the last pick: one left over from another session or database must not lock the user out.
+        try:
+            remembered = int(request.cookies.get(CLIENT_COOKIE, ""))
+        except ValueError:
+            remembered = None
+        client_id = remembered if remembered in allowed else allowed[0]
     client = db.get(Client, client_id)
     if client is None:
         raise AppError(403, "client_forbidden")

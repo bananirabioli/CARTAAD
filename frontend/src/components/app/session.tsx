@@ -2,13 +2,14 @@
 
 import { createContext, useCallback, useContext, useMemo } from "react";
 
-import { api, refresh, useApi, type Schemas } from "@/lib/api/client";
+import { api, refresh, useApi, type ApiError, type Schemas } from "@/lib/api/client";
 
 type Me = Schemas["MeOut"];
 
 type SessionValue = {
   me: Me | undefined;
   loading: boolean;
+  error: ApiError | undefined;
   can: (permission: string) => boolean;
   selectClient: (clientId: number) => Promise<void>;
   viewAs: (role: string, kbOwner?: boolean) => Promise<void>;
@@ -19,7 +20,7 @@ type SessionValue = {
 const SessionContext = createContext<SessionValue | null>(null);
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  const { data, isLoading, mutate } = useApi<Me>("/auth/me");
+  const { data, error, isLoading, mutate } = useApi<Me>("/auth/me");
 
   const can = useCallback((permission: string) => Boolean(data?.permissions.includes(permission)), [data]);
 
@@ -49,8 +50,8 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ me: data, loading: isLoading, can, selectClient, viewAs, logout, reload: mutate }),
-    [data, isLoading, can, selectClient, viewAs, logout, mutate],
+    () => ({ me: data, loading: isLoading, error, can, selectClient, viewAs, logout, reload: mutate }),
+    [data, isLoading, error, can, selectClient, viewAs, logout, mutate],
   );
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

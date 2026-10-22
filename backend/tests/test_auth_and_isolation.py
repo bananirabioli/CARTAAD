@@ -45,6 +45,19 @@ def test_client_isolation(client):
     assert r.status_code == 403
 
 
+def test_stale_client_cookie_falls_back_to_an_accessible_client(client):
+    me = login(client, "candidatura@demo.mx")
+    own_id = me["client"]["id"]
+    other_id = 1 if own_id != 1 else 2
+    for stale in (str(other_id), "99", "abc", ""):
+        client.cookies.set("cartaad_client", stale)
+        r = client.get("/auth/me")
+        assert r.status_code == 200, (stale, r.text)
+        assert r.json()["client"]["id"] == own_id
+    client.cookies.set("cartaad_client", str(other_id))
+    assert client.get("/topics", headers={"X-Client-Id": str(other_id)}).status_code == 403
+
+
 def test_topics_are_per_client(client):
     login(client, "admin@demo.mx", "municipio-ejemplo")
     r = client.post("/topics", json={"slug": "alumbrado", "name": "Alumbrado", "keywords": ["luminaria"]})
