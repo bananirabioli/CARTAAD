@@ -126,3 +126,19 @@ Registro de desviaciones o precisiones respecto al stack propuesto. Cada entrada
 - **Decisión:** una palabra clave de tema con prefijo `~` cuenta medio punto (p. ej. `~calle` en baches), para que una
   mención incidental no gane sobre la palabra clave fuerte de otro tema ("calle de la escuela" + "luminarias" →
   seguridad).
+
+## D-19 · Narrativas coordinadas por página y como señal
+
+- **Decisión:** se agrupan publicaciones no históricas de páginas distintas, del mismo tema y dentro de la ventana
+  configurada, por similitud de *embeddings* (componentes conexas sobre `repeated_similarity`). Un grupo es «patrón
+  coordinado» con 3 o más páginas, similitud media ≥ `coordinated_similarity` y lapso dentro de la ventana; si no, es
+  «mensaje repetido». La interfaz y el reporte aclaran que es una señal para revisión, no una prueba.
+- **Por qué:** el alcance excluye perfilar ciudadanos (HR-03); la unidad es la página pública monitoreada.
+
+## D-20 · Casos avanzados de la semilla por el pipeline real
+
+- **Decisión:** los tres casos avanzados (calificado, en revisión con versiones del copiloto, programado con paquete
+  para aliados) se construyen llamando a los mismos servicios que la API, en lugar de insertar filas. En la API, la
+  semilla automática corre en un hilo (`asyncio.to_thread`) para que el render con Playwright síncrono funcione.
+- **Por qué:** así la semilla respeta reglas duras, validadores, versiones y bitácora, y no puede quedar en un estado
+  que el sistema no permitiría.

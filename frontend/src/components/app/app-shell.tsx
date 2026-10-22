@@ -25,7 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { fmtDate, t } from "@/i18n";
+import { fmtDate, t, tEnum } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 import { Loading } from "./common";
@@ -133,8 +133,8 @@ function VedaBanner() {
       <span className="font-semibold">{t("topbar.vedaActive", { name: r.name })}</span>
       <span>
         {t("topbar.vedaDetail", {
-          formats: r.blocked_formats.join(", ") || t("topbar.none"),
-          creatives: r.blocked_creatives.join(", ") || t("topbar.none"),
+          formats: r.blocked_formats.map((f) => tEnum("format", f)).join(", ") || t("topbar.none"),
+          creatives: r.blocked_creatives.map((c) => tEnum("creative", c)).join(", ") || t("topbar.none"),
           until: fmtDate(r.ends_at),
         })}
       </span>

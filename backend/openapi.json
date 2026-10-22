@@ -7316,6 +7316,265 @@
     }
    }
   },
+  "/intelligence/narratives": {
+   "get": {
+    "tags": [
+     "intelligence"
+    ],
+    "summary": "Narratives",
+    "operationId": "narratives_intelligence_narratives_get",
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 90,
+       "minimum": 1,
+       "default": 7,
+       "title": "Days"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/NarrativeOut"
+         },
+         "title": "Response Narratives Intelligence Narratives Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/intelligence/weekly-report": {
+   "get": {
+    "tags": [
+     "intelligence"
+    ],
+    "summary": "Weekly Report",
+    "operationId": "weekly_report_intelligence_weekly_report_get",
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Start"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Weekly Report Intelligence Weekly Report Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/intelligence/weekly-report.md": {
+   "get": {
+    "tags": [
+     "intelligence"
+    ],
+    "summary": "Weekly Report Md",
+    "operationId": "weekly_report_md_intelligence_weekly_report_md_get",
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Start"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/intelligence/weekly-report.html": {
+   "get": {
+    "tags": [
+     "intelligence"
+    ],
+    "summary": "Weekly Report Html",
+    "operationId": "weekly_report_html_intelligence_weekly_report_html_get",
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Start"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     },
+     {
+      "name": "download",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Download"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "text/html": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -13177,6 +13436,97 @@
      "reach"
     ],
     "title": "MetricsIn"
+   },
+   "NarrativeOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "level": {
+      "type": "string",
+      "title": "Level"
+     },
+     "topic": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic"
+     },
+     "topic_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Name"
+     },
+     "representative": {
+      "type": "string",
+      "title": "Representative"
+     },
+     "posts": {
+      "type": "integer",
+      "title": "Posts"
+     },
+     "sources": {
+      "type": "integer",
+      "title": "Sources"
+     },
+     "mean_similarity": {
+      "type": "number",
+      "title": "Mean Similarity"
+     },
+     "first_seen": {
+      "type": "string",
+      "title": "First Seen"
+     },
+     "last_seen": {
+      "type": "string",
+      "title": "Last Seen"
+     },
+     "span_hours": {
+      "type": "number",
+      "title": "Span Hours"
+     },
+     "interactions": {
+      "type": "integer",
+      "title": "Interactions"
+     },
+     "items": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Items"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "level",
+     "topic",
+     "topic_name",
+     "representative",
+     "posts",
+     "sources",
+     "mean_similarity",
+     "first_seen",
+     "last_seen",
+     "span_hours",
+     "interactions",
+     "items"
+    ],
+    "title": "NarrativeOut"
    },
    "Page_AiRunOut_": {
     "properties": {

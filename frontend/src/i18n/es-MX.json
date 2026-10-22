@@ -42,7 +42,7 @@
     "mockMode": "IA en modo mock",
     "liveMode": "IA: {provider}",
     "vedaActive": "Modo veda activo: {name}",
-    "vedaDetail": "Formatos bloqueados: {formats}. Creativos bloqueados: {creatives}. Vigente hasta {until}.",
+    "vedaDetail": "Formatos bloqueados: {formats}. Creativos bloqueados: {creatives}. Vigente hasta: {until}",
     "vedaLegends": "Leyendas obligatorias: {legends}",
     "none": "ninguno",
     "reminders": "Recordatorios"
@@ -1180,5 +1180,32 @@
     },
     "engagement": "Interacción",
     "variant": "Variante"
+  },
+  "intelligence": {
+    "title": "Inteligencia",
+    "subtitle": "Narrativas que se repiten en varias páginas dentro de una ventana de tiempo (agrupadas por similitud) y reporte semanal exportable.",
+    "tabs": {
+      "narratives": "Narrativas coordinadas",
+      "report": "Reporte semanal"
+    },
+    "window": "Últimos {days} días",
+    "disclaimer": "Se agrupan páginas públicas monitoreadas, nunca personas. «Patrón coordinado» (3 o más páginas, similitud alta, en la ventana configurada) es una señal para revisión, no prueba de coordinación.",
+    "level": {
+      "coordinado": "Patrón coordinado",
+      "repetido": "Mensaje repetido"
+    },
+    "pages": "{n} páginas",
+    "posts": "{n} publicaciones",
+    "similarity": "similitud media {value}",
+    "span": "en {hours} h",
+    "interactions": "{n} interacciones",
+    "firstSeen": "Primera aparición",
+    "openCase": "Abrir caso",
+    "none": "No se detectaron narrativas repetidas en esta ventana.",
+    "start": "Inicio de la semana",
+    "startHelp": "Vacío = últimos 7 días",
+    "tag": "Filtrar respuestas por etiqueta",
+    "downloadMd": "Descargar Markdown",
+    "downloadHtml": "Descargar HTML"
   }
 }

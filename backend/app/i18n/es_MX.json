@@ -249,7 +249,7 @@
       "intensity_max_no_alt": "«Más firme» excede la intensidad máxima del estilo «{style}» ({max}) y no hay otro estilo permitido en este formato con más intensidad.",
       "register": "El estilo «{style}» usa registro {current}; para un registro {target} cambia al estilo «{suggested}».",
       "register_no_alt": "El estilo «{style}» no admite registro {target} y no hay otro estilo permitido para este formato con ese registro.",
-      "hard_rule": "La instrucción contradice {rule}: {message}",
+      "hard_rule": "La instrucción contradice {rule} ({title}): «{snippet}». Las reglas duras no se pueden desactivar.",
       "no_fact": "Dato faltante: no hay un hecho vigente y pertinente en la base; pídelo al dueño de la base.",
       "same_style": "La pieza ya está en el estilo «{style}».",
       "no_other_angle": "No hay otra estrategia disponible para este caso."
@@ -274,5 +274,80 @@
   },
   "metrics": {
     "not_published": "Solo se miden piezas publicadas."
+  },
+  "intelligence": {
+    "manual_capture": "captura manual",
+    "reason_legal": "Revisión legal pendiente",
+    "reason_undecided": "Alerta alta sin decisión",
+    "months": "ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic",
+    "enums": {
+      "alert_level": {
+        "bajo": "Bajo",
+        "medio": "Medio",
+        "alto": "Alto",
+        "critico": "Crítico",
+        "sin_linea_base": "Sin línea base"
+      },
+      "stance": {
+        "en_contra": "En contra",
+        "a_favor": "A favor",
+        "neutral": "Neutral"
+      },
+      "decision": {
+        "responder": "Responder",
+        "monitorear": "Monitorear",
+        "ignorar": "Ignorar",
+        "canalizar": "Canalizar a atención"
+      },
+      "strategy": {
+        "desmentir": "Desmentir",
+        "contextualizar": "Contextualizar",
+        "reencuadrar": "Reencuadrar",
+        "contrastar": "Contrastar",
+        "amplificar": "Amplificar",
+        "agradecer": "Agradecer"
+      },
+      "narrative_level": {
+        "coordinado": "Patrón coordinado",
+        "repetido": "Mensaje repetido"
+      }
+    },
+    "report": {
+      "title": "Reporte semanal",
+      "period": "Del {start} al {end}",
+      "summary": "Resumen",
+      "summary_line": "{posts} publicaciones monitoreadas, {cases} casos nuevos, {routed} quejas canalizadas a atención ciudadana.",
+      "flow": "Flujo",
+      "veda": "Modo veda",
+      "veda_line": "Vigente: {name} (hasta {end}). Formatos y creativos bloqueados; leyendas obligatorias.",
+      "topics": "Temas de la semana",
+      "topic": "Tema",
+      "cases": "Casos",
+      "high": "Alerta alta o crítica",
+      "against": "En contra",
+      "narratives": "Narrativas coordinadas o repetidas",
+      "level": "Patrón",
+      "pages": "Páginas",
+      "similarity": "Similitud",
+      "span": "Ventana",
+      "message": "Mensaje",
+      "attention": "Requiere atención",
+      "case": "Caso",
+      "alert": "Alerta",
+      "reason": "Motivo",
+      "responses": "Respuestas",
+      "tag": "etiqueta",
+      "responses_line": "{pieces} piezas generadas, {approved} aprobadas por una persona, {published} publicadas.",
+      "decisions": "Decisiones",
+      "by_style": "Aprobadas por estilo",
+      "by_format": "Aprobadas por formato",
+      "by_strategy": "Aprobadas por estrategia",
+      "by_creative": "Aprobadas por creativo",
+      "results": "Resultados",
+      "results_line": "{measured} mediciones; alcance medio contra el original: {reach}. Calificaciones: {worked} funcionó, {not_worked} no funcionó.",
+      "rejected": "Directrices rechazadas por reglas duras",
+      "none": "Sin registros esta semana.",
+      "footer": "Generado por C-A-R-T-A-A-D con datos ficticios de demostración. El LLM propone y redacta, el código valida, una persona decide. «Patrón coordinado» es una señal para revisión, no prueba de coordinación."
+    }
   }
 }

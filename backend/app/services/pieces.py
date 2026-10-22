@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from app.ai.runner import StepMeta, run_step
 from app.db import utcnow
 from app.errors import AppError
-from app.guardrails.hard_rules import check_text_against_hard_rules
+from app.guardrails.hard_rules import HARD_RULES, check_text_against_hard_rules
 from app.i18n import t
 from app.models.cases import Case
 from app.models.core import Client, Topic, User
@@ -155,7 +155,8 @@ def run_copilot(db: Session, piece: Piece, user: User, *, action: str, instructi
         raise AppError(409, "conflict", t("pieces.errors.locked", status=piece.status))
     hits = check_text_against_hard_rules(instruction) if instruction else []
     if hits:
-        return {"applied": False, "message": t("pieces.copilot.hard_rule", rule=hits[0].rule_id, message=hits[0].message), "rule_id": hits[0].rule_id}
+        hit = hits[0]
+        return {"applied": False, "message": t("pieces.copilot.hard_rule", rule=hit.rule_id, title=HARD_RULES[hit.rule_id].title, snippet=hit.snippet), "rule_id": hit.rule_id}
     case = db.get(Case, piece.case_id)
     client = db.get(Client, piece.client_id)
     settings = get_client_settings(client)

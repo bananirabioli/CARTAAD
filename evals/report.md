@@ -1,6 +1,6 @@
 # Reporte de evaluación
 
-- Proveedor: **mock** · casos: 20 · aprobados: **20/20** · tiempo: 6.9 s
+- Proveedor: **mock** · casos: 20 · aprobados: **20/20** · tiempo: 11.4 s
 - Generado por `make eval` (regresión con MockProvider; `EVAL_PROVIDER=anthropic` para medir calidad con el modelo real).
 
 ## Resumen por tipo

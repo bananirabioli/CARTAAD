@@ -11,12 +11,15 @@ help:
 	@echo "make eval          # set de evaluación con MockProvider → evals/report.md"
 	@echo "make openapi       # regenera openapi.json y los tipos del frontend"
 	@echo "make typecheck     # tsc del frontend"
+	@echo "make lint          # eslint del frontend"
+	@echo "make dev-api / dev-web  # API y web locales sin Docker"
 	@echo "make seed-sources  # agrega 100 fuentes monitoreadas de prueba"
 
 setup:
 	$(PYTHON312) -m venv backend/.venv
 	$(PY) -m pip install -q --upgrade pip
 	$(PY) -m pip install -q -r backend/requirements.txt
+	$(PY) -m playwright install chromium
 	cd frontend && pnpm install
 
 up:
