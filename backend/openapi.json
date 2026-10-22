@@ -869,6 +869,1470 @@
     }
    }
   },
+  "/kb/gov-levels": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Levels",
+    "operationId": "list_levels_kb_gov_levels_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/GovLevelOut"
+         },
+         "type": "array",
+         "title": "Response List Levels Kb Gov Levels Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Create Level",
+    "operationId": "create_level_kb_gov_levels_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/GovLevelIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GovLevelOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/facts": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Facts",
+    "operationId": "list_facts_kb_facts_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "topic_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic Id"
+      }
+     },
+     {
+      "name": "gov_level_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Gov Level Id"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^(vigente|vencido|sin_documento|sin_verificar)$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "default": 1,
+       "title": "Page"
+      }
+     },
+     {
+      "name": "page_size",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Page Size"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_FactOut_"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Create Fact",
+    "operationId": "create_fact_kb_facts_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FactIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FactOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/facts/{fact_id}": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Get Fact",
+    "operationId": "get_fact_kb_facts__fact_id__get",
+    "parameters": [
+     {
+      "name": "fact_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Fact Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FactOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Fact",
+    "operationId": "update_fact_kb_facts__fact_id__patch",
+    "parameters": [
+     {
+      "name": "fact_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Fact Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FactPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FactOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/facts/{fact_id}/verify": {
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Verify Fact",
+    "operationId": "verify_fact_kb_facts__fact_id__verify_post",
+    "parameters": [
+     {
+      "name": "fact_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Fact Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FactOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/facts/import": {
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Import Facts",
+    "operationId": "import_facts_kb_facts_import_post",
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_import_facts_kb_facts_import_post"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportReport"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/documents": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Documents",
+    "operationId": "list_documents_kb_documents_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DocumentOut"
+         },
+         "title": "Response List Documents Kb Documents Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Upload Document",
+    "operationId": "upload_document_kb_documents_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_upload_document_kb_documents_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DocumentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/documents/{doc_id}": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Get Document",
+    "operationId": "get_document_kb_documents__doc_id__get",
+    "parameters": [
+     {
+      "name": "doc_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Doc Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DocumentDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Document",
+    "operationId": "update_document_kb_documents__doc_id__patch",
+    "parameters": [
+     {
+      "name": "doc_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Doc Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DocumentPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DocumentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/search": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Search",
+    "operationId": "search_kb_search_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 2,
+       "title": "Q"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 50,
+       "minimum": 1,
+       "default": 12,
+       "title": "Limit"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/SearchHit"
+         },
+         "title": "Response Search Kb Search Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/briefs": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Briefs",
+    "operationId": "list_briefs_kb_briefs_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/BriefOut"
+         },
+         "type": "array",
+         "title": "Response List Briefs Kb Briefs Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Create Brief",
+    "operationId": "create_brief_kb_briefs_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/BriefIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/BriefOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/briefs/{brief_id}": {
+   "put": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Brief",
+    "operationId": "update_brief_kb_briefs__brief_id__put",
+    "parameters": [
+     {
+      "name": "brief_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Brief Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/BriefIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/BriefOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/key-messages": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Key Messages",
+    "operationId": "list_key_messages_kb_key_messages_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/KeyMessageOut"
+         },
+         "type": "array",
+         "title": "Response List Key Messages Kb Key Messages Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Create Key Message",
+    "operationId": "create_key_message_kb_key_messages_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/KeyMessageIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/KeyMessageOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/key-messages/{km_id}": {
+   "put": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Key Message",
+    "operationId": "update_key_message_kb_key_messages__km_id__put",
+    "parameters": [
+     {
+      "name": "km_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Km Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/KeyMessageIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/KeyMessageOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Delete Key Message",
+    "operationId": "delete_key_message_kb_key_messages__km_id__delete",
+    "parameters": [
+     {
+      "name": "km_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Km Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Message"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/actors": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Actors",
+    "operationId": "list_actors_kb_actors_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ActorOut"
+         },
+         "type": "array",
+         "title": "Response List Actors Kb Actors Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Create Actor",
+    "operationId": "create_actor_kb_actors_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ActorIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ActorOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/actors/{actor_id}": {
+   "put": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Actor",
+    "operationId": "update_actor_kb_actors__actor_id__put",
+    "parameters": [
+     {
+      "name": "actor_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Actor Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ActorIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ActorOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/competences": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Competences",
+    "operationId": "list_competences_kb_competences_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/CompetenceOut"
+         },
+         "type": "array",
+         "title": "Response List Competences Kb Competences Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Create Competence",
+    "operationId": "create_competence_kb_competences_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CompetenceIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CompetenceOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/competences/{comp_id}": {
+   "put": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Competence",
+    "operationId": "update_competence_kb_competences__comp_id__put",
+    "parameters": [
+     {
+      "name": "comp_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Comp Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CompetenceIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CompetenceOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/images": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List Images",
+    "operationId": "list_images_kb_images_get",
+    "parameters": [
+     {
+      "name": "image_type",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Image Type"
+      }
+     },
+     {
+      "name": "topic_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic Id"
+      }
+     },
+     {
+      "name": "tag",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Tag"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ImageOut"
+         },
+         "title": "Response List Images Kb Images Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Upload Image",
+    "operationId": "upload_image_kb_images_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_upload_image_kb_images_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImageOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/images/{image_id}": {
+   "patch": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Update Image",
+    "operationId": "update_image_kb_images__image_id__patch",
+    "parameters": [
+     {
+      "name": "image_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Image Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ImagePatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImageOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/history": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "List History",
+    "operationId": "list_history_kb_history_get",
+    "parameters": [
+     {
+      "name": "topic",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic"
+      }
+     },
+     {
+      "name": "style",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Style"
+      }
+     },
+     {
+      "name": "format",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Format"
+      }
+     },
+     {
+      "name": "strategy",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Strategy"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/HistoryOut"
+         },
+         "title": "Response List History Kb History Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/stats": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Kb Stats",
+    "operationId": "kb_stats_kb_stats_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "integer"
+         },
+         "type": "object",
+         "title": "Response Kb Stats Kb Stats Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -897,6 +2361,117 @@
  },
  "components": {
   "schemas": {
+   "ActorIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "aliases": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Aliases",
+      "default": []
+     },
+     "actor_type": {
+      "type": "string",
+      "enum": [
+       "gobierno_municipal",
+       "gobierno_estatal",
+       "gobierno_federal",
+       "partido",
+       "funcionario_rol",
+       "organismo",
+       "medio",
+       "organizacion",
+       "otro"
+      ],
+      "title": "Actor Type",
+      "default": "otro"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "is_own": {
+      "type": "boolean",
+      "title": "Is Own",
+      "default": false
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "name"
+    ],
+    "title": "ActorIn"
+   },
+   "ActorOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "aliases": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Aliases"
+     },
+     "actor_type": {
+      "type": "string",
+      "title": "Actor Type"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "is_own": {
+      "type": "boolean",
+      "title": "Is Own"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "aliases",
+     "actor_type",
+     "gov_level_id",
+     "is_own",
+     "notes"
+    ],
+    "title": "ActorOut"
+   },
    "AuditOut": {
     "properties": {
      "id": {
@@ -985,6 +2560,254 @@
      "created_at"
     ],
     "title": "AuditOut"
+   },
+   "Body_import_facts_kb_facts_import_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file"
+    ],
+    "title": "Body_import_facts_kb_facts_import_post"
+   },
+   "Body_upload_document_kb_documents_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "issuer": {
+      "type": "string",
+      "title": "Issuer",
+      "default": ""
+     },
+     "doc_type": {
+      "type": "string",
+      "title": "Doc Type",
+      "default": "informe"
+     },
+     "issued_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issued At"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file",
+     "title"
+    ],
+    "title": "Body_upload_document_kb_documents_post"
+   },
+   "Body_upload_image_kb_images_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "credit": {
+      "type": "string",
+      "title": "Credit",
+      "default": ""
+     },
+     "license": {
+      "type": "string",
+      "title": "License",
+      "default": ""
+     },
+     "image_type": {
+      "type": "string",
+      "title": "Image Type",
+      "default": "foto_real"
+     },
+     "taken_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Taken At"
+     },
+     "tags": {
+      "type": "string",
+      "title": "Tags",
+      "default": ""
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file",
+     "title"
+    ],
+    "title": "Body_upload_image_kb_images_post"
+   },
+   "BriefIn": {
+    "properties": {
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "body_md": {
+      "type": "string",
+      "title": "Body Md",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "title"
+    ],
+    "title": "BriefIn"
+   },
+   "BriefOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "body_md": {
+      "type": "string",
+      "title": "Body Md"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "topic_id",
+     "title",
+     "body_md",
+     "updated_at"
+    ],
+    "title": "BriefOut"
+   },
+   "ChunkOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "ord": {
+      "type": "integer",
+      "title": "Ord"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "ord",
+     "page",
+     "text"
+    ],
+    "title": "ChunkOut"
    },
    "ClientIn": {
     "properties": {
@@ -1159,6 +2982,1030 @@
     "type": "object",
     "title": "ClientPatch"
    },
+   "CompetenceIn": {
+    "properties": {
+     "gov_level_id": {
+      "type": "integer",
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description"
+     },
+     "legal_basis": {
+      "type": "string",
+      "title": "Legal Basis",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "gov_level_id",
+     "description"
+    ],
+    "title": "CompetenceIn"
+   },
+   "CompetenceOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "gov_level_id": {
+      "type": "integer",
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description"
+     },
+     "legal_basis": {
+      "type": "string",
+      "title": "Legal Basis"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "gov_level_id",
+     "topic_id",
+     "description",
+     "legal_basis"
+    ],
+    "title": "CompetenceOut"
+   },
+   "DocumentDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "doc_type": {
+      "type": "string",
+      "title": "Doc Type"
+     },
+     "issuer": {
+      "type": "string",
+      "title": "Issuer"
+     },
+     "issued_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issued At"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "file_key": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "File Key"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "pages": {
+      "type": "integer",
+      "title": "Pages"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "error": {
+      "type": "string",
+      "title": "Error"
+     },
+     "chunk_count": {
+      "type": "integer",
+      "title": "Chunk Count",
+      "default": 0
+     },
+     "fact_count": {
+      "type": "integer",
+      "title": "Fact Count",
+      "default": 0
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "chunks": {
+      "items": {
+       "$ref": "#/components/schemas/ChunkOut"
+      },
+      "type": "array",
+      "title": "Chunks",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "doc_type",
+     "issuer",
+     "issued_at",
+     "url",
+     "file_key",
+     "gov_level_id",
+     "topic_id",
+     "pages",
+     "status",
+     "error",
+     "created_at"
+    ],
+    "title": "DocumentDetail"
+   },
+   "DocumentOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "doc_type": {
+      "type": "string",
+      "title": "Doc Type"
+     },
+     "issuer": {
+      "type": "string",
+      "title": "Issuer"
+     },
+     "issued_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issued At"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "file_key": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "File Key"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "pages": {
+      "type": "integer",
+      "title": "Pages"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "error": {
+      "type": "string",
+      "title": "Error"
+     },
+     "chunk_count": {
+      "type": "integer",
+      "title": "Chunk Count",
+      "default": 0
+     },
+     "fact_count": {
+      "type": "integer",
+      "title": "Fact Count",
+      "default": 0
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "doc_type",
+     "issuer",
+     "issued_at",
+     "url",
+     "file_key",
+     "gov_level_id",
+     "topic_id",
+     "pages",
+     "status",
+     "error",
+     "created_at"
+    ],
+    "title": "DocumentOut"
+   },
+   "DocumentPatch": {
+    "properties": {
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "doc_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Doc Type"
+     },
+     "issuer": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issuer"
+     },
+     "issued_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issued At"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     }
+    },
+    "type": "object",
+    "title": "DocumentPatch"
+   },
+   "DocumentRef": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "issuer": {
+      "type": "string",
+      "title": "Issuer"
+     },
+     "issued_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issued At"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "file_key": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "File Key"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "issuer",
+     "issued_at",
+     "url",
+     "file_key"
+    ],
+    "title": "DocumentRef"
+   },
+   "FactIn": {
+    "properties": {
+     "statement": {
+      "type": "string",
+      "minLength": 5,
+      "title": "Statement"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "unit": {
+      "type": "string",
+      "title": "Unit",
+      "default": ""
+     },
+     "base": {
+      "type": "string",
+      "title": "Base",
+      "default": "total"
+     },
+     "period_label": {
+      "type": "string",
+      "title": "Period Label",
+      "default": ""
+     },
+     "period_start": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period Start"
+     },
+     "period_end": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period End"
+     },
+     "fact_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fact Date"
+     },
+     "document_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Document Id"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "valid_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid Until"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "statement"
+    ],
+    "title": "FactIn"
+   },
+   "FactOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "statement": {
+      "type": "string",
+      "title": "Statement"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "unit": {
+      "type": "string",
+      "title": "Unit"
+     },
+     "base": {
+      "type": "string",
+      "title": "Base"
+     },
+     "period_label": {
+      "type": "string",
+      "title": "Period Label"
+     },
+     "period_start": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period Start"
+     },
+     "period_end": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period End"
+     },
+     "fact_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fact Date"
+     },
+     "document_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Document Id"
+     },
+     "document": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/DocumentRef"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "gov_level_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Name"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "topic_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Slug"
+     },
+     "verified_by_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified By Id"
+     },
+     "verified_by_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified By Name"
+     },
+     "verified_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified At"
+     },
+     "valid_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid Until"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes"
+     },
+     "expired": {
+      "type": "boolean",
+      "title": "Expired",
+      "default": false
+     },
+     "source_label": {
+      "type": "string",
+      "title": "Source Label",
+      "default": ""
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "statement",
+     "value",
+     "unit",
+     "base",
+     "period_label",
+     "period_start",
+     "period_end",
+     "fact_date",
+     "document_id",
+     "gov_level_id",
+     "topic_id",
+     "verified_by_id",
+     "verified_at",
+     "valid_until",
+     "notes",
+     "created_at"
+    ],
+    "title": "FactOut"
+   },
+   "FactPatch": {
+    "properties": {
+     "statement": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Statement"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "unit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Unit"
+     },
+     "base": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Base"
+     },
+     "period_label": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period Label"
+     },
+     "period_start": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period Start"
+     },
+     "period_end": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period End"
+     },
+     "fact_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fact Date"
+     },
+     "document_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Document Id"
+     },
+     "gov_level_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gov Level Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "valid_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Valid Until"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "title": "FactPatch"
+   },
+   "GovLevelIn": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "ord": {
+      "type": "integer",
+      "title": "Ord",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "GovLevelIn"
+   },
+   "GovLevelOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "ord": {
+      "type": "integer",
+      "title": "Ord"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "ord"
+    ],
+    "title": "GovLevelOut"
+   },
    "HTTPValidationError": {
     "properties": {
      "detail": {
@@ -1194,6 +4041,429 @@
      "description"
     ],
     "title": "HardRuleOut"
+   },
+   "HistoryOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "case_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Id"
+     },
+     "piece_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Piece Id"
+     },
+     "topic_slug": {
+      "type": "string",
+      "title": "Topic Slug"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "creative_slug": {
+      "type": "string",
+      "title": "Creative Slug"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "outcome": {
+      "type": "string",
+      "enum": [
+       "funciono",
+       "no_funciono"
+      ],
+      "title": "Outcome"
+     },
+     "reach_ratio": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reach Ratio"
+     },
+     "sentiment_delta": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sentiment Delta"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "case_id",
+     "piece_id",
+     "topic_slug",
+     "format_slug",
+     "style_slug",
+     "strategy",
+     "creative_slug",
+     "flow",
+     "outcome",
+     "reach_ratio",
+     "sentiment_delta",
+     "summary",
+     "notes",
+     "created_at"
+    ],
+    "title": "HistoryOut"
+   },
+   "ImageOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "file_key": {
+      "type": "string",
+      "title": "File Key"
+     },
+     "credit": {
+      "type": "string",
+      "title": "Credit"
+     },
+     "license": {
+      "type": "string",
+      "title": "License"
+     },
+     "taken_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Taken At"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Tags"
+     },
+     "image_type": {
+      "type": "string",
+      "enum": [
+       "foto_real",
+       "ilustracion"
+      ],
+      "title": "Image Type"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "approved": {
+      "type": "boolean",
+      "title": "Approved"
+     },
+     "meta": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Meta"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "file_key",
+     "credit",
+     "license",
+     "taken_at",
+     "tags",
+     "image_type",
+     "topic_id",
+     "approved",
+     "meta",
+     "created_at"
+    ],
+    "title": "ImageOut"
+   },
+   "ImagePatch": {
+    "properties": {
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "credit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Credit"
+     },
+     "license": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "License"
+     },
+     "taken_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Taken At"
+     },
+     "tags": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Tags"
+     },
+     "image_type": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "foto_real",
+         "ilustracion"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Image Type"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "approved": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved"
+     }
+    },
+    "type": "object",
+    "title": "ImagePatch"
+   },
+   "ImportReport": {
+    "properties": {
+     "created": {
+      "type": "integer",
+      "title": "Created"
+     },
+     "updated": {
+      "type": "integer",
+      "title": "Updated",
+      "default": 0
+     },
+     "errors": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Errors",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "created"
+    ],
+    "title": "ImportReport"
+   },
+   "KeyMessageIn": {
+    "properties": {
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "tone_note": {
+      "type": "string",
+      "title": "Tone Note",
+      "default": ""
+     },
+     "priority": {
+      "type": "integer",
+      "maximum": 100.0,
+      "minimum": 1.0,
+      "title": "Priority",
+      "default": 50
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "text"
+    ],
+    "title": "KeyMessageIn"
+   },
+   "KeyMessageOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "tone_note": {
+      "type": "string",
+      "title": "Tone Note"
+     },
+     "priority": {
+      "type": "integer",
+      "title": "Priority"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "topic_id",
+     "text",
+     "tone_note",
+     "priority",
+     "active"
+    ],
+    "title": "KeyMessageOut"
    },
    "LoginIn": {
     "properties": {
@@ -1323,6 +4593,81 @@
      "page_size"
     ],
     "title": "Page[AuditOut]"
+   },
+   "Page_FactOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/FactOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "page": {
+      "type": "integer",
+      "title": "Page"
+     },
+     "page_size": {
+      "type": "integer",
+      "title": "Page Size"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "total",
+     "page",
+     "page_size"
+    ],
+    "title": "Page[FactOut]"
+   },
+   "SearchHit": {
+    "properties": {
+     "kind": {
+      "type": "string",
+      "enum": [
+       "fact",
+       "chunk",
+       "brief"
+      ],
+      "title": "Kind"
+     },
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "snippet": {
+      "type": "string",
+      "title": "Snippet"
+     },
+     "score": {
+      "type": "number",
+      "title": "Score"
+     },
+     "ref": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Ref",
+      "default": {}
+     }
+    },
+    "type": "object",
+    "required": [
+     "kind",
+     "id",
+     "title",
+     "snippet",
+     "score"
+    ],
+    "title": "SearchHit"
    },
    "SelectClientIn": {
     "properties": {

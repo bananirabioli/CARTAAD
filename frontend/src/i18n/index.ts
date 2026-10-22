@@ -41,7 +41,8 @@ export function enumOptions(group: string): { value: string; label: string }[] {
 }
 
 const dateFmt = new Intl.DateTimeFormat(LOCALE, { dateStyle: "medium", timeStyle: "short" });
-const dayFmt = new Intl.DateTimeFormat(LOCALE, { dateStyle: "medium" });
+// Day-precision values are stored as UTC midnight: format them in UTC to avoid off-by-one days.
+const dayFmt = new Intl.DateTimeFormat(LOCALE, { dateStyle: "medium", timeZone: "UTC" });
 const numFmt = new Intl.NumberFormat(LOCALE);
 
 export function fmtDate(value: string | null | undefined): string {

@@ -93,3 +93,13 @@ def next_code(db: Session, client_id: int | None, name: str, prefix: str, width:
 
 def user_permissions(user: User) -> list[str]:
     return sorted(permissions_for(user))
+
+
+def owned(db: Session, model: type, obj_id: int, client_id: int):  # noqa: ANN201
+    """Fetch a client-scoped row or raise 404 (also when it belongs to another client)."""
+    from app.errors import not_found
+
+    obj = db.get(model, obj_id)
+    if obj is None or getattr(obj, "client_id", None) != client_id:
+        raise not_found()
+    return obj

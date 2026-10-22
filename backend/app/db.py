@@ -46,6 +46,9 @@ class Vector(TypeDecorator):
         super().__init__()
         self.dim = dim
 
+    def __repr__(self) -> str:
+        return f"Vector(dim={self.dim})"
+
     def load_dialect_impl(self, dialect: Any) -> Any:
         if dialect.name == "postgresql":
             from pgvector.sqlalchemy import Vector as PGVector

@@ -56,7 +56,42 @@
     "kb_owner": "Dueño de la base"
   },
   "enums": {
-    "client_type": { "gobierno": "Gobierno", "partido": "Partido", "candidatura": "Candidatura" }
+    "client_type": {
+      "gobierno": "Gobierno",
+      "partido": "Partido",
+      "candidatura": "Candidatura"
+    },
+    "image_type": {
+      "foto_real": "Foto real",
+      "ilustracion": "Ilustración"
+    },
+    "actor_type": {
+      "gobierno_municipal": "Gobierno municipal",
+      "gobierno_estatal": "Gobierno estatal",
+      "gobierno_federal": "Gobierno federal",
+      "partido": "Partido",
+      "funcionario_rol": "Cargo / rol",
+      "organismo": "Organismo",
+      "medio": "Medio",
+      "organizacion": "Organización",
+      "otro": "Otro"
+    },
+    "outcome": {
+      "funciono": "Funcionó",
+      "no_funciono": "No funcionó"
+    },
+    "fact_status": {
+      "vigente": "Vigentes",
+      "vencido": "Vencidos",
+      "sin_documento": "Sin documento",
+      "sin_verificar": "Sin verificar"
+    },
+    "doc_status": {
+      "pendiente": "Procesando",
+      "procesado": "Procesado",
+      "sin_texto": "Sin texto extraíble",
+      "error": "Error"
+    }
   },
   "common": {
     "save": "Guardar",
@@ -128,5 +163,129 @@
     "title": "Tablero de alertas",
     "subtitle": "Casos por nivel de alerta y estado, publicaciones que más aceleran y narrativas repetidas.",
     "welcome": "Hola, {name}"
+  },
+  "kb": {
+    "title": "Base de conocimiento",
+    "subtitle": "Hechos con fuente y fecha, documentos oficiales, briefs, mensajes clave, actores, competencias, imágenes aprobadas e historial. La alimenta el equipo; la cura el dueño de la base.",
+    "searchPlaceholder": "Búsqueda semántica en hechos, documentos y briefs…",
+    "searchResults": "Resultados de búsqueda semántica",
+    "score": "similitud {score}",
+    "tabs": {
+      "facts": "Hechos",
+      "documents": "Documentos",
+      "briefs": "Briefs",
+      "messages": "Mensajes clave",
+      "actors": "Actores",
+      "competences": "Competencias",
+      "images": "Banco de imágenes",
+      "history": "Historial"
+    },
+    "kind": {
+      "fact": "Hecho",
+      "chunk": "Documento",
+      "brief": "Brief"
+    },
+    "facts": {
+      "code": "Clave",
+      "statement": "Hecho",
+      "value": "Cifra",
+      "period": "Periodo",
+      "source": "Fuente y fecha",
+      "level": "Nivel",
+      "topic": "Tema",
+      "verified": "Verificación",
+      "validity": "Vigencia",
+      "verifiedBy": "Verificado por {name}",
+      "notVerified": "Sin verificar",
+      "verify": "Marcar verificado",
+      "expired": "Vencido",
+      "validUntil": "Hasta {date}",
+      "noExpiry": "Sin vencimiento",
+      "noDocument": "Sin documento de origen",
+      "new": "Nuevo hecho",
+      "import": "Importar CSV",
+      "importTitle": "Importar hechos desde CSV",
+      "importHelp": "Columnas: code, statement, value, unit, base, period_label, period_start, period_end, fact_date, document (título o id), gov_level, topic, valid_until, notes. Fechas en formato AAAA-MM-DD.",
+      "importResult": "{created} creados, {updated} actualizados, {errors} con error",
+      "unit": "Unidad",
+      "base": "Base",
+      "periodLabel": "Etiqueta de periodo",
+      "periodStart": "Inicio del periodo",
+      "periodEnd": "Fin del periodo",
+      "factDate": "Fecha del dato",
+      "document": "Documento de origen",
+      "notes": "Notas",
+      "allTopics": "Todos los temas",
+      "allLevels": "Todos los niveles",
+      "allStatus": "Todos los estados"
+    },
+    "documents": {
+      "upload": "Subir PDF",
+      "uploadTitle": "Subir documento fuente (PDF)",
+      "titleField": "Título",
+      "issuer": "Emisor",
+      "docType": "Tipo",
+      "issuedAt": "Fecha de emisión",
+      "url": "URL",
+      "chunks": "{count} fragmentos",
+      "facts": "{count} hechos",
+      "pages": "{count} páginas",
+      "viewChunks": "Ver fragmentos",
+      "page": "pág. {page}",
+      "openPdf": "Abrir PDF"
+    },
+    "briefs": {
+      "new": "Nuevo brief",
+      "titleField": "Título",
+      "body": "Contenido (markdown)",
+      "preview": "Vista previa",
+      "edit": "Editar brief",
+      "updated": "Actualizado {date}"
+    },
+    "messages": {
+      "new": "Nuevo mensaje clave",
+      "text": "Mensaje",
+      "tone": "Nota de tono",
+      "priority": "Prioridad",
+      "general": "General"
+    },
+    "actors": {
+      "new": "Nuevo actor",
+      "name": "Nombre",
+      "aliases": "Alias (separados por coma)",
+      "type": "Tipo",
+      "own": "Propio",
+      "notes": "Notas",
+      "help": "El validador de afirmaciones usa nombres y alias para detectar menciones a actores."
+    },
+    "competences": {
+      "new": "Nueva competencia",
+      "description": "Competencia",
+      "legalBasis": "Fundamento",
+      "level": "Nivel de gobierno",
+      "topic": "Tema"
+    },
+    "images": {
+      "upload": "Subir imagen",
+      "uploadTitle": "Subir imagen aprobada",
+      "credit": "Crédito",
+      "license": "Licencia",
+      "takenAt": "Fecha de la toma",
+      "tags": "Etiquetas (separadas por coma)",
+      "type": "Tipo",
+      "creditRequired": "Una foto real requiere crédito (HR-06).",
+      "notEvidence": "Las ilustraciones nunca son evidencia (HR-06)."
+    },
+    "history": {
+      "topic": "Tema",
+      "format": "Formato",
+      "style": "Estilo",
+      "strategy": "Estrategia",
+      "creative": "Creativo",
+      "outcome": "Resultado",
+      "reach": "Alcance vs. original",
+      "sentiment": "Δ sentimiento",
+      "date": "Fecha"
+    }
   }
 }

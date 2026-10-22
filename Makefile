@@ -39,7 +39,8 @@ openapi:
 migration:
 	@test -n "$(m)" || (echo 'uso: make migration m="descripcion"' && exit 1)
 	cd backend && rm -f .migrate.db && DATABASE_URL="sqlite:///$$PWD/.migrate.db" .venv/bin/alembic upgrade head \
-	  && DATABASE_URL="sqlite:///$$PWD/.migrate.db" .venv/bin/alembic revision --autogenerate -m "$(m)" \
+	  && REV=$$(printf "%04d" $$(( $$(ls alembic/versions/*.py | wc -l) + 1 ))) \
+	  && DATABASE_URL="sqlite:///$$PWD/.migrate.db" .venv/bin/alembic revision --autogenerate --rev-id $$REV -m "$(m)" \
 	  && sed -i.bak 's/astext_type=Text()/astext_type=sa.Text()/g' alembic/versions/*.py && rm -f alembic/versions/*.bak .migrate.db
 
 typecheck:

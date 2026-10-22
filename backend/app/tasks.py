@@ -16,3 +16,18 @@ def recompute_baselines() -> int:
 @celery_app.task(name="app.tasks.publish_due_posts")
 def publish_due_posts() -> int:
     return 0
+
+
+@celery_app.task(name="app.tasks.process_document")
+def process_document_task(document_id: int) -> int:
+    from app.db import SessionLocal
+    from app.models.kb import SourceDocument
+    from app.services.documents import process_document
+
+    with SessionLocal() as db:
+        doc = db.get(SourceDocument, document_id)
+        if doc is None:
+            return 0
+        n = process_document(db, doc)
+        db.commit()
+        return n

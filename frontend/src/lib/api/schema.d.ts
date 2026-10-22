@@ -320,6 +320,357 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/kb/gov-levels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Levels */
+        get: operations["list_levels_kb_gov_levels_get"];
+        put?: never;
+        /** Create Level */
+        post: operations["create_level_kb_gov_levels_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/facts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Facts */
+        get: operations["list_facts_kb_facts_get"];
+        put?: never;
+        /** Create Fact */
+        post: operations["create_fact_kb_facts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/facts/{fact_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Fact */
+        get: operations["get_fact_kb_facts__fact_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Fact */
+        patch: operations["update_fact_kb_facts__fact_id__patch"];
+        trace?: never;
+    };
+    "/kb/facts/{fact_id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify Fact */
+        post: operations["verify_fact_kb_facts__fact_id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/facts/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import Facts */
+        post: operations["import_facts_kb_facts_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Documents */
+        get: operations["list_documents_kb_documents_get"];
+        put?: never;
+        /** Upload Document */
+        post: operations["upload_document_kb_documents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/documents/{doc_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Document */
+        get: operations["get_document_kb_documents__doc_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Document */
+        patch: operations["update_document_kb_documents__doc_id__patch"];
+        trace?: never;
+    };
+    "/kb/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search */
+        get: operations["search_kb_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/briefs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Briefs */
+        get: operations["list_briefs_kb_briefs_get"];
+        put?: never;
+        /** Create Brief */
+        post: operations["create_brief_kb_briefs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/briefs/{brief_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Brief */
+        put: operations["update_brief_kb_briefs__brief_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/key-messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Key Messages */
+        get: operations["list_key_messages_kb_key_messages_get"];
+        put?: never;
+        /** Create Key Message */
+        post: operations["create_key_message_kb_key_messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/key-messages/{km_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Key Message */
+        put: operations["update_key_message_kb_key_messages__km_id__put"];
+        post?: never;
+        /** Delete Key Message */
+        delete: operations["delete_key_message_kb_key_messages__km_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/actors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Actors */
+        get: operations["list_actors_kb_actors_get"];
+        put?: never;
+        /** Create Actor */
+        post: operations["create_actor_kb_actors_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/actors/{actor_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Actor */
+        put: operations["update_actor_kb_actors__actor_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/competences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Competences */
+        get: operations["list_competences_kb_competences_get"];
+        put?: never;
+        /** Create Competence */
+        post: operations["create_competence_kb_competences_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/competences/{comp_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Competence */
+        put: operations["update_competence_kb_competences__comp_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/images": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Images */
+        get: operations["list_images_kb_images_get"];
+        put?: never;
+        /** Upload Image */
+        post: operations["upload_image_kb_images_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/images/{image_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Update Image */
+        patch: operations["update_image_kb_images__image_id__patch"];
+        trace?: never;
+    };
+    "/kb/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List History */
+        get: operations["list_history_kb_history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/kb/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Kb Stats */
+        get: operations["kb_stats_kb_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -341,6 +692,51 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActorIn */
+        ActorIn: {
+            /** Name */
+            name: string;
+            /**
+             * Aliases
+             * @default []
+             */
+            aliases: string[];
+            /**
+             * Actor Type
+             * @default otro
+             * @enum {string}
+             */
+            actor_type: "gobierno_municipal" | "gobierno_estatal" | "gobierno_federal" | "partido" | "funcionario_rol" | "organismo" | "medio" | "organizacion" | "otro";
+            /** Gov Level Id */
+            gov_level_id?: number | null;
+            /**
+             * Is Own
+             * @default false
+             */
+            is_own: boolean;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+        };
+        /** ActorOut */
+        ActorOut: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Aliases */
+            aliases: string[];
+            /** Actor Type */
+            actor_type: string;
+            /** Gov Level Id */
+            gov_level_id: number | null;
+            /** Is Own */
+            is_own: boolean;
+            /** Notes */
+            notes: string;
+        };
         /** AuditOut */
         AuditOut: {
             /** Id */
@@ -370,6 +766,106 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+        };
+        /** Body_import_facts_kb_facts_import_post */
+        Body_import_facts_kb_facts_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_upload_document_kb_documents_post */
+        Body_upload_document_kb_documents_post: {
+            /** File */
+            file: string;
+            /** Title */
+            title: string;
+            /**
+             * Issuer
+             * @default
+             */
+            issuer: string;
+            /**
+             * Doc Type
+             * @default informe
+             */
+            doc_type: string;
+            /** Issued At */
+            issued_at?: string | null;
+            /** Url */
+            url?: string | null;
+            /** Gov Level Id */
+            gov_level_id?: number | null;
+            /** Topic Id */
+            topic_id?: number | null;
+        };
+        /** Body_upload_image_kb_images_post */
+        Body_upload_image_kb_images_post: {
+            /** File */
+            file: string;
+            /** Title */
+            title: string;
+            /**
+             * Credit
+             * @default
+             */
+            credit: string;
+            /**
+             * License
+             * @default
+             */
+            license: string;
+            /**
+             * Image Type
+             * @default foto_real
+             */
+            image_type: string;
+            /** Taken At */
+            taken_at?: string | null;
+            /**
+             * Tags
+             * @default
+             */
+            tags: string;
+            /** Topic Id */
+            topic_id?: number | null;
+        };
+        /** BriefIn */
+        BriefIn: {
+            /** Topic Id */
+            topic_id?: number | null;
+            /** Title */
+            title: string;
+            /**
+             * Body Md
+             * @default
+             */
+            body_md: string;
+        };
+        /** BriefOut */
+        BriefOut: {
+            /** Id */
+            id: number;
+            /** Topic Id */
+            topic_id: number | null;
+            /** Title */
+            title: string;
+            /** Body Md */
+            body_md: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** ChunkOut */
+        ChunkOut: {
+            /** Id */
+            id: number;
+            /** Ord */
+            ord: number;
+            /** Page */
+            page: number;
+            /** Text */
+            text: string;
         };
         /** ClientIn */
         ClientIn: {
@@ -428,6 +924,306 @@ export interface components {
             /** Restrictions */
             restrictions?: string | null;
         };
+        /** CompetenceIn */
+        CompetenceIn: {
+            /** Gov Level Id */
+            gov_level_id: number;
+            /** Topic Id */
+            topic_id?: number | null;
+            /** Description */
+            description: string;
+            /**
+             * Legal Basis
+             * @default
+             */
+            legal_basis: string;
+        };
+        /** CompetenceOut */
+        CompetenceOut: {
+            /** Id */
+            id: number;
+            /** Gov Level Id */
+            gov_level_id: number;
+            /** Topic Id */
+            topic_id: number | null;
+            /** Description */
+            description: string;
+            /** Legal Basis */
+            legal_basis: string;
+        };
+        /** DocumentDetail */
+        DocumentDetail: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Doc Type */
+            doc_type: string;
+            /** Issuer */
+            issuer: string;
+            /** Issued At */
+            issued_at: string | null;
+            /** Url */
+            url: string | null;
+            /** File Key */
+            file_key: string | null;
+            /** Gov Level Id */
+            gov_level_id: number | null;
+            /** Topic Id */
+            topic_id: number | null;
+            /** Pages */
+            pages: number;
+            /** Status */
+            status: string;
+            /** Error */
+            error: string;
+            /**
+             * Chunk Count
+             * @default 0
+             */
+            chunk_count: number;
+            /**
+             * Fact Count
+             * @default 0
+             */
+            fact_count: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Chunks
+             * @default []
+             */
+            chunks: components["schemas"]["ChunkOut"][];
+        };
+        /** DocumentOut */
+        DocumentOut: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Doc Type */
+            doc_type: string;
+            /** Issuer */
+            issuer: string;
+            /** Issued At */
+            issued_at: string | null;
+            /** Url */
+            url: string | null;
+            /** File Key */
+            file_key: string | null;
+            /** Gov Level Id */
+            gov_level_id: number | null;
+            /** Topic Id */
+            topic_id: number | null;
+            /** Pages */
+            pages: number;
+            /** Status */
+            status: string;
+            /** Error */
+            error: string;
+            /**
+             * Chunk Count
+             * @default 0
+             */
+            chunk_count: number;
+            /**
+             * Fact Count
+             * @default 0
+             */
+            fact_count: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** DocumentPatch */
+        DocumentPatch: {
+            /** Title */
+            title?: string | null;
+            /** Doc Type */
+            doc_type?: string | null;
+            /** Issuer */
+            issuer?: string | null;
+            /** Issued At */
+            issued_at?: string | null;
+            /** Url */
+            url?: string | null;
+            /** Gov Level Id */
+            gov_level_id?: number | null;
+            /** Topic Id */
+            topic_id?: number | null;
+        };
+        /** DocumentRef */
+        DocumentRef: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Issuer */
+            issuer: string;
+            /** Issued At */
+            issued_at: string | null;
+            /** Url */
+            url: string | null;
+            /** File Key */
+            file_key: string | null;
+        };
+        /** FactIn */
+        FactIn: {
+            /** Statement */
+            statement: string;
+            /** Value */
+            value?: number | null;
+            /**
+             * Unit
+             * @default
+             */
+            unit: string;
+            /**
+             * Base
+             * @default total
+             */
+            base: string;
+            /**
+             * Period Label
+             * @default
+             */
+            period_label: string;
+            /** Period Start */
+            period_start?: string | null;
+            /** Period End */
+            period_end?: string | null;
+            /** Fact Date */
+            fact_date?: string | null;
+            /** Document Id */
+            document_id?: number | null;
+            /** Gov Level Id */
+            gov_level_id?: number | null;
+            /** Topic Id */
+            topic_id?: number | null;
+            /** Valid Until */
+            valid_until?: string | null;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+        };
+        /** FactOut */
+        FactOut: {
+            /** Id */
+            id: number;
+            /** Code */
+            code: string;
+            /** Statement */
+            statement: string;
+            /** Value */
+            value: number | null;
+            /** Unit */
+            unit: string;
+            /** Base */
+            base: string;
+            /** Period Label */
+            period_label: string;
+            /** Period Start */
+            period_start: string | null;
+            /** Period End */
+            period_end: string | null;
+            /** Fact Date */
+            fact_date: string | null;
+            /** Document Id */
+            document_id: number | null;
+            document?: components["schemas"]["DocumentRef"] | null;
+            /** Gov Level Id */
+            gov_level_id: number | null;
+            /** Gov Level Name */
+            gov_level_name?: string | null;
+            /** Topic Id */
+            topic_id: number | null;
+            /** Topic Slug */
+            topic_slug?: string | null;
+            /** Verified By Id */
+            verified_by_id: number | null;
+            /** Verified By Name */
+            verified_by_name?: string | null;
+            /** Verified At */
+            verified_at: string | null;
+            /** Valid Until */
+            valid_until: string | null;
+            /** Notes */
+            notes: string;
+            /**
+             * Expired
+             * @default false
+             */
+            expired: boolean;
+            /**
+             * Source Label
+             * @default
+             */
+            source_label: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** FactPatch */
+        FactPatch: {
+            /** Statement */
+            statement?: string | null;
+            /** Value */
+            value?: number | null;
+            /** Unit */
+            unit?: string | null;
+            /** Base */
+            base?: string | null;
+            /** Period Label */
+            period_label?: string | null;
+            /** Period Start */
+            period_start?: string | null;
+            /** Period End */
+            period_end?: string | null;
+            /** Fact Date */
+            fact_date?: string | null;
+            /** Document Id */
+            document_id?: number | null;
+            /** Gov Level Id */
+            gov_level_id?: number | null;
+            /** Topic Id */
+            topic_id?: number | null;
+            /** Valid Until */
+            valid_until?: string | null;
+            /** Notes */
+            notes?: string | null;
+        };
+        /** GovLevelIn */
+        GovLevelIn: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /**
+             * Ord
+             * @default 0
+             */
+            ord: number;
+        };
+        /** GovLevelOut */
+        GovLevelOut: {
+            /** Id */
+            id: number;
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Ord */
+            ord: number;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -441,6 +1237,153 @@ export interface components {
             title: string;
             /** Description */
             description: string;
+        };
+        /** HistoryOut */
+        HistoryOut: {
+            /** Id */
+            id: number;
+            /** Case Id */
+            case_id: number | null;
+            /** Piece Id */
+            piece_id: number | null;
+            /** Topic Slug */
+            topic_slug: string;
+            /** Format Slug */
+            format_slug: string;
+            /** Style Slug */
+            style_slug: string;
+            /** Strategy */
+            strategy: string;
+            /** Creative Slug */
+            creative_slug: string;
+            /** Flow */
+            flow: string;
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "funciono" | "no_funciono";
+            /** Reach Ratio */
+            reach_ratio: number | null;
+            /** Sentiment Delta */
+            sentiment_delta: number | null;
+            /** Summary */
+            summary: string;
+            /** Notes */
+            notes: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** ImageOut */
+        ImageOut: {
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** File Key */
+            file_key: string;
+            /** Credit */
+            credit: string;
+            /** License */
+            license: string;
+            /** Taken At */
+            taken_at: string | null;
+            /** Tags */
+            tags: string[];
+            /**
+             * Image Type
+             * @enum {string}
+             */
+            image_type: "foto_real" | "ilustracion";
+            /** Topic Id */
+            topic_id: number | null;
+            /** Approved */
+            approved: boolean;
+            /** Meta */
+            meta: {
+                [key: string]: unknown;
+            };
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** ImagePatch */
+        ImagePatch: {
+            /** Title */
+            title?: string | null;
+            /** Credit */
+            credit?: string | null;
+            /** License */
+            license?: string | null;
+            /** Taken At */
+            taken_at?: string | null;
+            /** Tags */
+            tags?: string[] | null;
+            /** Image Type */
+            image_type?: ("foto_real" | "ilustracion") | null;
+            /** Topic Id */
+            topic_id?: number | null;
+            /** Approved */
+            approved?: boolean | null;
+        };
+        /** ImportReport */
+        ImportReport: {
+            /** Created */
+            created: number;
+            /**
+             * Updated
+             * @default 0
+             */
+            updated: number;
+            /**
+             * Errors
+             * @default []
+             */
+            errors: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** KeyMessageIn */
+        KeyMessageIn: {
+            /** Topic Id */
+            topic_id?: number | null;
+            /** Text */
+            text: string;
+            /**
+             * Tone Note
+             * @default
+             */
+            tone_note: string;
+            /**
+             * Priority
+             * @default 50
+             */
+            priority: number;
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+        };
+        /** KeyMessageOut */
+        KeyMessageOut: {
+            /** Id */
+            id: number;
+            /** Topic Id */
+            topic_id: number | null;
+            /** Text */
+            text: string;
+            /** Tone Note */
+            tone_note: string;
+            /** Priority */
+            priority: number;
+            /** Active */
+            active: boolean;
         };
         /** LoginIn */
         LoginIn: {
@@ -499,6 +1442,40 @@ export interface components {
             page: number;
             /** Page Size */
             page_size: number;
+        };
+        /** Page[FactOut] */
+        Page_FactOut_: {
+            /** Items */
+            items: components["schemas"]["FactOut"][];
+            /** Total */
+            total: number;
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+        };
+        /** SearchHit */
+        SearchHit: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "fact" | "chunk" | "brief";
+            /** Id */
+            id: number;
+            /** Title */
+            title: string;
+            /** Snippet */
+            snippet: string;
+            /** Score */
+            score: number;
+            /**
+             * Ref
+             * @default {}
+             */
+            ref: {
+                [key: string]: unknown;
+            };
         };
         /** SelectClientIn */
         SelectClientIn: {
@@ -1291,6 +2268,961 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_levels_kb_gov_levels_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GovLevelOut"][];
+                };
+            };
+        };
+    };
+    create_level_kb_gov_levels_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GovLevelIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GovLevelOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_facts_kb_facts_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                topic_id?: number | null;
+                gov_level_id?: number | null;
+                status?: string | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_FactOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_fact_kb_facts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FactIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_fact_kb_facts__fact_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_fact_kb_facts__fact_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FactPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    verify_fact_kb_facts__fact_id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_facts_kb_facts_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_import_facts_kb_facts_import_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportReport"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_documents_kb_documents_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_document_kb_documents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_document_kb_documents_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_document_kb_documents__doc_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_document_kb_documents__doc_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                doc_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_kb_search_get: {
+        parameters: {
+            query: {
+                q: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchHit"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_briefs_kb_briefs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BriefOut"][];
+                };
+            };
+        };
+    };
+    create_brief_kb_briefs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BriefIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BriefOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_brief_kb_briefs__brief_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                brief_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BriefIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BriefOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_key_messages_kb_key_messages_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KeyMessageOut"][];
+                };
+            };
+        };
+    };
+    create_key_message_kb_key_messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KeyMessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KeyMessageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_key_message_kb_key_messages__km_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                km_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KeyMessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KeyMessageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_key_message_kb_key_messages__km_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                km_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_actors_kb_actors_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActorOut"][];
+                };
+            };
+        };
+    };
+    create_actor_kb_actors_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActorIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_actor_kb_actors__actor_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                actor_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActorIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_competences_kb_competences_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompetenceOut"][];
+                };
+            };
+        };
+    };
+    create_competence_kb_competences_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompetenceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompetenceOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_competence_kb_competences__comp_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                comp_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompetenceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompetenceOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_images_kb_images_get: {
+        parameters: {
+            query?: {
+                image_type?: string | null;
+                topic_id?: number | null;
+                tag?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImageOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_image_kb_images_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_image_kb_images_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_image_kb_images__image_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                image_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImagePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImageOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_history_kb_history_get: {
+        parameters: {
+            query?: {
+                topic?: string | null;
+                style?: string | null;
+                format?: string | null;
+                strategy?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HistoryOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    kb_stats_kb_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: number;
+                    };
                 };
             };
         };
