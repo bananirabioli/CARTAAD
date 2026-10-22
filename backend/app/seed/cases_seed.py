@@ -13,7 +13,7 @@ def seed_cases(db: Session, clients: dict[str, Client]) -> None:
     for client in clients.values():
         if db.scalar(select(Case.id).where(Case.client_id == client.id).limit(1)):
             continue
-        posts = db.scalars(select(Post).where(Post.client_id == client.id, Post.is_history.is_(False)).order_by(Post.published_at))
+        posts = db.scalars(select(Post).where(Post.client_id == client.id, Post.is_history.is_(False)).order_by(Post.published_at, Post.id))
         for post in posts:
             process_new_post(db, post)
         db.flush()

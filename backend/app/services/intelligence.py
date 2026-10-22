@@ -35,7 +35,7 @@ def coordinated_narratives(db: Session, client: Client, days: int = 7, until: da
     since = until - timedelta(days=days)
     window = timedelta(hours=settings.coordinated_window_hours)
     posts = [p for p in db.scalars(
-        select(Post).where(Post.client_id == client.id, Post.is_history.is_(False), Post.published_at.between(since, until)).order_by(Post.published_at)
+        select(Post).where(Post.client_id == client.id, Post.is_history.is_(False), Post.published_at.between(since, until)).order_by(Post.published_at, Post.id)
     ) if p.embedding]
     topics = {c.post_id: c.topic_slug for c in db.scalars(select(Classification).where(Classification.post_id.in_([p.id for p in posts])))}
 
