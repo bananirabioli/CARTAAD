@@ -305,6 +305,57 @@
     },
     "topic_fallback": {
       "otro": "Otro"
+    },
+    "piece_status": {
+      "generado": "Generada",
+      "bloqueado": "Bloqueada",
+      "aprobado": "Aprobada",
+      "descartado": "Descartada",
+      "programado": "Programada",
+      "publicado": "Publicada"
+    },
+    "validation": {
+      "ok": "Validadores OK",
+      "warn": "Con avisos",
+      "block": "Bloqueada"
+    },
+    "figure_status": {
+      "pendiente": "Pendiente",
+      "verificada": "Verificada",
+      "rechazada": "Rechazada"
+    },
+    "copilot_action": {
+      "mas_corto": "Más corto",
+      "mas_firme": "Más firme",
+      "mas_formal": "Más formal",
+      "menos_formal": "Menos formal",
+      "mas_empatico": "Más empático",
+      "otro_angulo": "Otro ángulo",
+      "agregar_dato": "Agregar dato",
+      "cambiar_estilo": "Cambiar de estilo",
+      "libre": "Instrucción libre",
+      "generar": "Generación",
+      "editar": "Edición manual",
+      "revertir": "Revertir"
+    },
+    "author_type": {
+      "ia": "IA",
+      "persona": "Persona"
+    },
+    "severity": {
+      "alta": "Alta",
+      "media": "Media",
+      "baja": "Baja"
+    },
+    "redteam_kind": {
+      "replica": "Réplica probable",
+      "punto_debil": "Punto débil"
+    },
+    "render_status": {
+      "pendiente": "Renderizando…",
+      "listo": "Render listo",
+      "error": "Error de render",
+      "no_aplica": "Solo texto"
     }
   },
   "common": {
@@ -815,5 +866,98 @@
       "formato": "del formato",
       "cliente": "del cliente"
     }
+  },
+  "generation": {
+    "title": "Generación",
+    "subtitle": "Copy en variantes de estilo y creativos del catálogo filtrados por la matriz creativo × formato. Todo pasa por validadores antes de llegar a la bandeja.",
+    "target": "Cuenta destino",
+    "format": "Formato",
+    "strategy": "Estrategia",
+    "chosenStyle": "Estilo elegido",
+    "variants": "Variantes de estilo a generar",
+    "variantsHelp": "Por defecto: el estilo elegido más institucional, cercano y directo si el formato los permite.",
+    "generate": "Generar propuesta",
+    "regenerate": "Regenerar",
+    "generating": "Generando propuesta…",
+    "notReady": "El caso aún no está listo para generar: primero decide «responder» (y, si aplica, espera la liberación de legal).",
+    "error": "La generación falló: {error}",
+    "copyVariants": "Copy principal · variantes de estilo",
+    "creatives": "Creativos",
+    "excluded": "No se ofrecen",
+    "excludedKind": {
+      "matriz": "✗ matriz",
+      "veda": "modo veda",
+      "insumos": "faltan insumos"
+    },
+    "adaptation": "Adaptación",
+    "missingInputs": "Faltan insumos",
+    "why": "Por qué",
+    "applied": "Directrices aplicadas",
+    "sources": "Fuentes",
+    "legends": "Leyendas",
+    "openEditor": "Abrir editor",
+    "copilot": "Copiloto",
+    "risk": "Riesgo",
+    "redTeam": "Red team",
+    "figures": "{verified}/{total} cifras verificadas",
+    "noProposal": "Todavía no hay propuesta para este caso.",
+    "proposalOf": "Propuesta #{id} · {date}",
+    "recommendedStyle": "Estilo recomendado: {style} · {reason}",
+    "legalPending": "Legal pendiente",
+    "noRender": "Sin imagen (solo texto)"
+  },
+  "editor": {
+    "title": "Editor de pieza",
+    "backToCase": "Volver al caso",
+    "preview": "Vista previa",
+    "renders": "Imágenes renderizadas",
+    "livePreview": "Vista HTML en vivo",
+    "slots": "Textos de la pieza",
+    "segments": "Segmentos del copy",
+    "slides": "Láminas",
+    "saveVersion": "Guardar como nueva versión",
+    "editNote": "Nota de la edición",
+    "rerender": "Re-renderizar",
+    "changeImage": "Imagen del banco",
+    "noImage": "Sin imagen",
+    "validation": "Validadores",
+    "compliance": "Cumplimiento de estilo",
+    "figures": "Cifras a verificar",
+    "figuresHelp": "Cada cifra debe verificarla una persona antes de aprobar (HR-09). Una nueva versión reinicia la verificación.",
+    "verify": "Verificar",
+    "reject": "Rechazar",
+    "matched": "Coincide con {fact}",
+    "unmatched": "Sin hecho que la respalde",
+    "redTeam": "Red team (informativo)",
+    "versions": "Historial de versiones",
+    "revert": "Volver a esta versión",
+    "current": "actual",
+    "diff": "Cambios",
+    "legal": "Revisión legal de la pieza",
+    "legalReason": "Motivo",
+    "legalNote": "Nota de legal",
+    "approvalBlockers": "Para aprobar falta",
+    "consent": "Testimonio real y consentimiento",
+    "consentHelp": "Voz ciudadana solo admite testimonios reales con consentimiento firmado adjunto (HR-07). Nunca se inventan.",
+    "consentPerson": "Persona (como aparecerá)",
+    "consentTestimony": "Testimonio textual",
+    "consentSigned": "Fecha de firma",
+    "consentFile": "Consentimiento (PDF o imagen)",
+    "consentAttached": "Consentimiento adjunto: {name}",
+    "copilotTitle": "Copiloto",
+    "copilotHelp": "Cada instrucción crea una versión nueva con su diff. El copiloto se mueve dentro de los límites del estilo y toda versión se revalida.",
+    "copilotPlaceholder": "Ej.: reemplaza «circula» por «se difunde»",
+    "send": "Enviar",
+    "changeStyleTo": "Cambiar a",
+    "styleLimits": "Intensidad del estilo {min}–{max} · actual {current}",
+    "refused": "El copiloto no aplicó el cambio",
+    "applied": "Nueva versión v{version}",
+    "segmentType": "Tipo",
+    "segmentFacts": "Hechos (ids)"
+  },
+  "inbox": {
+    "approve": "Aprobar",
+    "approved": "Pieza aprobada",
+    "discard": "Descartar"
   }
 }

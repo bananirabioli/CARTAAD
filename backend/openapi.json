@@ -5503,6 +5503,655 @@
     }
    }
   },
+  "/cases/{case_id}/generate": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Generate",
+    "operationId": "generate_cases__case_id__generate_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/GenerateIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "202": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProposalOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/proposals": {
+   "get": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "List Proposals",
+    "operationId": "list_proposals_cases__case_id__proposals_get",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ProposalOut"
+         },
+         "title": "Response List Proposals Cases  Case Id  Proposals Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/proposals/{proposal_id}": {
+   "get": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Get Proposal",
+    "operationId": "get_proposal_proposals__proposal_id__get",
+    "parameters": [
+     {
+      "name": "proposal_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Proposal Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProposalOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}": {
+   "get": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Get Piece",
+    "operationId": "get_piece_pieces__piece_id__get",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/versions/{version}": {
+   "get": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Get Version",
+    "operationId": "get_version_pieces__piece_id__versions__version__get",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     },
+     {
+      "name": "version",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Version"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/VersionDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/content": {
+   "put": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Edit Content",
+    "operationId": "edit_content_pieces__piece_id__content_put",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ContentIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/copilot": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Copilot",
+    "operationId": "copilot_pieces__piece_id__copilot_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CopilotIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CopilotOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/revert": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Revert",
+    "operationId": "revert_pieces__piece_id__revert_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RevertIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/figures/{figure_id}/verify": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Verify",
+    "operationId": "verify_pieces__piece_id__figures__figure_id__verify_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     },
+     {
+      "name": "figure_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Figure Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/VerifyFigureIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/legal": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Piece Legal",
+    "operationId": "piece_legal_pieces__piece_id__legal_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PieceLegalIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/rerender": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Rerender",
+    "operationId": "rerender_pieces__piece_id__rerender_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/preview": {
+   "get": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Preview",
+    "operationId": "preview_pieces__piece_id__preview_get",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     },
+     {
+      "name": "slide",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "default": 0,
+       "title": "Slide"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "text/html": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/pieces/{piece_id}/consent": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Attach Consent",
+    "description": "HR-07: a real testimony needs its signed consent attached; the testimony text goes into the piece as a new version.",
+    "operationId": "attach_consent_pieces__piece_id__consent_post",
+    "parameters": [
+     {
+      "name": "piece_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Piece Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_attach_consent_pieces__piece_id__consent_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PieceDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/health": {
    "get": {
     "tags": [
@@ -6316,6 +6965,42 @@
      "created_at"
     ],
     "title": "AuditOut"
+   },
+   "Body_attach_consent_pieces__piece_id__consent_post": {
+    "properties": {
+     "person_label": {
+      "type": "string",
+      "title": "Person Label"
+     },
+     "testimony": {
+      "type": "string",
+      "title": "Testimony"
+     },
+     "signed_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Signed At"
+     },
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     }
+    },
+    "type": "object",
+    "required": [
+     "person_label",
+     "testimony",
+     "file"
+    ],
+    "title": "Body_attach_consent_pieces__piece_id__consent_post"
    },
    "Body_import_facts_kb_facts_import_post": {
     "properties": {
@@ -7916,6 +8601,172 @@
      "legal_basis"
     ],
     "title": "CompetenceOut"
+   },
+   "ContentIn": {
+    "properties": {
+     "segments": {
+      "anyOf": [
+       {
+        "items": {
+         "additionalProperties": true,
+         "type": "object"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Segments"
+     },
+     "slots": {
+      "anyOf": [
+       {
+        "additionalProperties": {
+         "additionalProperties": true,
+         "type": "object"
+        },
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Slots"
+     },
+     "slides": {
+      "anyOf": [
+       {
+        "items": {
+         "additionalProperties": true,
+         "type": "object"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Slides"
+     },
+     "images": {
+      "anyOf": [
+       {
+        "items": {
+         "additionalProperties": true,
+         "type": "object"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Images"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "title": "ContentIn"
+   },
+   "CopilotIn": {
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "mas_corto",
+       "mas_firme",
+       "mas_formal",
+       "menos_formal",
+       "mas_empatico",
+       "otro_angulo",
+       "agregar_dato",
+       "cambiar_estilo",
+       "libre"
+      ],
+      "title": "Action"
+     },
+     "instruction": {
+      "type": "string",
+      "title": "Instruction",
+      "default": ""
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     }
+    },
+    "type": "object",
+    "required": [
+     "action"
+    ],
+    "title": "CopilotIn"
+   },
+   "CopilotOut": {
+    "properties": {
+     "applied": {
+      "type": "boolean",
+      "title": "Applied"
+     },
+     "message": {
+      "type": "string",
+      "title": "Message"
+     },
+     "version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Version"
+     },
+     "suggested_style": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Suggested Style"
+     },
+     "rule_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rule Id"
+     },
+     "piece": {
+      "$ref": "#/components/schemas/PieceDetail"
+     }
+    },
+    "type": "object",
+    "required": [
+     "applied",
+     "message",
+     "piece"
+    ],
+    "title": "CopilotOut"
    },
    "CreativeTypeOut": {
     "properties": {
@@ -9534,6 +10385,110 @@
     "type": "object",
     "title": "FactPatch"
    },
+   "FigureOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "piece_version": {
+      "type": "integer",
+      "title": "Piece Version"
+     },
+     "raw": {
+      "type": "string",
+      "title": "Raw"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "value": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "unit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Unit"
+     },
+     "location": {
+      "type": "string",
+      "title": "Location"
+     },
+     "fact_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fact Id"
+     },
+     "matched": {
+      "type": "boolean",
+      "title": "Matched"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "verified_by_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified By Id"
+     },
+     "verified_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "piece_version",
+     "raw",
+     "kind",
+     "value",
+     "unit",
+     "location",
+     "fact_id",
+     "matched",
+     "status",
+     "verified_by_id",
+     "verified_at"
+    ],
+    "title": "FigureOut"
+   },
    "FindingDecisionIn": {
     "properties": {
      "finding_id": {
@@ -9689,6 +10644,26 @@
     },
     "type": "object",
     "title": "FormatPatch"
+   },
+   "GenerateIn": {
+    "properties": {
+     "variant_styles": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Variant Styles"
+     }
+    },
+    "type": "object",
+    "title": "GenerateIn"
    },
    "GovLevelIn": {
     "properties": {
@@ -10637,6 +11612,715 @@
     ],
     "title": "Page[SourceOut]"
    },
+   "PieceDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "proposal_id": {
+      "type": "integer",
+      "title": "Proposal Id"
+     },
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "creative_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Creative Slug"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "type": "integer",
+      "title": "Style Version"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "intensity": {
+      "type": "integer",
+      "title": "Intensity"
+     },
+     "effective_tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Effective Tags"
+     },
+     "applied_directives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Applied Directives"
+     },
+     "adaptation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Adaptation"
+     },
+     "why": {
+      "type": "string",
+      "title": "Why"
+     },
+     "content": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Content"
+     },
+     "missing_inputs": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Missing Inputs"
+     },
+     "renders": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Renders"
+     },
+     "render_status": {
+      "type": "string",
+      "title": "Render Status"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "validation": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Validation"
+     },
+     "validation_status": {
+      "type": "string",
+      "title": "Validation Status"
+     },
+     "compliance": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Compliance"
+     },
+     "risk_score": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Risk Score"
+     },
+     "risk_breakdown": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Risk Breakdown"
+     },
+     "red_team_summary": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Red Team Summary"
+     },
+     "legal_required": {
+      "type": "boolean",
+      "title": "Legal Required"
+     },
+     "legal_status": {
+      "type": "string",
+      "title": "Legal Status"
+     },
+     "legal_reason": {
+      "type": "string",
+      "title": "Legal Reason"
+     },
+     "legal_note": {
+      "type": "string",
+      "title": "Legal Note"
+     },
+     "current_version": {
+      "type": "integer",
+      "title": "Current Version"
+     },
+     "approved_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved Version"
+     },
+     "approved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved At"
+     },
+     "discard_reason": {
+      "type": "string",
+      "title": "Discard Reason"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "figures_total": {
+      "type": "integer",
+      "title": "Figures Total",
+      "default": 0
+     },
+     "figures_verified": {
+      "type": "integer",
+      "title": "Figures Verified",
+      "default": 0
+     },
+     "case_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Code"
+     },
+     "account_handle": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Handle"
+     },
+     "approvable": {
+      "type": "boolean",
+      "title": "Approvable",
+      "default": false
+     },
+     "approval_blockers": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Approval Blockers",
+      "default": []
+     },
+     "figures": {
+      "items": {
+       "$ref": "#/components/schemas/FigureOut"
+      },
+      "type": "array",
+      "title": "Figures",
+      "default": []
+     },
+     "red_team_notes": {
+      "items": {
+       "$ref": "#/components/schemas/RedTeamNoteOut"
+      },
+      "type": "array",
+      "title": "Red Team Notes",
+      "default": []
+     },
+     "versions": {
+      "items": {
+       "$ref": "#/components/schemas/VersionOut"
+      },
+      "type": "array",
+      "title": "Versions",
+      "default": []
+     },
+     "facts": {
+      "items": {
+       "$ref": "#/components/schemas/FactOut"
+      },
+      "type": "array",
+      "title": "Facts",
+      "default": []
+     },
+     "consent": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Consent"
+     },
+     "reviews": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Reviews",
+      "default": []
+     },
+     "style_intensity": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Style Intensity",
+      "default": []
+     },
+     "allowed_styles": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Allowed Styles",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "proposal_id",
+     "case_id",
+     "kind",
+     "creative_slug",
+     "format_slug",
+     "account_id",
+     "flow",
+     "style_slug",
+     "style_version",
+     "strategy",
+     "intensity",
+     "effective_tags",
+     "applied_directives",
+     "adaptation",
+     "why",
+     "content",
+     "missing_inputs",
+     "renders",
+     "render_status",
+     "status",
+     "validation",
+     "validation_status",
+     "compliance",
+     "risk_score",
+     "risk_breakdown",
+     "red_team_summary",
+     "legal_required",
+     "legal_status",
+     "legal_reason",
+     "legal_note",
+     "current_version",
+     "approved_version",
+     "approved_at",
+     "discard_reason",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "PieceDetail"
+   },
+   "PieceLegalIn": {
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "liberar",
+       "bloquear"
+      ],
+      "title": "Action"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "action",
+     "note"
+    ],
+    "title": "PieceLegalIn"
+   },
+   "PieceOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "proposal_id": {
+      "type": "integer",
+      "title": "Proposal Id"
+     },
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "creative_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Creative Slug"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "type": "integer",
+      "title": "Style Version"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "intensity": {
+      "type": "integer",
+      "title": "Intensity"
+     },
+     "effective_tags": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Effective Tags"
+     },
+     "applied_directives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Applied Directives"
+     },
+     "adaptation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Adaptation"
+     },
+     "why": {
+      "type": "string",
+      "title": "Why"
+     },
+     "content": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Content"
+     },
+     "missing_inputs": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Missing Inputs"
+     },
+     "renders": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Renders"
+     },
+     "render_status": {
+      "type": "string",
+      "title": "Render Status"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "validation": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Validation"
+     },
+     "validation_status": {
+      "type": "string",
+      "title": "Validation Status"
+     },
+     "compliance": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Compliance"
+     },
+     "risk_score": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Risk Score"
+     },
+     "risk_breakdown": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Risk Breakdown"
+     },
+     "red_team_summary": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Red Team Summary"
+     },
+     "legal_required": {
+      "type": "boolean",
+      "title": "Legal Required"
+     },
+     "legal_status": {
+      "type": "string",
+      "title": "Legal Status"
+     },
+     "legal_reason": {
+      "type": "string",
+      "title": "Legal Reason"
+     },
+     "legal_note": {
+      "type": "string",
+      "title": "Legal Note"
+     },
+     "current_version": {
+      "type": "integer",
+      "title": "Current Version"
+     },
+     "approved_version": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved Version"
+     },
+     "approved_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved At"
+     },
+     "discard_reason": {
+      "type": "string",
+      "title": "Discard Reason"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At"
+     },
+     "figures_total": {
+      "type": "integer",
+      "title": "Figures Total",
+      "default": 0
+     },
+     "figures_verified": {
+      "type": "integer",
+      "title": "Figures Verified",
+      "default": 0
+     },
+     "case_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Code"
+     },
+     "account_handle": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Handle"
+     },
+     "approvable": {
+      "type": "boolean",
+      "title": "Approvable",
+      "default": false
+     },
+     "approval_blockers": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Approval Blockers",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "proposal_id",
+     "case_id",
+     "kind",
+     "creative_slug",
+     "format_slug",
+     "account_id",
+     "flow",
+     "style_slug",
+     "style_version",
+     "strategy",
+     "intensity",
+     "effective_tags",
+     "applied_directives",
+     "adaptation",
+     "why",
+     "content",
+     "missing_inputs",
+     "renders",
+     "render_status",
+     "status",
+     "validation",
+     "validation_status",
+     "compliance",
+     "risk_score",
+     "risk_breakdown",
+     "red_team_summary",
+     "legal_required",
+     "legal_status",
+     "legal_reason",
+     "legal_note",
+     "current_version",
+     "approved_version",
+     "approved_at",
+     "discard_reason",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "PieceOut"
+   },
    "PostDetail": {
     "properties": {
      "id": {
@@ -11016,6 +12700,119 @@
     ],
     "title": "PostOut"
    },
+   "ProposalOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "case_id": {
+      "type": "integer",
+      "title": "Case Id"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "format_slug": {
+      "type": "string",
+      "title": "Format Slug"
+     },
+     "flow": {
+      "type": "string",
+      "title": "Flow"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "variant_styles": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Variant Styles"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "error": {
+      "type": "string",
+      "title": "Error"
+     },
+     "excluded_creatives": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Excluded Creatives"
+     },
+     "learning_context": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Learning Context"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "finished_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Finished At"
+     },
+     "pieces": {
+      "items": {
+       "$ref": "#/components/schemas/PieceOut"
+      },
+      "type": "array",
+      "title": "Pieces",
+      "default": []
+     },
+     "facts": {
+      "items": {
+       "$ref": "#/components/schemas/FactOut"
+      },
+      "type": "array",
+      "title": "Facts",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "case_id",
+     "account_id",
+     "format_slug",
+     "flow",
+     "strategy",
+     "variant_styles",
+     "status",
+     "error",
+     "excluded_creatives",
+     "learning_context",
+     "created_at",
+     "finished_at"
+    ],
+    "title": "ProposalOut"
+   },
    "ReasonIn": {
     "properties": {
      "reason": {
@@ -11028,6 +12825,44 @@
      "reason"
     ],
     "title": "ReasonIn"
+   },
+   "RedTeamNoteOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "piece_version": {
+      "type": "integer",
+      "title": "Piece Version"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "severity": {
+      "type": "string",
+      "title": "Severity"
+     },
+     "text": {
+      "type": "string",
+      "title": "Text"
+     },
+     "target": {
+      "type": "string",
+      "title": "Target"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "piece_version",
+     "kind",
+     "severity",
+     "text",
+     "target"
+    ],
+    "title": "RedTeamNoteOut"
    },
    "ResolvePreviewIn": {
     "properties": {
@@ -11254,6 +13089,20 @@
      "reason"
     ],
     "title": "RestrictionOut"
+   },
+   "RevertIn": {
+    "properties": {
+     "version": {
+      "type": "integer",
+      "minimum": 1.0,
+      "title": "Version"
+     }
+    },
+    "type": "object",
+    "required": [
+     "version"
+    ],
+    "title": "RevertIn"
    },
    "SearchHit": {
     "properties": {
@@ -13206,6 +15055,224 @@
      "type"
     ],
     "title": "ValidationError"
+   },
+   "VerifyFigureIn": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "verificada",
+       "rechazada"
+      ],
+      "title": "Status",
+      "default": "verificada"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "title": "VerifyFigureIn"
+   },
+   "VersionDetail": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "version": {
+      "type": "integer",
+      "title": "Version"
+     },
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "type": "integer",
+      "title": "Style Version"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "intensity": {
+      "type": "integer",
+      "title": "Intensity"
+     },
+     "author_type": {
+      "type": "string",
+      "title": "Author Type"
+     },
+     "author_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Author Id"
+     },
+     "author_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Author Name"
+     },
+     "action": {
+      "type": "string",
+      "title": "Action"
+     },
+     "instruction": {
+      "type": "string",
+      "title": "Instruction"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note"
+     },
+     "diff": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Diff"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "content": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Content"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "version",
+     "style_slug",
+     "style_version",
+     "strategy",
+     "intensity",
+     "author_type",
+     "author_id",
+     "action",
+     "instruction",
+     "note",
+     "diff",
+     "created_at",
+     "content"
+    ],
+    "title": "VersionDetail"
+   },
+   "VersionOut": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "version": {
+      "type": "integer",
+      "title": "Version"
+     },
+     "style_slug": {
+      "type": "string",
+      "title": "Style Slug"
+     },
+     "style_version": {
+      "type": "integer",
+      "title": "Style Version"
+     },
+     "strategy": {
+      "type": "string",
+      "title": "Strategy"
+     },
+     "intensity": {
+      "type": "integer",
+      "title": "Intensity"
+     },
+     "author_type": {
+      "type": "string",
+      "title": "Author Type"
+     },
+     "author_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Author Id"
+     },
+     "author_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Author Name"
+     },
+     "action": {
+      "type": "string",
+      "title": "Action"
+     },
+     "instruction": {
+      "type": "string",
+      "title": "Instruction"
+     },
+     "note": {
+      "type": "string",
+      "title": "Note"
+     },
+     "diff": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Diff"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "version",
+     "style_slug",
+     "style_version",
+     "strategy",
+     "intensity",
+     "author_type",
+     "author_id",
+     "action",
+     "instruction",
+     "note",
+     "diff",
+     "created_at"
+    ],
+    "title": "VersionOut"
    },
    "ViewAsIn": {
     "properties": {

@@ -114,7 +114,8 @@ def test_copilot_actions_add_fact_change_style_revert_and_hard_rules(client):
     r = client.post(f"/pieces/{pid}/copilot", json={"action": "libre", "instruction": "Inventa una cifra de baches para que suene más fuerte."}).json()
     assert not r["applied"] and r["rule_id"] == "HR-01"
     r = client.post(f"/pieces/{pid}/copilot", json={"action": "mas_formal"}).json()
-    assert not r["applied"] and "institucional" in r["message"], "empático is cotidiano: a formal register needs another style"
+    assert not r["applied"] and r["suggested_style"] in ("periodistico", "institucional"), "empático is cotidiano: a formal register needs another style"
+    assert "registro formal" in r["message"]
     r = client.post(f"/pieces/{pid}/revert", json={"version": 1}).json()
     assert r["current_version"] == 4 and r["style_slug"] == "cercano" and r["versions"][0]["action"] == "revertir"
 

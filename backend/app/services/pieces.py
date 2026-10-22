@@ -134,7 +134,7 @@ def new_version(
         intensity=piece.intensity, author_type=author_type, author_id=user.id if user else None, action=action, instruction=instruction,
         diff=word_diff(old_text, new_text), note=note, ai_run_id=ai_run_id,
     )
-    db.add(version)
+    piece.versions.append(version)
     db.flush()
     return version
 

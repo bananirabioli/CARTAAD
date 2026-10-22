@@ -1565,6 +1565,230 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate */
+        post: operations["generate_cases__case_id__generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/proposals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Proposals */
+        get: operations["list_proposals_cases__case_id__proposals_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/proposals/{proposal_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Proposal */
+        get: operations["get_proposal_proposals__proposal_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Piece */
+        get: operations["get_piece_pieces__piece_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Version */
+        get: operations["get_version_pieces__piece_id__versions__version__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit Content */
+        put: operations["edit_content_pieces__piece_id__content_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/copilot": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Copilot */
+        post: operations["copilot_pieces__piece_id__copilot_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/revert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revert */
+        post: operations["revert_pieces__piece_id__revert_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/figures/{figure_id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify */
+        post: operations["verify_pieces__piece_id__figures__figure_id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/legal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Piece Legal */
+        post: operations["piece_legal_pieces__piece_id__legal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/rerender": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rerender */
+        post: operations["rerender_pieces__piece_id__rerender_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Preview */
+        get: operations["preview_pieces__piece_id__preview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pieces/{piece_id}/consent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Attach Consent
+         * @description HR-07: a real testimony needs its signed consent attached; the testimony text goes into the piece as a new version.
+         */
+        post: operations["attach_consent_pieces__piece_id__consent_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -1855,6 +2079,17 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+        };
+        /** Body_attach_consent_pieces__piece_id__consent_post */
+        Body_attach_consent_pieces__piece_id__consent_post: {
+            /** Person Label */
+            person_label: string;
+            /** Testimony */
+            testimony: string;
+            /** Signed At */
+            signed_at?: string | null;
+            /** File */
+            file: string;
         };
         /** Body_import_facts_kb_facts_import_post */
         Body_import_facts_kb_facts_import_post: {
@@ -2364,6 +2599,61 @@ export interface components {
             description: string;
             /** Legal Basis */
             legal_basis: string;
+        };
+        /** ContentIn */
+        ContentIn: {
+            /** Segments */
+            segments?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Slots */
+            slots?: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            } | null;
+            /** Slides */
+            slides?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Images */
+            images?: {
+                [key: string]: unknown;
+            }[] | null;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
+        /** CopilotIn */
+        CopilotIn: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "mas_corto" | "mas_firme" | "mas_formal" | "menos_formal" | "mas_empatico" | "otro_angulo" | "agregar_dato" | "cambiar_estilo" | "libre";
+            /**
+             * Instruction
+             * @default
+             */
+            instruction: string;
+            /** Style Slug */
+            style_slug?: string | null;
+        };
+        /** CopilotOut */
+        CopilotOut: {
+            /** Applied */
+            applied: boolean;
+            /** Message */
+            message: string;
+            /** Version */
+            version?: number | null;
+            /** Suggested Style */
+            suggested_style?: string | null;
+            /** Rule Id */
+            rule_id?: string | null;
+            piece: components["schemas"]["PieceDetail"];
         };
         /** CreativeTypeOut */
         CreativeTypeOut: {
@@ -2877,6 +3167,33 @@ export interface components {
             /** Notes */
             notes?: string | null;
         };
+        /** FigureOut */
+        FigureOut: {
+            /** Id */
+            id: number;
+            /** Piece Version */
+            piece_version: number;
+            /** Raw */
+            raw: string;
+            /** Kind */
+            kind: string;
+            /** Value */
+            value: number | null;
+            /** Unit */
+            unit: string | null;
+            /** Location */
+            location: string;
+            /** Fact Id */
+            fact_id: number | null;
+            /** Matched */
+            matched: boolean;
+            /** Status */
+            status: string;
+            /** Verified By Id */
+            verified_by_id: number | null;
+            /** Verified At */
+            verified_at: string | null;
+        };
         /** FindingDecisionIn */
         FindingDecisionIn: {
             /** Finding Id */
@@ -2925,6 +3242,11 @@ export interface components {
             } | null;
             /** Active */
             active?: boolean | null;
+        };
+        /** GenerateIn */
+        GenerateIn: {
+            /** Variant Styles */
+            variant_styles?: string[] | null;
         };
         /** GovLevelIn */
         GovLevelIn: {
@@ -3282,6 +3604,295 @@ export interface components {
             /** Page Size */
             page_size: number;
         };
+        /** PieceDetail */
+        PieceDetail: {
+            /** Id */
+            id: number;
+            /** Proposal Id */
+            proposal_id: number;
+            /** Case Id */
+            case_id: number;
+            /** Kind */
+            kind: string;
+            /** Creative Slug */
+            creative_slug: string | null;
+            /** Format Slug */
+            format_slug: string;
+            /** Account Id */
+            account_id: number | null;
+            /** Flow */
+            flow: string;
+            /** Style Slug */
+            style_slug: string;
+            /** Style Version */
+            style_version: number;
+            /** Strategy */
+            strategy: string;
+            /** Intensity */
+            intensity: number;
+            /** Effective Tags */
+            effective_tags: string[];
+            /** Applied Directives */
+            applied_directives: {
+                [key: string]: unknown;
+            }[];
+            /** Adaptation */
+            adaptation: string | null;
+            /** Why */
+            why: string;
+            /** Content */
+            content: {
+                [key: string]: unknown;
+            };
+            /** Missing Inputs */
+            missing_inputs: string[];
+            /** Renders */
+            renders: string[];
+            /** Render Status */
+            render_status: string;
+            /** Status */
+            status: string;
+            /** Validation */
+            validation: {
+                [key: string]: unknown;
+            }[];
+            /** Validation Status */
+            validation_status: string;
+            /** Compliance */
+            compliance: {
+                [key: string]: unknown;
+            };
+            /** Risk Score */
+            risk_score: number | null;
+            /** Risk Breakdown */
+            risk_breakdown: {
+                [key: string]: unknown;
+            }[];
+            /** Red Team Summary */
+            red_team_summary: {
+                [key: string]: number;
+            };
+            /** Legal Required */
+            legal_required: boolean;
+            /** Legal Status */
+            legal_status: string;
+            /** Legal Reason */
+            legal_reason: string;
+            /** Legal Note */
+            legal_note: string;
+            /** Current Version */
+            current_version: number;
+            /** Approved Version */
+            approved_version: number | null;
+            /** Approved At */
+            approved_at: string | null;
+            /** Discard Reason */
+            discard_reason: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * Figures Total
+             * @default 0
+             */
+            figures_total: number;
+            /**
+             * Figures Verified
+             * @default 0
+             */
+            figures_verified: number;
+            /** Case Code */
+            case_code?: string | null;
+            /** Account Handle */
+            account_handle?: string | null;
+            /**
+             * Approvable
+             * @default false
+             */
+            approvable: boolean;
+            /**
+             * Approval Blockers
+             * @default []
+             */
+            approval_blockers: string[];
+            /**
+             * Figures
+             * @default []
+             */
+            figures: components["schemas"]["FigureOut"][];
+            /**
+             * Red Team Notes
+             * @default []
+             */
+            red_team_notes: components["schemas"]["RedTeamNoteOut"][];
+            /**
+             * Versions
+             * @default []
+             */
+            versions: components["schemas"]["VersionOut"][];
+            /**
+             * Facts
+             * @default []
+             */
+            facts: components["schemas"]["FactOut"][];
+            /** Consent */
+            consent?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Reviews
+             * @default []
+             */
+            reviews: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Style Intensity
+             * @default []
+             */
+            style_intensity: number[];
+            /**
+             * Allowed Styles
+             * @default []
+             */
+            allowed_styles: string[];
+        };
+        /** PieceLegalIn */
+        PieceLegalIn: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "liberar" | "bloquear";
+            /** Note */
+            note: string;
+        };
+        /** PieceOut */
+        PieceOut: {
+            /** Id */
+            id: number;
+            /** Proposal Id */
+            proposal_id: number;
+            /** Case Id */
+            case_id: number;
+            /** Kind */
+            kind: string;
+            /** Creative Slug */
+            creative_slug: string | null;
+            /** Format Slug */
+            format_slug: string;
+            /** Account Id */
+            account_id: number | null;
+            /** Flow */
+            flow: string;
+            /** Style Slug */
+            style_slug: string;
+            /** Style Version */
+            style_version: number;
+            /** Strategy */
+            strategy: string;
+            /** Intensity */
+            intensity: number;
+            /** Effective Tags */
+            effective_tags: string[];
+            /** Applied Directives */
+            applied_directives: {
+                [key: string]: unknown;
+            }[];
+            /** Adaptation */
+            adaptation: string | null;
+            /** Why */
+            why: string;
+            /** Content */
+            content: {
+                [key: string]: unknown;
+            };
+            /** Missing Inputs */
+            missing_inputs: string[];
+            /** Renders */
+            renders: string[];
+            /** Render Status */
+            render_status: string;
+            /** Status */
+            status: string;
+            /** Validation */
+            validation: {
+                [key: string]: unknown;
+            }[];
+            /** Validation Status */
+            validation_status: string;
+            /** Compliance */
+            compliance: {
+                [key: string]: unknown;
+            };
+            /** Risk Score */
+            risk_score: number | null;
+            /** Risk Breakdown */
+            risk_breakdown: {
+                [key: string]: unknown;
+            }[];
+            /** Red Team Summary */
+            red_team_summary: {
+                [key: string]: number;
+            };
+            /** Legal Required */
+            legal_required: boolean;
+            /** Legal Status */
+            legal_status: string;
+            /** Legal Reason */
+            legal_reason: string;
+            /** Legal Note */
+            legal_note: string;
+            /** Current Version */
+            current_version: number;
+            /** Approved Version */
+            approved_version: number | null;
+            /** Approved At */
+            approved_at: string | null;
+            /** Discard Reason */
+            discard_reason: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * Figures Total
+             * @default 0
+             */
+            figures_total: number;
+            /**
+             * Figures Verified
+             * @default 0
+             */
+            figures_verified: number;
+            /** Case Code */
+            case_code?: string | null;
+            /** Account Handle */
+            account_handle?: string | null;
+            /**
+             * Approvable
+             * @default false
+             */
+            approvable: boolean;
+            /**
+             * Approval Blockers
+             * @default []
+             */
+            approval_blockers: string[];
+        };
         /** PostDetail */
         PostDetail: {
             /** Id */
@@ -3392,10 +4003,71 @@ export interface components {
             /** Case Code */
             case_code?: string | null;
         };
+        /** ProposalOut */
+        ProposalOut: {
+            /** Id */
+            id: number;
+            /** Case Id */
+            case_id: number;
+            /** Account Id */
+            account_id: number | null;
+            /** Format Slug */
+            format_slug: string;
+            /** Flow */
+            flow: string;
+            /** Strategy */
+            strategy: string;
+            /** Variant Styles */
+            variant_styles: string[];
+            /** Status */
+            status: string;
+            /** Error */
+            error: string;
+            /** Excluded Creatives */
+            excluded_creatives: {
+                [key: string]: unknown;
+            }[];
+            /** Learning Context */
+            learning_context: {
+                [key: string]: unknown;
+            };
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Finished At */
+            finished_at: string | null;
+            /**
+             * Pieces
+             * @default []
+             */
+            pieces: components["schemas"]["PieceOut"][];
+            /**
+             * Facts
+             * @default []
+             */
+            facts: components["schemas"]["FactOut"][];
+        };
         /** ReasonIn */
         ReasonIn: {
             /** Reason */
             reason: string;
+        };
+        /** RedTeamNoteOut */
+        RedTeamNoteOut: {
+            /** Id */
+            id: number;
+            /** Piece Version */
+            piece_version: number;
+            /** Kind */
+            kind: string;
+            /** Severity */
+            severity: string;
+            /** Text */
+            text: string;
+            /** Target */
+            target: string;
         };
         /** ResolvePreviewIn */
         ResolvePreviewIn: {
@@ -3471,6 +4143,11 @@ export interface components {
              * @default false
              */
             in_effect: boolean;
+        };
+        /** RevertIn */
+        RevertIn: {
+            /** Version */
+            version: number;
         };
         /** SearchHit */
         SearchHit: {
@@ -4255,6 +4932,96 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** VerifyFigureIn */
+        VerifyFigureIn: {
+            /**
+             * Status
+             * @default verificada
+             * @enum {string}
+             */
+            status: "verificada" | "rechazada";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
+        /** VersionDetail */
+        VersionDetail: {
+            /** Id */
+            id: number;
+            /** Version */
+            version: number;
+            /** Style Slug */
+            style_slug: string;
+            /** Style Version */
+            style_version: number;
+            /** Strategy */
+            strategy: string;
+            /** Intensity */
+            intensity: number;
+            /** Author Type */
+            author_type: string;
+            /** Author Id */
+            author_id: number | null;
+            /** Author Name */
+            author_name?: string | null;
+            /** Action */
+            action: string;
+            /** Instruction */
+            instruction: string;
+            /** Note */
+            note: string;
+            /** Diff */
+            diff: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Content */
+            content: {
+                [key: string]: unknown;
+            };
+        };
+        /** VersionOut */
+        VersionOut: {
+            /** Id */
+            id: number;
+            /** Version */
+            version: number;
+            /** Style Slug */
+            style_slug: string;
+            /** Style Version */
+            style_version: number;
+            /** Strategy */
+            strategy: string;
+            /** Intensity */
+            intensity: number;
+            /** Author Type */
+            author_type: string;
+            /** Author Id */
+            author_id: number | null;
+            /** Author Name */
+            author_name?: string | null;
+            /** Action */
+            action: string;
+            /** Instruction */
+            instruction: string;
+            /** Note */
+            note: string;
+            /** Diff */
+            diff: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** ViewAsIn */
         ViewAsIn: {
@@ -7848,6 +8615,441 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DashboardOut"];
+                };
+            };
+        };
+    };
+    generate_cases__case_id__generate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GenerateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProposalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_proposals_cases__case_id__proposals_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProposalOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_proposal_proposals__proposal_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                proposal_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProposalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_piece_pieces__piece_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_version_pieces__piece_id__versions__version__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VersionDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_content_pieces__piece_id__content_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copilot_pieces__piece_id__copilot_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CopilotIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CopilotOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revert_pieces__piece_id__revert_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevertIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    verify_pieces__piece_id__figures__figure_id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+                figure_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VerifyFigureIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    piece_legal_pieces__piece_id__legal_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PieceLegalIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rerender_pieces__piece_id__rerender_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_pieces__piece_id__preview_get: {
+        parameters: {
+            query?: {
+                slide?: number;
+            };
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attach_consent_pieces__piece_id__consent_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                piece_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_attach_consent_pieces__piece_id__consent_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PieceDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

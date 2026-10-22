@@ -1,6 +1,8 @@
 """Generación (6.5), piezas, copiloto con versiones, verificación por cifra y revisión legal por pieza."""
 
-from fastapi import APIRouter, Depends
+from datetime import datetime
+
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from fastapi.responses import HTMLResponse
 from sqlalchemy import select
 
@@ -32,6 +34,7 @@ from app.services import pieces as piece_svc
 from app.services.catalog import active_style, format_style_slugs, get_format, style_allowed_for_format
 from app.services.facts import fact_out
 from app.services.generation import start_generation
+from app.storage import client_key, get_storage
 
 router = APIRouter(tags=["generation"])
 
@@ -97,7 +100,13 @@ def piece_out(ctx: Ctx, piece: Piece, model: type[PieceOut] = PieceOut) -> Piece
 
 def _proposal_out(ctx: Ctx, p: Proposal) -> ProposalOut:
     pieces = list(ctx.db.scalars(select(Piece).where(Piece.proposal_id == p.id).order_by(Piece.kind.desc(), Piece.id)))
-    return ProposalOut.model_validate(p).model_copy(update={"pieces": [piece_out(ctx, x) for x in pieces]})
+    ids: set[int] = set()
+    for x in pieces:
+        ids |= {i for s in x.content.get("segments") or [] for i in s.get("fact_ids") or []}
+        ids |= {i for s in (x.content.get("slots") or {}).values() for i in s.get("fact_ids") or []}
+        ids |= {i for s in x.content.get("slides") or [] for i in s.get("fact_ids") or []}
+    facts = list(ctx.db.scalars(select(Fact).where(Fact.client_id == ctx.client_id, Fact.id.in_(ids)))) if ids else []
+    return ProposalOut.model_validate(p).model_copy(update={"pieces": [piece_out(ctx, x) for x in pieces], "facts": [fact_out(ctx.db, f) for f in facts]})
 
 
 @router.post("/cases/{case_id}/generate", response_model=ProposalOut, status_code=202)
@@ -213,3 +222,36 @@ def preview(piece_id: int, slide: int = 0, ctx: Ctx = Depends(get_ctx)) -> HTMLR
     piece = owned(ctx.db, Piece, piece_id, ctx.client_id)
     models = render_model(ctx.db, piece)
     return HTMLResponse(render_html(models[min(slide, len(models) - 1)]))
+
+
+@router.post("/pieces/{piece_id}/consent", response_model=PieceDetail)
+async def attach_consent(
+    piece_id: int,
+    person_label: str = Form(...),
+    testimony: str = Form(...),
+    signed_at: datetime | None = Form(None),
+    file: UploadFile = File(...),
+    ctx: Ctx = Depends(require("piece.edit")),
+) -> PieceOut:
+    """HR-07: a real testimony needs its signed consent attached; the testimony text goes into the piece as a new version."""
+    piece = owned(ctx.db, Piece, piece_id, ctx.client_id)
+    if piece.creative_slug != "voz_ciudadana":
+        raise AppError(422, "invalid_value", detail="solo aplica a «Voz ciudadana»")
+    if file.content_type not in ("application/pdf", "image/png", "image/jpeg"):
+        raise AppError(422, "invalid_value", detail="el consentimiento debe ser PDF o imagen")
+    data = await file.read()
+    ext = {"application/pdf": "pdf", "image/png": "png", "image/jpeg": "jpg"}[file.content_type]
+    record = ConsentRecord(client_id=ctx.client_id, piece_id=piece.id, person_label=person_label.strip(), testimony=testimony.strip(), signed_at=signed_at, file_key="", uploaded_by_id=ctx.user.id)
+    ctx.db.add(record)
+    ctx.db.flush()
+    record.file_key = get_storage().save(client_key(ctx.client_id, "consents", f"{record.id}.{ext}"), data, file.content_type)
+    slots = dict((piece.content or {}).get("slots") or {})
+    slots["cita"] = {"text": testimony.strip(), "fact_ids": []}
+    slots["persona"] = {"text": person_label.strip(), "fact_ids": []}
+    piece.missing_inputs = []
+    ctx.db.add(Review(client_id=ctx.client_id, piece_id=piece.id, case_id=piece.case_id, user_id=ctx.user.id, action="consentimiento", piece_version=piece.current_version, note=person_label))
+    audit.record(ctx.db, action="piece.consent", entity_type="piece", entity_id=piece.id, client_id=ctx.client_id, user=ctx.user, note=person_label)
+    piece_svc.edit_piece(ctx.db, piece, ctx.user, {"slots": slots}, "testimonio real con consentimiento")
+    ctx.db.commit()
+    piece_svc.enqueue_pending_render(piece)
+    return piece_out(ctx, piece, PieceDetail)

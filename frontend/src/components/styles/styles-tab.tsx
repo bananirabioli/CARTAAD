@@ -380,7 +380,7 @@ export function AppliedList({ applied }: { applied: Record<string, unknown>[] })
             key={String(a.code)}
             variant="outline"
             title={(a.notes as string[] | undefined)?.join(" ")}
-            className={cn("font-normal", a.effect === "conflicto" && "border-status-block/60 text-status-block", a.effect === "parcial" && "border-status-warn/60")}
+            className={cn("max-w-full justify-start truncate font-normal", a.effect === "conflicto" && "border-status-block/60 text-status-block", a.effect === "parcial" && "border-status-warn/60")}
           >
             <span className="font-mono">{String(a.code)}</span> · {tEnum("level", String(a.level))} · {String(a.title)}
           </Badge>

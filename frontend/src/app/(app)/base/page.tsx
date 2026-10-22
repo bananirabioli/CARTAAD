@@ -56,7 +56,7 @@ export default function KnowledgeBasePage() {
       <PageHeader title={t("kb.title")} subtitle={t("kb.subtitle")} />
       <SemanticSearch />
       <Tabs defaultValue="facts">
-        <TabsList className="flex-wrap">
+        <TabsList className="h-auto flex-wrap">
           <TabsTrigger value="facts">{t("kb.tabs.facts")}</TabsTrigger>
           <TabsTrigger value="documents">{t("kb.tabs.documents")}</TabsTrigger>
           <TabsTrigger value="briefs">{t("kb.tabs.briefs")}</TabsTrigger>

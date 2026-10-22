@@ -124,6 +124,7 @@ class ProposalOut(ORM):
     created_at: datetime
     finished_at: datetime | None
     pieces: list[PieceOut] = []
+    facts: list[FactOut] = []
 
 
 class GenerateIn(BaseModel):
