@@ -1,10 +1,10 @@
-# Production overlay for a VPS. Needs Docker Compose v2.24+ (`!reset`) and DOMAIN, SECRET_KEY, BASIC_AUTH_USER and
-# BASIC_AUTH_HASH in .env (see docs/DEPLOY.md):
+# Production overlay for a VPS. Needs Docker Compose v2.24+ (`!reset`) and DOMAIN, SECRET_KEY, ADMIN_EMAIL and
+# ADMIN_PASSWORD in .env (see docs/DEPLOY.md):
 #   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 x-prod-env: &prod-env
   SECRET_KEY: ${SECRET_KEY:?define SECRET_KEY in .env}
   COOKIE_SECURE: "true"
-  DEMO_MODE: ${DEMO_MODE:-true}
+  DEMO_MODE: ${DEMO_MODE:-false}
 
 services:
   db:
@@ -32,8 +32,6 @@ services:
     restart: unless-stopped
     environment:
       DOMAIN: ${DOMAIN:?define DOMAIN in .env}
-      BASIC_AUTH_USER: ${BASIC_AUTH_USER:?define BASIC_AUTH_USER in .env}
-      BASIC_AUTH_HASH: ${BASIC_AUTH_HASH:?define BASIC_AUTH_HASH in .env}
     ports:
       - "80:80"
       - "443:443"

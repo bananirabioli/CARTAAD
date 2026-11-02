@@ -42,6 +42,10 @@ class LLMProvider(Protocol):
 @lru_cache
 def get_provider(name: str | None = None) -> LLMProvider:
     choice = (name or get_settings().llm_provider).lower()
+    if choice == "openrouter":
+        from app.ai.openrouter import OpenRouterProvider
+
+        return OpenRouterProvider()
     if choice == "anthropic":
         from app.ai.anthropic_provider import AnthropicProvider
 

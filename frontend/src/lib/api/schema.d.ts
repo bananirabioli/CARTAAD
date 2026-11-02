@@ -249,6 +249,26 @@ export interface paths {
         patch: operations["update_user_users__user_id__patch"];
         trace?: never;
     };
+    "/meta/ai-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Ai Status
+         * @description What the Modelos tab shows: active providers, models and whether the key is set (never the key itself).
+         */
+        get: operations["ai_status_meta_ai_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meta/hard-rules": {
         parameters: {
             query?: never;
@@ -1015,7 +1035,8 @@ export interface paths {
         /** List Formats */
         get: operations["list_formats_catalog_formats_get"];
         put?: never;
-        post?: never;
+        /** Create Format */
+        post: operations["create_format_catalog_formats_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1049,7 +1070,8 @@ export interface paths {
         /** List Creatives */
         get: operations["list_creatives_catalog_creatives_get"];
         put?: never;
-        post?: never;
+        /** Create Creative */
+        post: operations["create_creative_catalog_creatives_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1576,6 +1598,26 @@ export interface paths {
         put?: never;
         /** Generate */
         post: operations["generate_cases__case_id__generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/generate-content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate Content
+         * @description MVP: decide «responder» with the main account and generate copies, images and (optionally) a video in one go.
+         */
+        post: operations["generate_content_cases__case_id__generate_content_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3010,7 +3052,7 @@ export interface components {
              * Client Type
              * @enum {string}
              */
-            client_type: "gobierno" | "partido" | "candidatura";
+            client_type: "gobierno" | "partido" | "candidatura" | "organizacion" | "empresa" | "otro";
             /**
              * Default Tone
              * @default
@@ -3036,7 +3078,7 @@ export interface components {
              * Client Type
              * @enum {string}
              */
-            client_type: "gobierno" | "partido" | "candidatura";
+            client_type: "gobierno" | "partido" | "candidatura" | "organizacion" | "empresa" | "otro";
             /** Default Tone */
             default_tone: string;
             /** Default Style Slug */
@@ -3049,7 +3091,7 @@ export interface components {
             /** Name */
             name?: string | null;
             /** Client Type */
-            client_type?: ("gobierno" | "partido" | "candidatura") | null;
+            client_type?: ("gobierno" | "partido" | "candidatura" | "organizacion" | "empresa" | "otro") | null;
             /** Default Tone */
             default_tone?: string | null;
             /** Default Style Slug */
@@ -3150,6 +3192,57 @@ export interface components {
             rule_id?: string | null;
             piece: components["schemas"]["PieceDetail"];
         };
+        /** CreativeTypeIn */
+        CreativeTypeIn: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Flow
+             * @default A
+             * @enum {string}
+             */
+            flow: "A" | "B";
+            /**
+             * Template
+             * @default dato_duro
+             */
+            template: string;
+            /**
+             * Required Slots
+             * @default [
+             *       "titulo",
+             *       "texto"
+             *     ]
+             */
+            required_slots: string[];
+            /**
+             * Requires Fact
+             * @default false
+             */
+            requires_fact: boolean;
+            /**
+             * Requires Consent
+             * @default false
+             */
+            requires_consent: boolean;
+            /**
+             * Requires Real Photo
+             * @default false
+             */
+            requires_real_photo: boolean;
+            /**
+             * Text Only
+             * @default false
+             */
+            text_only: boolean;
+        };
         /** CreativeTypeOut */
         CreativeTypeOut: {
             /** Id */
@@ -3185,6 +3278,12 @@ export interface components {
         CreativeTypePatch: {
             /** Name */
             name?: string | null;
+            /** Flow */
+            flow?: ("A" | "B") | null;
+            /** Template */
+            template?: string | null;
+            /** Text Only */
+            text_only?: boolean | null;
             /** Description */
             description?: string | null;
             /** Required Slots */
@@ -3696,6 +3795,40 @@ export interface components {
             /** Confirmed */
             confirmed: boolean;
         };
+        /** FormatIn */
+        FormatIn: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Template
+             * @default clasico
+             */
+            template: string;
+            /**
+             * Default Style Slug
+             * @default cercano
+             */
+            default_style_slug: string;
+            /**
+             * Allowed Style Slugs
+             * @default []
+             */
+            allowed_style_slugs: string[];
+            /**
+             * Options
+             * @default {}
+             */
+            options: {
+                [key: string]: unknown;
+            };
+        };
         /** FormatOut */
         FormatOut: {
             /** Id */
@@ -3725,6 +3858,8 @@ export interface components {
         FormatPatch: {
             /** Name */
             name?: string | null;
+            /** Template */
+            template?: string | null;
             /** Description */
             description?: string | null;
             /** Default Style Slug */
@@ -3737,6 +3872,39 @@ export interface components {
             } | null;
             /** Active */
             active?: boolean | null;
+        };
+        /**
+         * GenerateContentIn
+         * @description MVP: decide + generate in one step (copies, image prompts and images, optional video).
+         */
+        GenerateContentIn: {
+            /** Strategy */
+            strategy?: ("desmentir" | "contextualizar" | "reencuadrar" | "contrastar" | "amplificar" | "agradecer") | null;
+            /** Style Slug */
+            style_slug?: string | null;
+            /** Variant Styles */
+            variant_styles?: string[] | null;
+            /**
+             * Network
+             * @default facebook
+             * @enum {string}
+             */
+            network: "facebook" | "x" | "instagram" | "tiktok" | "youtube" | "whatsapp";
+            /**
+             * Image Count
+             * @default 1
+             */
+            image_count: number;
+            /**
+             * Video
+             * @default false
+             */
+            video: boolean;
+            /**
+             * Instructions
+             * @default
+             */
+            instructions: string;
         };
         /** GenerateIn */
         GenerateIn: {
@@ -3936,6 +4104,11 @@ export interface components {
             renders: string[];
             /** Render Status */
             render_status: string;
+            /**
+             * Render Error
+             * @default
+             */
+            render_error: string;
             /** Status */
             status: string;
             /** Validation */
@@ -4366,6 +4539,11 @@ export interface components {
             renders: string[];
             /** Render Status */
             render_status: string;
+            /**
+             * Render Error
+             * @default
+             */
+            render_error: string;
             /** Status */
             status: string;
             /** Validation */
@@ -4536,6 +4714,11 @@ export interface components {
             renders: string[];
             /** Render Status */
             render_status: string;
+            /**
+             * Render Error
+             * @default
+             */
+            render_error: string;
             /** Status */
             status: string;
             /** Validation */
@@ -4745,6 +4928,13 @@ export interface components {
             }[];
             /** Learning Context */
             learning_context: {
+                [key: string]: unknown;
+            };
+            /**
+             * Options
+             * @default {}
+             */
+            options: {
                 [key: string]: unknown;
             };
             /**
@@ -5667,7 +5857,7 @@ export interface components {
              * Role
              * @enum {string}
              */
-            role: "analista" | "aprobador" | "legal" | "diseno" | "admin";
+            role: "analista" | "aprobador" | "legal" | "diseno" | "admin" | "owner";
             /** Kb Owner */
             kb_owner: boolean;
             /** Active */
@@ -5693,7 +5883,7 @@ export interface components {
              * Role
              * @enum {string}
              */
-            role: "analista" | "aprobador" | "legal" | "diseno" | "admin";
+            role: "analista" | "aprobador" | "legal" | "diseno" | "admin" | "owner";
             /**
              * Kb Owner
              * @default false
@@ -5719,7 +5909,7 @@ export interface components {
              * Role
              * @enum {string}
              */
-            role: "analista" | "aprobador" | "legal" | "diseno" | "admin";
+            role: "analista" | "aprobador" | "legal" | "diseno" | "admin" | "owner";
             /** Kb Owner */
             kb_owner: boolean;
             /** Active */
@@ -5732,7 +5922,7 @@ export interface components {
             /** Name */
             name?: string | null;
             /** Role */
-            role?: ("analista" | "aprobador" | "legal" | "diseno" | "admin") | null;
+            role?: ("analista" | "aprobador" | "legal" | "diseno" | "admin" | "owner") | null;
             /** Kb Owner */
             kb_owner?: boolean | null;
             /** Active */
@@ -5851,7 +6041,7 @@ export interface components {
              * Role
              * @enum {string}
              */
-            role: "analista" | "aprobador" | "legal" | "diseno" | "admin";
+            role: "analista" | "aprobador" | "legal" | "diseno" | "admin" | "owner";
             /**
              * Kb Owner
              * @default false
@@ -6405,6 +6595,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ai_status_meta_ai_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
         };
@@ -8276,6 +8488,39 @@ export interface operations {
             };
         };
     };
+    create_format_catalog_formats_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FormatIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FormatOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     update_format_catalog_formats__format_id__patch: {
         parameters: {
             query?: never;
@@ -8329,6 +8574,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CreativeTypeOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_creative_catalog_creatives_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreativeTypeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreativeTypeOut"];
                 };
             };
             /** @description Validation Error */
@@ -9466,6 +9744,41 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["GenerateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProposalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generate_content_cases__case_id__generate_content_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GenerateContentIn"];
             };
         };
         responses: {

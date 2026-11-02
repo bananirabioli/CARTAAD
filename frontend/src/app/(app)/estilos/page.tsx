@@ -1,29 +1,30 @@
 "use client";
 
 import { PageHeader } from "@/components/app/common";
-import { DirectivesTab } from "@/components/styles/directives-tab";
-import { HardRulesTab, MatrixTab, TagsTab } from "@/components/styles/matrix-tab";
+import { CatalogTab, TopicsTab } from "@/components/settings/catalog-tabs";
+import { MatrixTab, TagsTab } from "@/components/styles/matrix-tab";
 import { StylesTab } from "@/components/styles/styles-tab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { t } from "@/i18n";
 
-export default function StylesPage() {
+// MVP: every catalog of the client in one place. Directives and hard rules keep working but leave the menu.
+export default function CatalogsPage() {
   return (
     <div>
-      <PageHeader title={t("styles.title")} subtitle={t("styles.subtitle")} />
-      <Tabs defaultValue="styles">
-        <TabsList>
+      <PageHeader title={t("mvp.catalogsTitle")} subtitle={t("mvp.catalogsSubtitle")} />
+      <Tabs defaultValue="topics">
+        <TabsList className="h-auto flex-wrap">
+          <TabsTrigger value="topics">{t("settings.tabs.topics")}</TabsTrigger>
           <TabsTrigger value="styles">{t("styles.tabs.styles")}</TabsTrigger>
-          <TabsTrigger value="directives">{t("styles.tabs.directives")}</TabsTrigger>
+          <TabsTrigger value="catalog">{t("mvp.formatsCreatives")}</TabsTrigger>
           <TabsTrigger value="matrix">{t("styles.tabs.matrix")}</TabsTrigger>
           <TabsTrigger value="tags">{t("styles.tabs.tags")}</TabsTrigger>
-          <TabsTrigger value="hard">{t("styles.tabs.hardRules")}</TabsTrigger>
         </TabsList>
+        <TabsContent value="topics" className="mt-3"><TopicsTab /></TabsContent>
         <TabsContent value="styles" className="mt-3"><StylesTab /></TabsContent>
-        <TabsContent value="directives" className="mt-3"><DirectivesTab /></TabsContent>
+        <TabsContent value="catalog" className="mt-3"><CatalogTab /></TabsContent>
         <TabsContent value="matrix" className="mt-3"><MatrixTab /></TabsContent>
         <TabsContent value="tags" className="mt-3"><TagsTab /></TabsContent>
-        <TabsContent value="hard" className="mt-3"><HardRulesTab /></TabsContent>
       </Tabs>
     </div>
   );

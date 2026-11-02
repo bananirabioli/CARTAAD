@@ -1,12 +1,9 @@
 # HTTPS is automatic. DOMAIN needs an A/AAAA record pointing at this server and ports 80/443 open.
+# Access is the app's own login (one master user from ADMIN_EMAIL / ADMIN_PASSWORD); there are no shared demo passwords.
 {$DOMAIN} {
 	encode zstd gzip
-
-	# Every seeded account shares the public demo password, so the whole site sits behind one shared login.
-	# Remove this block only after replacing the seeded passwords.
-	basic_auth {
-		{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+	request_body {
+		max_size 25MB
 	}
-
 	reverse_proxy web:3000
 }

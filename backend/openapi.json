@@ -626,6 +626,30 @@
     }
    }
   },
+  "/meta/ai-status": {
+   "get": {
+    "tags": [
+     "admin"
+    ],
+    "summary": "Ai Status",
+    "description": "What the Modelos tab shows: active providers, models and whether the key is set (never the key itself).",
+    "operationId": "ai_status_meta_ai_status_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Ai Status Meta Ai Status Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/meta/hard-rules": {
    "get": {
     "tags": [
@@ -3491,6 +3515,45 @@
       }
      }
     }
+   },
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Create Format",
+    "operationId": "create_format_catalog_formats_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FormatIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FormatOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
    }
   },
   "/catalog/formats/{format_id}": {
@@ -3581,6 +3644,45 @@
           "$ref": "#/components/schemas/CreativeTypeOut"
          },
          "title": "Response List Creatives Catalog Creatives Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "styles"
+    ],
+    "summary": "Create Creative",
+    "operationId": "create_creative_catalog_creatives_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CreativeTypeIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CreativeTypeOut"
         }
        }
       }
@@ -5527,6 +5629,59 @@
       "application/json": {
        "schema": {
         "$ref": "#/components/schemas/GenerateIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "202": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ProposalOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/cases/{case_id}/generate-content": {
+   "post": {
+    "tags": [
+     "generation"
+    ],
+    "summary": "Generate Content",
+    "description": "MVP: decide «responder» with the main account and generate copies, images and (optionally) a video in one go.",
+    "operationId": "generate_content_cases__case_id__generate_content_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/GenerateContentIn"
        }
       }
      }
@@ -9914,7 +10069,10 @@
       "enum": [
        "gobierno",
        "partido",
-       "candidatura"
+       "candidatura",
+       "organizacion",
+       "empresa",
+       "otro"
       ],
       "title": "Client Type"
      },
@@ -9967,7 +10125,10 @@
       "enum": [
        "gobierno",
        "partido",
-       "candidatura"
+       "candidatura",
+       "organizacion",
+       "empresa",
+       "otro"
       ],
       "title": "Client Type"
      },
@@ -10023,7 +10184,10 @@
         "enum": [
          "gobierno",
          "partido",
-         "candidatura"
+         "candidatura",
+         "organizacion",
+         "empresa",
+         "otro"
         ]
        },
        {
@@ -10351,6 +10515,78 @@
     ],
     "title": "CopilotOut"
    },
+   "CreativeTypeIn": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2,
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "minLength": 2,
+      "title": "Name"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description",
+      "default": ""
+     },
+     "flow": {
+      "type": "string",
+      "enum": [
+       "A",
+       "B"
+      ],
+      "title": "Flow",
+      "default": "A"
+     },
+     "template": {
+      "type": "string",
+      "title": "Template",
+      "default": "dato_duro"
+     },
+     "required_slots": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Required Slots",
+      "default": [
+       "titulo",
+       "texto"
+      ]
+     },
+     "requires_fact": {
+      "type": "boolean",
+      "title": "Requires Fact",
+      "default": false
+     },
+     "requires_consent": {
+      "type": "boolean",
+      "title": "Requires Consent",
+      "default": false
+     },
+     "requires_real_photo": {
+      "type": "boolean",
+      "title": "Requires Real Photo",
+      "default": false
+     },
+     "text_only": {
+      "type": "boolean",
+      "title": "Text Only",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "CreativeTypeIn"
+   },
    "CreativeTypeOut": {
     "properties": {
      "id": {
@@ -10444,6 +10680,43 @@
        }
       ],
       "title": "Name"
+     },
+     "flow": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "A",
+         "B"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Flow"
+     },
+     "template": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Template"
+     },
+     "text_only": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text Only"
      },
      "description": {
       "anyOf": [
@@ -12090,6 +12363,57 @@
     ],
     "title": "FindingDecisionIn"
    },
+   "FormatIn": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2,
+      "pattern": "^[a-z0-9_]+$",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "minLength": 2,
+      "title": "Name"
+     },
+     "description": {
+      "type": "string",
+      "title": "Description",
+      "default": ""
+     },
+     "template": {
+      "type": "string",
+      "title": "Template",
+      "default": "clasico"
+     },
+     "default_style_slug": {
+      "type": "string",
+      "title": "Default Style Slug",
+      "default": "cercano"
+     },
+     "allowed_style_slugs": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Allowed Style Slugs",
+      "default": []
+     },
+     "options": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Options",
+      "default": {}
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "FormatIn"
+   },
    "FormatOut": {
     "properties": {
      "id": {
@@ -12165,6 +12489,17 @@
       ],
       "title": "Name"
      },
+     "template": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Template"
+     },
      "description": {
       "anyOf": [
        {
@@ -12227,6 +12562,88 @@
     },
     "type": "object",
     "title": "FormatPatch"
+   },
+   "GenerateContentIn": {
+    "properties": {
+     "strategy": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "desmentir",
+         "contextualizar",
+         "reencuadrar",
+         "contrastar",
+         "amplificar",
+         "agradecer"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Strategy"
+     },
+     "style_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Style Slug"
+     },
+     "variant_styles": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Variant Styles"
+     },
+     "network": {
+      "type": "string",
+      "enum": [
+       "facebook",
+       "x",
+       "instagram",
+       "tiktok",
+       "youtube",
+       "whatsapp"
+      ],
+      "title": "Network",
+      "default": "facebook"
+     },
+     "image_count": {
+      "type": "integer",
+      "maximum": 2.0,
+      "minimum": 0.0,
+      "title": "Image Count",
+      "default": 1
+     },
+     "video": {
+      "type": "boolean",
+      "title": "Video",
+      "default": false
+     },
+     "instructions": {
+      "type": "string",
+      "maxLength": 1000,
+      "title": "Instructions",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "title": "GenerateContentIn",
+    "description": "MVP: decide + generate in one step (copies, image prompts and images, optional video)."
    },
    "GenerateIn": {
     "properties": {
@@ -12789,6 +13206,11 @@
      "render_status": {
       "type": "string",
       "title": "Render Status"
+     },
+     "render_error": {
+      "type": "string",
+      "title": "Render Error",
+      "default": ""
      },
      "status": {
       "type": "string",
@@ -13862,6 +14284,11 @@
       "type": "string",
       "title": "Render Status"
      },
+     "render_error": {
+      "type": "string",
+      "title": "Render Error",
+      "default": ""
+     },
      "status": {
       "type": "string",
       "title": "Status"
@@ -14261,6 +14688,11 @@
      "render_status": {
       "type": "string",
       "title": "Render Status"
+     },
+     "render_error": {
+      "type": "string",
+      "title": "Render Error",
+      "default": ""
      },
      "status": {
       "type": "string",
@@ -14893,6 +15325,12 @@
       "additionalProperties": true,
       "type": "object",
       "title": "Learning Context"
+     },
+     "options": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Options",
+      "default": {}
      },
      "created_at": {
       "type": "string",
@@ -17210,7 +17648,8 @@
        "aprobador",
        "legal",
        "diseno",
-       "admin"
+       "admin",
+       "owner"
       ],
       "title": "Role"
      },
@@ -17265,7 +17704,8 @@
        "aprobador",
        "legal",
        "diseno",
-       "admin"
+       "admin",
+       "owner"
       ],
       "title": "Role"
      },
@@ -17318,7 +17758,8 @@
        "aprobador",
        "legal",
        "diseno",
-       "admin"
+       "admin",
+       "owner"
       ],
       "title": "Role"
      },
@@ -17369,7 +17810,8 @@
          "aprobador",
          "legal",
          "diseno",
-         "admin"
+         "admin",
+         "owner"
         ]
        },
        {
@@ -17697,7 +18139,8 @@
        "aprobador",
        "legal",
        "diseno",
-       "admin"
+       "admin",
+       "owner"
       ],
       "title": "Role"
      },

@@ -2,18 +2,12 @@
 
 import {
   Activity,
-  BarChart3,
   BookOpen,
   Camera,
-  ClipboardCheck,
   FolderOpen,
   LayoutDashboard,
   LogOut,
-  Network,
   Palette,
-  Radar,
-  ScrollText,
-  Send,
   Settings,
   ShieldAlert,
   Sparkles,
@@ -33,38 +27,26 @@ import { SessionProvider, useSession } from "./session";
 
 type NavItem = { href: string; label: string; icon: React.ComponentType<{ className?: string }> };
 
+// MVP: one short flow (capture → analysis → generate) plus the catalogs. The other screens still exist by URL.
 const NAV: { section: string; items: NavItem[] }[] = [
   {
     section: "nav.sectionOperation",
     items: [
       { href: "/", label: "nav.dashboard", icon: LayoutDashboard },
-      { href: "/monitoreo", label: "nav.monitoring", icon: Radar },
       { href: "/captura", label: "nav.capture", icon: Camera },
       { href: "/casos", label: "nav.cases", icon: FolderOpen },
-      { href: "/bandeja", label: "nav.inbox", icon: ClipboardCheck },
     ],
   },
   {
     section: "nav.sectionKnowledge",
     items: [
-      { href: "/base", label: "nav.kb", icon: BookOpen },
-      { href: "/estilos", label: "nav.styles", icon: Palette },
-    ],
-  },
-  {
-    section: "nav.sectionOutput",
-    items: [
-      { href: "/publicacion", label: "nav.publishing", icon: Send },
-      { href: "/medicion", label: "nav.metrics", icon: BarChart3 },
-      { href: "/inteligencia", label: "nav.intelligence", icon: Network },
+      { href: "/base", label: "nav.facts", icon: BookOpen },
+      { href: "/estilos", label: "nav.catalogs", icon: Palette },
     ],
   },
   {
     section: "nav.sectionAdmin",
-    items: [
-      { href: "/configuracion", label: "nav.settings", icon: Settings },
-      { href: "/bitacora", label: "nav.audit", icon: ScrollText },
-    ],
+    items: [{ href: "/configuracion", label: "nav.settings", icon: Settings }],
   },
 ];
 

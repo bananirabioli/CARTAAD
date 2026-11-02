@@ -46,7 +46,8 @@ def run_step(db: Session, step: str, context: dict[str, Any], meta: StepMeta | N
     system, body = prompt.render(hard_rules_block=hard_rules_prompt_block(), **context)
     provider = get_provider()
     run = AiRun(
-        client_id=meta.client_id, step=step, prompt_version=prompt.version, provider=provider.name, model=provider.model,
+        client_id=meta.client_id, step=step, prompt_version=prompt.version, provider=provider.name,
+        model=provider.model_for(step) if hasattr(provider, "model_for") else provider.model,
         input=_trim({"context": context, "prompt_chars": len(system) + len(body)}), user_id=meta.user_id, case_id=meta.case_id,
         piece_id=meta.piece_id, style_id=meta.style_id, style_slug=meta.style_slug, style_version=meta.style_version,
         applied_directives=_jsonable(meta.applied_directives),

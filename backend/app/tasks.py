@@ -72,8 +72,16 @@ def generate_proposal_task(proposal_id: int, user_id: int | None = None) -> str:
         proposal = db.get(Proposal, proposal_id)
         user = db.get(User, user_id) if user_id else None
         try:
-            generate_proposal(db, proposal, user)
-            db.commit()
+            if (proposal.options or {}).get("mode") == "content":
+                from app.services.content import generate_content_proposal, video_pieces_to_render
+
+                generate_content_proposal(db, proposal, user)
+                db.commit()
+                for piece_id in video_pieces_to_render(proposal):
+                    render_video_task.delay(piece_id)
+            else:
+                generate_proposal(db, proposal, user)
+                db.commit()
             return "listo"
         except Exception as exc:  # noqa: BLE001
             db.rollback()
@@ -101,3 +109,20 @@ def render_piece_task(piece_id: int) -> int:
         keys = render_piece(db, piece)
         db.commit()
         return len(keys)
+
+
+@celery_app.task(name="app.tasks.render_video")
+def render_video_task(piece_id: int) -> str:
+    from app.db import SessionLocal
+    from app.models.generation import Piece
+    from app.services.content import render_video
+
+    with SessionLocal() as db:
+        piece = db.get(Piece, piece_id)
+        if piece is None or piece.kind != "video":
+            return "no_aplica"
+        piece.render_status = "generando"
+        db.commit()
+        render_video(db, piece)
+        db.commit()
+        return piece.render_status

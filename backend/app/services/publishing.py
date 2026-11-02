@@ -54,7 +54,7 @@ def approval_blockers(db: Session, piece: Piece) -> list[str]:
         blockers.append(t("publishing.blockers.consent"))
     if any(f.status == "rechazada" for f in piece.figures):
         blockers.append(t("publishing.blockers.rejected_figures"))
-    if piece.render_status in ("pendiente", "error"):
+    if piece.render_status in ("pendiente", "generando", "error"):
         blockers.append(t("publishing.blockers.render", status=piece.render_status))
     return blockers
 

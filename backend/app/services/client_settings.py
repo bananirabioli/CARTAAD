@@ -32,6 +32,7 @@ class ValidatorModes(BaseModel):
 
 
 class ClientSettings(BaseModel):
+    context: str = ""  # region / who the client is; goes into the analyze and generate prompts
     alert_thresholds: AlertThresholds = Field(default_factory=AlertThresholds)
     alert_window_hours: float = 6
     baseline_min_days: int = 14

@@ -44,7 +44,7 @@ def current_user(request: Request, db: Session = Depends(get_db)) -> User:
 
 
 def accessible_client_ids(db: Session, user: User) -> list[int]:
-    if user.role == "admin":
+    if user.role in ("admin", "owner"):
         return list(db.scalars(select(Client.id).order_by(Client.id)))
     return list(db.scalars(select(UserClient.client_id).where(UserClient.user_id == user.id).order_by(UserClient.client_id)))
 

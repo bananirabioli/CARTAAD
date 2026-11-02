@@ -3,6 +3,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.config import get_settings
 from app.models.core import Client, Topic
 from app.models.kb import GovLevel
 from app.services.bootstrap import register_cloner
@@ -18,6 +19,8 @@ DEFAULT_TOPICS = [
 
 @register_cloner("topics")
 def clone_topics(db: Session, client: Client) -> None:
+    if not get_settings().demo_mode:
+        return  # MVP: every client builds its own topics from scratch
     existing = set(db.scalars(select(Topic.slug).where(Topic.client_id == client.id)))
     for slug, name, keywords in DEFAULT_TOPICS:
         if slug not in existing:
@@ -29,6 +32,8 @@ DEFAULT_GOV_LEVELS = [("municipio", "Municipio", 1), ("estado", "Estado", 2), ("
 
 @register_cloner("gov_levels")
 def clone_gov_levels(db: Session, client: Client) -> None:
+    if not get_settings().demo_mode:
+        return
     existing = set(db.scalars(select(GovLevel.slug).where(GovLevel.client_id == client.id)))
     for slug, name, ord_ in DEFAULT_GOV_LEVELS:
         if slug not in existing:

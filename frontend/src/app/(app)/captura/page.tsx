@@ -2,7 +2,8 @@
 
 import { ImageUp, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import { AlertBadge } from "@/components/app/badges";
 import { PageHeader } from "@/components/app/common";
@@ -15,13 +16,28 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { enumOptions, t } from "@/i18n";
-import { api, ApiError, fileUrl, refresh, useApi, type Schemas } from "@/lib/api/client";
+import { api, ApiError, fileUrl, refresh, type Schemas } from "@/lib/api/client";
 import { cn } from "@/lib/utils";
 
-const NONE = "__none__";
+/** Re-encode any picked/pasted image (HEIC from iPhone, huge screenshots, nameless clipboard blobs) as a JPEG ≤ 2000 px. */
+async function toUploadable(file: File): Promise<File> {
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 2000 / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
+    return blob ? new File([blob], "captura.jpg", { type: "image/jpeg" }) : file;
+  } catch {
+    return file; // the browser cannot decode it: let the API answer with a clear error
+  }
+}
 
 export default function CapturePage() {
   const { can } = useSession();
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -29,16 +45,12 @@ export default function CapturePage() {
   const [text, setText] = useState("");
   const [url, setUrl] = useState("");
   const [network, setNetwork] = useState("facebook");
-  const [sourceId, setSourceId] = useState(NONE);
-  const [sourceName, setSourceName] = useState("");
-  const [sourceType, setSourceType] = useState("pagina_ciudadana");
   const [blur, setBlur] = useState(true);
   const [counts, setCounts] = useState({ likes: "", comments: "", shares: "" });
   const [commentsText, setCommentsText] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<Schemas["PostDetail"] | null>(null);
-  const { data: sources } = useApi<Schemas["Page_SourceOut_"]>("/sources?page_size=200");
 
   function pick(f: File | null | undefined) {
     if (!f) return;
@@ -46,13 +58,22 @@ export default function CapturePage() {
     setPreview(URL.createObjectURL(f));
   }
 
+  // Ctrl+V / Cmd+V pastes a screenshot straight from the clipboard.
+  useEffect(() => {
+    function onPaste(e: ClipboardEvent) {
+      const item = [...(e.clipboardData?.items ?? [])].find((i) => i.type.startsWith("image/"));
+      const f = item?.getAsFile();
+      if (f) pick(f);
+    }
+    window.addEventListener("paste", onPaste);
+    return () => window.removeEventListener("paste", onPaste);
+  }, []);
+
   function reset() {
     setFile(null);
     setPreview(null);
     setText("");
     setUrl("");
-    setSourceId(NONE);
-    setSourceName("");
     setCounts({ likes: "", comments: "", shares: "" });
     setCommentsText("");
     setResult(null);
@@ -68,17 +89,13 @@ export default function CapturePage() {
       fd.append("network", network);
       fd.append("blur_names", String(blur));
       if (url) fd.append("url", url);
-      if (sourceId !== NONE) fd.append("source_id", sourceId);
-      else if (sourceName.trim()) {
-        fd.append("source_name", sourceName.trim());
-        fd.append("source_type", sourceType);
-      }
       for (const [k, v] of Object.entries(counts)) if (v !== "") fd.append(k, v);
       if (commentsText.trim()) fd.append("comments_text", commentsText);
-      if (file) fd.append("image", file);
+      if (file) fd.append("image", await toUploadable(file), "captura.jpg");
       const post = await api.upload<Schemas["PostDetail"]>("/posts/manual", fd);
-      setResult(post);
-      await refresh("/posts", "/sources", "/cases", "/dashboard");
+      await refresh("/posts", "/cases", "/dashboard");
+      if (post.case_id) router.push(`/casos/${post.case_id}`);
+      else setResult(post);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : String(err));
     } finally {
@@ -121,7 +138,7 @@ export default function CapturePage() {
 
   return (
     <div>
-      <PageHeader title={t("capture.title")} subtitle={t("capture.subtitle")} />
+      <PageHeader title={t("mvp.captureTitle")} subtitle={t("mvp.captureSubtitle")} />
       <div className="grid gap-6 lg:grid-cols-2">
         <div
           role="button"
@@ -143,7 +160,7 @@ export default function CapturePage() {
             dragging && "border-primary bg-primary/5",
           )}
         >
-          <input ref={inputRef} type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={(e) => pick(e.target.files?.[0])} />
+          <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={(e) => pick(e.target.files?.[0])} />
           {preview ? (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -164,7 +181,7 @@ export default function CapturePage() {
             <Textarea id="copy" rows={5} value={text} onChange={(e) => setText(e.target.value)} />
             <p className="text-xs text-muted-foreground">{t("capture.copyHint")}</p>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid gap-3">
             <div className="grid gap-1.5">
               <Label>{t("capture.network")}</Label>
               <Select value={network} onValueChange={setNetwork}>
@@ -172,36 +189,7 @@ export default function CapturePage() {
                 <SelectContent>{enumOptions("network").map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
               </Select>
             </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="url">{t("capture.url")}</Label>
-              <Input id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
-            </div>
           </div>
-          <div className="grid gap-1.5">
-            <Label>{t("capture.source")}</Label>
-            <Select value={sourceId} onValueChange={setSourceId}>
-              <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value={NONE}>{t("capture.sourceNone")}</SelectItem>
-                {(sources?.items ?? []).map((s) => <SelectItem key={s.id} value={String(s.id)}>{s.name}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          </div>
-          {sourceId === NONE ? (
-            <div className="grid grid-cols-2 gap-3">
-              <div className="grid gap-1.5">
-                <Label htmlFor="newsrc">{t("capture.newSource")}</Label>
-                <Input id="newsrc" value={sourceName} onChange={(e) => setSourceName(e.target.value)} />
-              </div>
-              <div className="grid gap-1.5">
-                <Label>{t("capture.newSourceType")}</Label>
-                <Select value={sourceType} onValueChange={setSourceType}>
-                  <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                  <SelectContent>{enumOptions("source_type").map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
-                </Select>
-              </div>
-            </div>
-          ) : null}
           <label className="flex items-start gap-3 rounded-md border p-3">
             <Switch checked={blur} onCheckedChange={setBlur} />
             <span className="grid gap-0.5">
@@ -209,6 +197,13 @@ export default function CapturePage() {
               <span className="text-xs text-muted-foreground">{t("capture.blurHint")}</span>
             </span>
           </label>
+          <details className="rounded-md border p-3">
+            <summary className="cursor-pointer text-sm">{t("mvp.optionalData")}</summary>
+            <div className="mt-3 grid gap-3">
+              <div className="grid gap-1.5">
+                <Label htmlFor="url">{t("capture.url")}</Label>
+                <Input id="url" value={url} onChange={(e) => setUrl(e.target.value)} />
+              </div>
           <div className="grid gap-1.5">
             <Label>{t("capture.counts")}</Label>
             <div className="grid grid-cols-3 gap-2">
@@ -221,11 +216,13 @@ export default function CapturePage() {
             <Label htmlFor="ct">{t("capture.commentsText")}</Label>
             <Textarea id="ct" rows={3} value={commentsText} onChange={(e) => setCommentsText(e.target.value)} />
           </div>
+            </div>
+          </details>
           {error ? <p className="text-sm text-status-block">{error}</p> : null}
           <div>
             <Button onClick={submit} disabled={busy || !can("case.capture") || (!text.trim() && !file)}>
               {busy ? <Loader2 className="animate-spin" /> : null}
-              {busy ? t("capture.submitting") : t("capture.submit")}
+              {busy ? t("mvp.analyzing") : t("mvp.analyze")}
             </Button>
           </div>
         </div>

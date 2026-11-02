@@ -30,7 +30,7 @@ case "$1" in
     ;;
   worker)
     wait_for_db
-    exec celery -A app.worker worker --loglevel=INFO --concurrency=2
+    exec celery -A app.worker worker --loglevel=INFO --concurrency=3
     ;;
   beat)
     wait_for_db

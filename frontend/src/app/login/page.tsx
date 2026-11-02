@@ -16,8 +16,8 @@ const DEMO_PASSWORD = "demo1234";
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const [email, setEmail] = useState("analista@demo.mx");
-  const [password, setPassword] = useState(DEMO_PASSWORD);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const { data: demoUsers } = useApi<Schemas["UserOut"][]>("/auth/demo-users", { shouldRetryOnError: false });
@@ -57,11 +57,11 @@ function LoginForm() {
             <form className="grid gap-3" onSubmit={submit}>
               <div className="grid gap-1.5">
                 <Label htmlFor="email">{t("auth.email")}</Label>
-                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
+                <Input id="email" type="email" required placeholder="tu@correo.mx" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
               </div>
               <div className="grid gap-1.5">
                 <Label htmlFor="password">{t("auth.password")}</Label>
-                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
+                <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
               </div>
               {error ? <p className="text-sm text-status-block">{error}</p> : null}
               <Button type="submit" disabled={busy}>

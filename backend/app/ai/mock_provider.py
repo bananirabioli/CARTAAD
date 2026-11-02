@@ -17,6 +17,8 @@ HANDLERS: dict[str, str] = {
     "generate_creatives": "creatives:generate_creatives",
     "refine_piece": "refine:refine_piece",
     "red_team": "red_team:red_team",
+    "analyze_capture": "mvp:analyze_capture",
+    "generate_content": "mvp:generate_content",
 }
 
 

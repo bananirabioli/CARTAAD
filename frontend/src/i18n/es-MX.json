@@ -7,12 +7,12 @@
   },
   "nav": {
     "sectionOperation": "Operación",
-    "sectionKnowledge": "Conocimiento",
+    "sectionKnowledge": "Contenido",
     "sectionOutput": "Salida",
     "sectionAdmin": "Administración",
-    "dashboard": "Tablero de alertas",
+    "dashboard": "Inicio",
     "monitoring": "Monitoreo",
-    "capture": "Captura manual",
+    "capture": "Nueva captura",
     "cases": "Casos",
     "kb": "Base de conocimiento",
     "inbox": "Bandeja de aprobación",
@@ -21,11 +21,13 @@
     "intelligence": "Inteligencia",
     "styles": "Estilos y directrices",
     "settings": "Configuración",
-    "audit": "Bitácora de auditoría"
+    "audit": "Bitácora de auditoría",
+    "facts": "Hechos",
+    "catalogs": "Catálogos"
   },
   "auth": {
     "title": "Iniciar sesión",
-    "subtitle": "Usa una cuenta de demostración o tus credenciales.",
+    "subtitle": "Entra con tu correo y contraseña.",
     "email": "Correo",
     "password": "Contraseña",
     "submit": "Entrar",
@@ -53,13 +55,17 @@
     "legal": "Legal",
     "diseno": "Diseño",
     "admin": "Admin",
-    "kb_owner": "Dueño de la base"
+    "kb_owner": "Dueño de la base",
+    "owner": "Administrador"
   },
   "enums": {
     "client_type": {
       "gobierno": "Gobierno",
       "partido": "Partido",
-      "candidatura": "Candidatura"
+      "candidatura": "Candidatura",
+      "organizacion": "Organización",
+      "empresa": "Empresa",
+      "otro": "Otro"
     },
     "image_type": {
       "foto_real": "Foto real",
@@ -355,7 +361,8 @@
       "pendiente": "Renderizando…",
       "listo": "Render listo",
       "error": "Error de render",
-      "no_aplica": "Solo texto"
+      "no_aplica": "Solo texto",
+      "generando": "Generando"
     },
     "schedule_status": {
       "programado": "Programado",
@@ -365,7 +372,9 @@
     },
     "piece_kind": {
       "copy": "Copy",
-      "creative": "Creativo"
+      "creative": "Creativo",
+      "image": "Imagen",
+      "video": "Video"
     }
   },
   "common": {
@@ -1207,5 +1216,72 @@
     "tag": "Filtrar respuestas por etiqueta",
     "downloadMd": "Descargar Markdown",
     "downloadHtml": "Descargar HTML"
+  },
+  "mvp": {
+    "homeTitle": "Inicio",
+    "newCapture": "Nueva captura",
+    "emptyHome": "Todavía no hay casos. Sube la captura de una publicación para analizarla.",
+    "captureTitle": "Nueva captura",
+    "captureSubtitle": "Arrastra, elige o pega (Ctrl+V) la captura de una publicación. La IA la lee, decide si está a favor o en contra y prepara el análisis.",
+    "analyze": "Analizar",
+    "analyzing": "Analizando…",
+    "optionalData": "Datos opcionales (enlace, interacciones y comentarios)",
+    "nextStep": "Siguiente paso",
+    "goGenerate": "Generar contenido",
+    "generateSubtitle": "Elige la estrategia y la red. La IA escribe los copies, propone las imágenes y, si lo pides, el video.",
+    "generating": "Generando copies e imágenes… tarda menos de un minuto.",
+    "network": "Red destino",
+    "images": "Imágenes",
+    "variantsHelp": "Opcional: elige hasta 3 estilos. Si no eliges, se usan los predeterminados del formato.",
+    "video": "Generar video corto",
+    "videoHelp": "Se procesa aparte y tarda unos minutos.",
+    "instructions": "Indicaciones para la IA (opcional)",
+    "instructionsPlaceholder": "Ej.: menciona la obra de la colonia Centro, tono más cercano, evita tecnicismos.",
+    "legalCheck": "Este caso requiere revisión legal: escribe tu nota de revisión para continuar.",
+    "legalPlaceholder": "Ej.: Revisado, sin afirmaciones sobre personas sin respaldo.",
+    "approve": "Aprobar",
+    "approved": "Pieza aprobada",
+    "copy": "Copiar texto",
+    "copied": "Copiado al portapapeles",
+    "copyPrompt": "Copiar prompt",
+    "download": "Descargar",
+    "headline": "Titular sugerido",
+    "prompt": "Prompt",
+    "imagesTab": "Imágenes",
+    "videoTab": "Video",
+    "noImages": "No se pidieron imágenes en esta generación.",
+    "noVideo": "No se pidió video en esta generación.",
+    "videoRendering": "Generando el video…",
+    "videoNone": "Video no generado: usa el prompt y el guion.",
+    "scenes": "Escenas",
+    "voiceover": "Voz en off",
+    "onScreen": "Textos para edición",
+    "missingData": "Datos que harían más fuerte el mensaje",
+    "catalogsTitle": "Catálogos",
+    "catalogsSubtitle": "Temas, estilos, formatos, creativos y etiquetas del cliente seleccionado.",
+    "formatsCreatives": "Formatos y creativos",
+    "newFormat": "Nuevo formato",
+    "newCreative": "Nuevo creativo",
+    "template": "Plantilla",
+    "flow": "Flujo",
+    "flowA": "A · respuesta",
+    "flowB": "B · amplificación",
+    "textOnly": "Solo texto",
+    "factsTitle": "Hechos",
+    "factsSubtitle": "Datos con fuente y fecha. Son los únicos que la IA puede citar en los copies.",
+    "settingsSubtitle": "Clientes, cuenta principal, modelos de IA y registro de llamadas.",
+    "contextTitle": "Contexto de {client}",
+    "contextHelp": "Región o quién es el cliente. La IA lo usa al analizar y al redactar.",
+    "modelsTab": "Modelos de IA",
+    "keyPresent": "La API key de OpenRouter está configurada.",
+    "keyMissing": "Falta OPENROUTER_API_KEY: agrégala al archivo .env del servidor y reinicia api y worker.",
+    "modelsHelp": "Los modelos se cambian con las variables OPENROUTER_MODEL_* del archivo .env.",
+    "use": "Uso",
+    "provider": "Proveedor",
+    "model": "Modelo",
+    "modelAnalysis": "Análisis de capturas",
+    "modelText": "Copies y prompts",
+    "modelImage": "Imágenes",
+    "modelVideo": "Video"
   }
 }

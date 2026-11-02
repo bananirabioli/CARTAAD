@@ -1,6 +1,24 @@
 # C-A-R-T-A-A-D
 
-**Centro de Alerta y Respuesta Temprana a Amenazas Digitales**: prototipo beta con datos ficticios.
+**Centro de Alerta y Respuesta Temprana a Amenazas Digitales**.
+
+## Modo MVP (por defecto)
+
+Un usuario maestro y un flujo corto: **Nueva captura → Análisis → Generar contenido → Aprobar y descargar**.
+
+- La captura (imagen y/o texto) se analiza en **una sola llamada** con visión (`prompts/analyze_capture.md`): postura a
+  favor / en contra / neutral, tema, afirmaciones contra los hechos cargados, recomendación y estrategia.
+- **Generar contenido** (`prompts/generate_content.md`) escribe tres variantes de copy, los prompts de imagen (y las
+  imágenes) y, si se pide, el guion y el prompt de un video corto que el worker genera aparte.
+- Todo pasa por OpenRouter con una sola llave (`OPENROUTER_API_KEY`); los modelos se cambian con `OPENROUTER_MODEL_*`.
+- Menú: Inicio, Nueva captura, Casos, Hechos, Catálogos (temas, estilos, formatos, creativos, matriz, etiquetas) y
+  Configuración (clientes, cuenta principal, modelos, registro de IA). Las demás pantallas siguen existiendo por URL.
+- El usuario maestro se crea con `ADMIN_EMAIL` / `ADMIN_PASSWORD` al primer arranque. Ver [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
+## Modo demo (histórico)
+
+Prototipo beta con datos ficticios: `DEMO_MODE=true`, `LLM_PROVIDER=mock`, `IMAGE_PROVIDER=placeholder`,
+`VIDEO_PROVIDER=none`.
 
 Monitorea páginas públicas, detecta publicaciones que aceleran, las clasifica e interpreta afirmación por afirmación
 contra una base de hechos con fuente y fecha, sugiere estrategia y estilo, y genera copy y creativos en variantes de

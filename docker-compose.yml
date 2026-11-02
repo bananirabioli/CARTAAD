@@ -14,8 +14,12 @@ x-backend: &backend
     CELERY_EAGER: "false"
     STORAGE_DIR: /data/files
     RENDERER: playwright
-    DEMO_MODE: "true"
     AUTO_SEED: "false"
+    # MVP defaults; .env can switch back to the offline demo (DEMO_MODE=true, LLM_PROVIDER=mock, IMAGE_PROVIDER=placeholder).
+    DEMO_MODE: ${DEMO_MODE:-false}
+    LLM_PROVIDER: ${LLM_PROVIDER:-openrouter}
+    IMAGE_PROVIDER: ${IMAGE_PROVIDER:-openrouter}
+    VIDEO_PROVIDER: ${VIDEO_PROVIDER:-openrouter}
   volumes:
     - files:/data/files
   depends_on:

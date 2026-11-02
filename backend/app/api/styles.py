@@ -17,6 +17,7 @@ from app.schemas.common import Message, Page
 from app.schemas.styles import (
     AiRunDetail,
     AiRunOut,
+    CreativeTypeIn,
     CreativeTypeOut,
     CreativeTypePatch,
     DirectiveFields,
@@ -24,6 +25,7 @@ from app.schemas.styles import (
     DirectivePatch,
     DirectiveTransitionIn,
     FindingDecisionIn,
+    FormatIn,
     FormatOut,
     FormatPatch,
     MatrixCell,
@@ -408,6 +410,23 @@ def list_formats(ctx: Ctx = Depends(get_ctx)) -> list[Format]:
     return list(ctx.db.scalars(select(Format).where(Format.client_id == ctx.client_id).order_by(Format.ord)))
 
 
+@router.post("/catalog/formats", response_model=FormatOut, status_code=201)
+def create_format(body: FormatIn, ctx: Ctx = Depends(require("catalog.manage"))) -> Format:
+    if ctx.db.scalar(select(Format.id).where(Format.client_id == ctx.client_id, Format.slug == body.slug)):
+        raise conflict(body.slug)
+    n = len(list(ctx.db.scalars(select(Format.id).where(Format.client_id == ctx.client_id))))
+    allowed = body.allowed_style_slugs or [body.default_style_slug]
+    fmt = Format(client_id=ctx.client_id, code=f"F{n + 1}", ord=n, **body.model_dump(exclude={"allowed_style_slugs"}), allowed_style_slugs=allowed)
+    ctx.db.add(fmt)
+    ctx.db.flush()
+    # A new format accepts every creative until the matrix says otherwise.
+    for ct in ctx.db.scalars(select(CreativeType).where(CreativeType.client_id == ctx.client_id)):
+        ctx.db.add(CreativeFormatCompat(client_id=ctx.client_id, creative_slug=ct.slug, format_slug=fmt.slug, level="full", note=""))
+    audit.record(ctx.db, action="format.create", entity_type="format", entity_id=fmt.id, client_id=ctx.client_id, user=ctx.user, after=audit.snapshot(fmt))
+    ctx.db.commit()
+    return fmt
+
+
 @router.patch("/catalog/formats/{format_id}", response_model=FormatOut)
 def update_format(format_id: int, body: FormatPatch, ctx: Ctx = Depends(require("catalog.manage"))) -> Format:
     fmt = owned(ctx.db, Format, format_id, ctx.client_id)
@@ -425,6 +444,21 @@ def list_creatives(ctx: Ctx = Depends(get_ctx), flow: str | None = None) -> list
     if flow:
         stmt = stmt.where(CreativeType.flow == flow)
     return list(ctx.db.scalars(stmt.order_by(CreativeType.ord)))
+
+
+@router.post("/catalog/creatives", response_model=CreativeTypeOut, status_code=201)
+def create_creative(body: CreativeTypeIn, ctx: Ctx = Depends(require("catalog.manage"))) -> CreativeType:
+    if ctx.db.scalar(select(CreativeType.id).where(CreativeType.client_id == ctx.client_id, CreativeType.slug == body.slug)):
+        raise conflict(body.slug)
+    n = len(list(ctx.db.scalars(select(CreativeType.id).where(CreativeType.client_id == ctx.client_id, CreativeType.flow == body.flow))))
+    ct = CreativeType(client_id=ctx.client_id, code=f"{body.flow}{n + 1}", ord=100 + n, is_comparison=False, **body.model_dump())
+    ctx.db.add(ct)
+    ctx.db.flush()
+    for fmt in ctx.db.scalars(select(Format).where(Format.client_id == ctx.client_id)):
+        ctx.db.add(CreativeFormatCompat(client_id=ctx.client_id, creative_slug=ct.slug, format_slug=fmt.slug, level="full", note=""))
+    audit.record(ctx.db, action="creative.create", entity_type="creative_type", entity_id=ct.id, client_id=ctx.client_id, user=ctx.user, after=audit.snapshot(ct))
+    ctx.db.commit()
+    return ct
 
 
 @router.patch("/catalog/creatives/{creative_id}", response_model=CreativeTypeOut)
