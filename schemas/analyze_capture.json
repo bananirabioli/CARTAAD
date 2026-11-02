@@ -1,0 +1,308 @@
+{
+  "$defs": {
+    "ClaimOut": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "cierta",
+            "falsa",
+            "incompleta",
+            "no_verificable"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        },
+        "fact_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "missing_data": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Qué dato falta en la base para verificarla.",
+          "title": "Missing Data"
+        }
+      },
+      "required": [
+        "text",
+        "verdict",
+        "explanation"
+      ],
+      "title": "ClaimOut",
+      "type": "object"
+    },
+    "CommentThemeOut": {
+      "properties": {
+        "theme": {
+          "title": "Theme",
+          "type": "string"
+        },
+        "share": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Share",
+          "type": "number"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "theme",
+        "share",
+        "summary"
+      ],
+      "title": "CommentThemeOut",
+      "type": "object"
+    },
+    "EngagementRead": {
+      "properties": {
+        "emotion": {
+          "default": "",
+          "description": "Emoción dominante que mueve la publicación (enojo, miedo, orgullo, burla…).",
+          "title": "Emotion",
+          "type": "string"
+        },
+        "why_it_spreads": {
+          "default": "",
+          "description": "Por qué está circulando o podría circular.",
+          "title": "Why It Spreads",
+          "type": "string"
+        },
+        "response_angle": {
+          "default": "",
+          "description": "Ángulo de respuesta con más posibilidad de enganchar a la audiencia del cliente.",
+          "title": "Response Angle",
+          "type": "string"
+        }
+      },
+      "title": "EngagementRead",
+      "type": "object"
+    },
+    "StrategyAlternative": {
+      "properties": {
+        "strategy": {
+          "enum": [
+            "desmentir",
+            "contextualizar",
+            "reencuadrar",
+            "contrastar",
+            "amplificar",
+            "agradecer"
+          ],
+          "title": "Strategy",
+          "type": "string"
+        },
+        "why": {
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "strategy",
+        "why"
+      ],
+      "title": "StrategyAlternative",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "extracted_text": {
+      "description": "Texto visible de la publicación, tal cual (sin los comentarios).",
+      "title": "Extracted Text",
+      "type": "string"
+    },
+    "network_guess": {
+      "default": "otra",
+      "enum": [
+        "facebook",
+        "x",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "whatsapp",
+        "otra"
+      ],
+      "title": "Network Guess",
+      "type": "string"
+    },
+    "visual_context": {
+      "description": "Qué se ve: imagen, video, memes, tono visual. Sin identificar personas por su rostro.",
+      "title": "Visual Context",
+      "type": "string"
+    },
+    "author_type": {
+      "default": "desconocido",
+      "enum": [
+        "medio",
+        "pagina_ciudadana",
+        "actor_politico",
+        "influencer",
+        "cuenta_personal",
+        "desconocido"
+      ],
+      "title": "Author Type",
+      "type": "string"
+    },
+    "stance": {
+      "description": "Postura de la publicación respecto al cliente.",
+      "enum": [
+        "a_favor",
+        "en_contra",
+        "neutral"
+      ],
+      "title": "Stance",
+      "type": "string"
+    },
+    "stance_confidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Stance Confidence",
+      "type": "number"
+    },
+    "topic": {
+      "description": "slug de uno de los temas del cliente, u 'otro'",
+      "title": "Topic",
+      "type": "string"
+    },
+    "message_type": {
+      "enum": [
+        "opinion",
+        "dato_falso",
+        "dato_sacado_de_contexto",
+        "acusacion_o_difamacion",
+        "queja_ciudadana_legitima"
+      ],
+      "title": "Message Type",
+      "type": "string"
+    },
+    "tone": {
+      "description": "Rasgos de tono: ironía, enojo, burla, preocupación, entusiasmo…",
+      "items": {
+        "type": "string"
+      },
+      "title": "Tone",
+      "type": "array"
+    },
+    "summary": {
+      "description": "Qué dice la publicación y qué busca, en 2–3 frases.",
+      "title": "Summary",
+      "type": "string"
+    },
+    "narrative": {
+      "description": "La narrativa de fondo que empuja (el marco), en una frase.",
+      "title": "Narrative",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/ClaimOut"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "audience_reaction": {
+      "description": "Temas de los comentarios visibles, sin identificar a nadie.",
+      "items": {
+        "$ref": "#/$defs/CommentThemeOut"
+      },
+      "title": "Audience Reaction",
+      "type": "array"
+    },
+    "risk_notes": {
+      "default": "",
+      "description": "Riesgos de responder o de no responder.",
+      "title": "Risk Notes",
+      "type": "string"
+    },
+    "recommendation": {
+      "enum": [
+        "responder",
+        "monitorear",
+        "ignorar"
+      ],
+      "title": "Recommendation",
+      "type": "string"
+    },
+    "explanation": {
+      "description": "Por qué esta recomendación; si responder amplificaría el ataque, dilo.",
+      "title": "Explanation",
+      "type": "string"
+    },
+    "strategy": {
+      "enum": [
+        "desmentir",
+        "contextualizar",
+        "reencuadrar",
+        "contrastar",
+        "amplificar",
+        "agradecer"
+      ],
+      "title": "Strategy",
+      "type": "string"
+    },
+    "strategy_justification": {
+      "title": "Strategy Justification",
+      "type": "string"
+    },
+    "alternatives": {
+      "items": {
+        "$ref": "#/$defs/StrategyAlternative"
+      },
+      "title": "Alternatives",
+      "type": "array"
+    },
+    "canalizar_a_atencion": {
+      "default": false,
+      "title": "Canalizar A Atencion",
+      "type": "boolean"
+    },
+    "detected_names": {
+      "description": "Nombres o handles visibles de particulares, solo para difuminarlos.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Detected Names",
+      "type": "array"
+    },
+    "engagement": {
+      "$ref": "#/$defs/EngagementRead",
+      "description": "Lectura de engagement: emoción, por qué circula, ángulo de respuesta."
+    }
+  },
+  "required": [
+    "extracted_text",
+    "visual_context",
+    "stance",
+    "stance_confidence",
+    "topic",
+    "message_type",
+    "summary",
+    "narrative",
+    "recommendation",
+    "explanation",
+    "strategy",
+    "strategy_justification"
+  ],
+  "title": "AnalyzeCaptureOut",
+  "type": "object"
+}

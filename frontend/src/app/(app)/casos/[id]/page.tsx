@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Pencil, RefreshCw, Scale } from "lucide-react";
+import { ArrowRight, Pencil, RefreshCw, Scale, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -10,17 +10,17 @@ import { AlertBadge } from "@/components/app/badges";
 import { ErrorState, KeyValue, Loading, ReasonDialog } from "@/components/app/common";
 import { FormDialog } from "@/components/app/form-dialog";
 import { useSession } from "@/components/app/session";
-import { CaseStatusBadge, ClaimList, LearningTable, RiskBreakdown, RiskMeter } from "@/components/cases/parts";
+import { CaseStatusBadge, ClaimList, RiskBreakdown, RiskMeter } from "@/components/cases/parts";
+import { ModelBadge, ModelPicker, useLabConfig } from "@/components/lab/parts";
 import { CaseMetricsPanel } from "@/components/metrics/parts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { enumOptions, fmtDate, fmtNum, t, tEnum } from "@/i18n";
 import { api, ApiError, fileUrl, refresh, useApi, type Schemas } from "@/lib/api/client";
-import { useStateResetOn, useTopics } from "@/lib/hooks";
+import { useTopics } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 type CaseD = Schemas["CaseDetail"];
@@ -41,103 +41,99 @@ function Section({ title, children, action, className }: { title: string; childr
   );
 }
 
-function DecisionPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) {
-  const { can, me } = useSession();
-  const accounts = c.account_options ?? [];
-  const vedaFormats = ((me?.restriction as { blocked_formats?: string[] } | null)?.blocked_formats) ?? [];
-  const firstOk = accounts.find((a) => !vedaFormats.includes(a.format_slug));
-  const [accountId, setAccountId] = useState<string>(firstOk ? String(firstOk.id) : "");
-  const account = accounts.find((a) => String(a.id) === accountId);
-  const recommended = (c.recommended_style?.value as string | null) ?? null;
-  const [style, setStyle] = useStateResetOn<string>(accountId, () => "");
-  const [strategy, setStrategy] = useState<string>(c.strategy_suggested ?? "");
-  const [reasonFor, setReasonFor] = useState<string | null>(null);
+/** MVP: the decision is folded into «Generar contenido»; monitor / ignore / route stay one click away. */
+type LabInfo = { analyst_context?: string | null; analysis_model?: string | null; analysis?: { model?: string } | null; engagement?: { emotion?: string; why_it_spreads?: string; response_angle?: string } | null };
+
+function LabPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) {
+  const { can } = useSession();
+  const lab = (c.lab ?? {}) as LabInfo;
+  const { data: cfg } = useLabConfig();
+  const [context, setContext] = useState(lab.analyst_context ?? "");
+  const [model, setModel] = useState(lab.analysis_model ?? "");
   const [busy, setBusy] = useState(false);
-
-  if (c.status !== "interpretado" || !can("case.decide")) return null;
-
-  async function decide(decision: string, reason = "") {
+  const eng = lab.engagement;
+  async function run() {
     setBusy(true);
     try {
-      const body: Record<string, unknown> = { decision, reason };
-      if (decision === "responder") Object.assign(body, { account_id: Number(accountId), strategy: strategy || null, style_slug: style || null });
-      const d = await api.post<CaseD>(`/cases/${c.id}/decide`, body);
-      onDone(d);
+      onDone(await api.post<CaseD>(`/cases/${c.id}/reanalyze`, { context, model }));
       await refresh("/cases", "/dashboard");
-      toast.success(tEnum("case_status", d.status));
+      toast.success(t("lab.reanalyzed"));
     } catch (err) {
       toast.error(errMsg(err));
     } finally {
       setBusy(false);
     }
   }
-
   return (
-    <Section title={t("cases.decision")}>
-      <div className="grid gap-4">
-        <p className="text-xs text-muted-foreground">{t("cases.decisionHelp")}</p>
-        {c.flow ? (
-          <div className="grid min-w-0 gap-3 rounded-md border bg-muted/30 p-3">
-            <div className="grid gap-1.5">
-              <Label>{t("cases.account")}</Label>
-              <Select value={accountId} onValueChange={setAccountId}>
-                <SelectTrigger className="w-full max-w-full min-w-0"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {accounts.map((a) => {
-                    const blocked = vedaFormats.includes(a.format_slug);
-                    return (
-                      <SelectItem key={a.id} value={String(a.id)} disabled={blocked}>
-                        {a.display_name} · {a.format_name} · {tEnum("account_type", a.account_type)}
-                        {blocked ? ` · ${t("cases.blockedByVeda")}` : ""}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-            </div>
-            {account ? (
-              <div className="grid gap-1.5">
-                <Label>{t("cases.style")}</Label>
-                <div className="flex flex-wrap gap-1.5">
-                  {account.allowed_styles.map((s) => {
-                    const selected = (style || account.default_style) === s;
-                    return (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setStyle(s === account.default_style ? "" : s)}
-                        className={cn("rounded-full border px-2.5 py-1 text-xs", selected ? "border-primary bg-primary text-primary-foreground" : "hover:bg-muted")}
-                      >
-                        {s}
-                        {s === recommended ? ` · ${t("cases.recommendedTag")}` : ""}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="text-[11px] text-muted-foreground">
-                  {t("cases.styleDefault", { style: account.default_style ?? "", source: t(`cases.sourceStyleSource.${account.default_source}`) })}
-                </p>
-              </div>
-            ) : null}
-            <div className="grid gap-1.5">
-              <Label>{t("cases.confirmStrategy")}</Label>
-              <Select value={strategy} onValueChange={setStrategy}>
-                <SelectTrigger className="w-full"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  {(c.strategy_candidates ?? []).map((s) => <SelectItem key={s} value={s}>{tEnum("strategy", s)}{s === c.strategy_suggested ? ` · ${t("cases.recommendedTag")}` : ""}</SelectItem>)}
-                </SelectContent>
-              </Select>
-            </div>
-            <Button disabled={busy || !accountId} onClick={() => decide("responder")}>{t("cases.confirmRespond")}</Button>
+    <Section title={t("lab.reanalyzeTitle")} action={<ModelBadge model={lab.analysis?.model} />}>
+      <div className="grid gap-3 text-sm">
+        {eng && (eng.emotion || eng.response_angle) ? (
+          <div className="grid gap-1 rounded-md border bg-muted/30 p-3 text-xs">
+            <p className="font-medium">{t("lab.engagementRead")}</p>
+            {eng.emotion ? <p><span className="text-muted-foreground">{t("lab.emotion")}: </span>{eng.emotion}</p> : null}
+            {eng.why_it_spreads ? <p><span className="text-muted-foreground">{t("lab.whySpreads")}: </span>{eng.why_it_spreads}</p> : null}
+            {eng.response_angle ? <p><span className="text-muted-foreground">{t("lab.responseAngle")}: </span>{eng.response_angle}</p> : null}
           </div>
         ) : null}
-        <div className="flex flex-wrap gap-2">
-          {(["monitorear", "ignorar", "canalizar"] as const).map((d) => (
-            <Button key={d} size="sm" variant={c.classification?.recommendation === d ? "default" : "outline"} onClick={() => setReasonFor(d)}>
-              {tEnum("decision", d)}
-            </Button>
-          ))}
-        </div>
+        {can("case.classify_edit") ? (
+          <>
+            <div className="grid gap-1.5">
+              <Label htmlFor="rctx">{t("lab.analystContext")}</Label>
+              <Textarea id="rctx" rows={3} value={context} onChange={(e) => setContext(e.target.value)} placeholder={t("lab.analystContextPlaceholder")} />
+            </div>
+            <div className="grid gap-1.5">
+              <Label>{t("lab.analysisModel")}</Label>
+              <ModelPicker kind="analysis" value={model} fallback={cfg?.models.analysis.effective} onChange={setModel} />
+            </div>
+            <p className="text-xs text-muted-foreground">{t("lab.reanalyzeHelp")}</p>
+            <div><Button size="sm" variant="outline" disabled={busy} onClick={run}><RefreshCw className={cn(busy && "animate-spin")} />{t("lab.reanalyze")}</Button></div>
+          </>
+        ) : lab.analyst_context ? <p className="text-xs"><span className="text-muted-foreground">{t("lab.analystContext")}: </span>{lab.analyst_context}</p> : null}
+      </div>
+    </Section>
+  );
+}
+
+function NextStepPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) {
+  const { can } = useSession();
+  const [reasonFor, setReasonFor] = useState<string | null>(null);
+  if (!can("case.decide")) return null;
+  const closed = ["monitoreando", "ignorado", "canalizado", "descartado"].includes(c.status);
+  const generable = c.status === "interpretado" || closed || ["listo_para_generar", "revision_legal", "generado", "en_revision", "aprobado"].includes(c.status);
+
+  async function decide(decision: string, reason = "") {
+    try {
+      const d = await api.post<CaseD>(`/cases/${c.id}/decide`, { decision, reason });
+      onDone(d);
+      await refresh("/cases", "/dashboard");
+      toast.success(tEnum("case_status", d.status));
+    } catch (err) {
+      toast.error(errMsg(err));
+    }
+  }
+
+  return (
+    <Section title={t("mvp.nextStep")}>
+      <div className="grid gap-3">
+        {c.classification ? (
+          <p className="text-sm">
+            <span className="text-muted-foreground">{t("cases.recommendation")}: </span>
+            <span className="font-medium">{tEnum("recommendation", c.classification.recommendation)}</span>
+            {c.strategy_suggested ? <> · <span className="text-muted-foreground">{t("cases.strategy")}: </span><span className="font-medium">{tEnum("strategy", c.strategy_suggested)}</span></> : null}
+          </p>
+        ) : null}
+        {generable ? (
+          <Button asChild>
+            <Link href={`/casos/${c.id}/generacion`}><Sparkles />{t("mvp.goGenerate")}<ArrowRight /></Link>
+          </Button>
+        ) : null}
+        {c.status === "interpretado" ? (
+          <div className="flex flex-wrap gap-2">
+            {(["monitorear", "ignorar", "canalizar"] as const).map((d) => (
+              <Button key={d} size="sm" variant="outline" onClick={() => setReasonFor(d)}>{tEnum("decision", d)}</Button>
+            ))}
+          </div>
+        ) : null}
       </div>
       <ReasonDialog
         open={reasonFor !== null}
@@ -220,11 +216,6 @@ export default function CaseDetailPage() {
             <p className="text-[11px] text-muted-foreground">{t("cases.risk")}</p>
             <RiskMeter score={c.risk_score} />
           </div>
-          {["listo_para_generar", "generado", "en_revision", "aprobado", "programado"].includes(c.status) ? (
-            <Button asChild>
-              <Link href={`/casos/${c.id}/generacion`}>{t("cases.goGenerate")}<ArrowRight /></Link>
-            </Button>
-          ) : null}
           {closable && can("case.decide") ? <Button variant="ghost" size="sm" onClick={() => setCloseOpen(true)}>{t("cases.close")}</Button> : null}
           {["monitoreando", "ignorado", "canalizado", "descartado"].includes(c.status) && can("case.decide") ? <Button variant="outline" size="sm" onClick={() => setReopenOpen(true)}>{t("cases.reopen")}</Button> : null}
         </div>
@@ -242,12 +233,11 @@ export default function CaseDetailPage() {
               <p className="whitespace-pre-line text-base">{c.post.text}</p>
               <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 <KeyValue label={t("monitoring.network")}>{tEnum("network", c.post.network)}</KeyValue>
-                <KeyValue label={t("monitoring.velocity")}>{t("monitoring.velocityValue", { value: fmtNum(c.post.velocity ?? 0, 1) })}</KeyValue>
-                <KeyValue label={t("monitoring.baseline")}>{c.post.baseline_per_hour ? t("monitoring.baselinePerHour", { value: fmtNum(c.post.baseline_per_hour, 1) }) : t("monitoring.baselineInsufficient")}</KeyValue>
-                <KeyValue label={t("monitoring.interactions")}>{fmtNum(c.post.total_interactions)}</KeyValue>
               </div>
             </div>
           </Section>
+
+          <LabPanel key={`${c.id}-${c.updated_at}`} c={c} onDone={set} />
 
           {cls ? (
             <Section
@@ -323,7 +313,7 @@ export default function CaseDetailPage() {
         </div>
 
         <div className="grid content-start gap-4">
-          <DecisionPanel c={c} onDone={set} />
+          <NextStepPanel c={c} onDone={set} />
           {["publicado", "medido", "calificado"].includes(c.status) ? (
             <Section title={t("metrics.panel")}>
               <CaseMetricsPanel caseId={c.id} onChanged={() => void mutate()} />
@@ -344,18 +334,6 @@ export default function CaseDetailPage() {
                     {c.strategy_alternatives.map((a, i) => <p key={i} className="text-xs text-muted-foreground"><span className="font-medium text-foreground">{tEnum("strategy", String(a.strategy))}</span>: {String(a.why)}</p>)}
                   </div>
                 ) : null}
-              </div>
-            </Section>
-          ) : null}
-          {c.flow ? (
-            <Section title={t("cases.recommendedStyle")}>
-              <div className="grid gap-3">
-                <div className="flex items-center gap-2 text-sm">
-                  {c.recommended_style?.value ? <Badge>{String(c.recommended_style.value)}</Badge> : <Badge variant="outline">{t("cases.insufficient")}</Badge>}
-                  <span className="text-xs text-muted-foreground">{String(c.recommended_style?.reason ?? "")}</span>
-                </div>
-                {c.style_slug ? <p className="text-xs"><span className="font-medium">{t("cases.style")}:</span> {c.style_slug} — {String(c.style_choice?.reason ?? "")}</p> : null}
-                <LearningTable learning={c.learning_context} />
               </div>
             </Section>
           ) : null}

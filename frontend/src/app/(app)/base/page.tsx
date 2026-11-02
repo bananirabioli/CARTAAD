@@ -5,7 +5,8 @@ import { useState } from "react";
 
 import { PageHeader } from "@/components/app/common";
 import { FactsTab } from "@/components/kb/facts-tab";
-import { ActorsTab, BriefsTab, CompetencesTab, DocumentsTab, HistoryTab, ImagesTab, MessagesTab } from "@/components/kb/other-tabs";
+import { ReviewTab } from "@/components/kb/review-tab";
+import { DocumentsTab, MessagesTab } from "@/components/kb/other-tabs";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -53,27 +54,19 @@ function SemanticSearch() {
 export default function KnowledgeBasePage() {
   return (
     <div>
-      <PageHeader title={t("kb.title")} subtitle={t("kb.subtitle")} />
+      <PageHeader title={t("mvp.factsTitle")} subtitle={t("mvp.factsSubtitle")} />
       <SemanticSearch />
       <Tabs defaultValue="facts">
         <TabsList className="h-auto flex-wrap">
           <TabsTrigger value="facts">{t("kb.tabs.facts")}</TabsTrigger>
+          <TabsTrigger value="review">{t("kb.lab.review")}</TabsTrigger>
           <TabsTrigger value="documents">{t("kb.tabs.documents")}</TabsTrigger>
-          <TabsTrigger value="briefs">{t("kb.tabs.briefs")}</TabsTrigger>
           <TabsTrigger value="messages">{t("kb.tabs.messages")}</TabsTrigger>
-          <TabsTrigger value="actors">{t("kb.tabs.actors")}</TabsTrigger>
-          <TabsTrigger value="competences">{t("kb.tabs.competences")}</TabsTrigger>
-          <TabsTrigger value="images">{t("kb.tabs.images")}</TabsTrigger>
-          <TabsTrigger value="history">{t("kb.tabs.history")}</TabsTrigger>
         </TabsList>
         <TabsContent value="facts" className="mt-3"><FactsTab /></TabsContent>
+        <TabsContent value="review" className="mt-3"><ReviewTab /></TabsContent>
         <TabsContent value="documents" className="mt-3"><DocumentsTab /></TabsContent>
-        <TabsContent value="briefs" className="mt-3"><BriefsTab /></TabsContent>
         <TabsContent value="messages" className="mt-3"><MessagesTab /></TabsContent>
-        <TabsContent value="actors" className="mt-3"><ActorsTab /></TabsContent>
-        <TabsContent value="competences" className="mt-3"><CompetencesTab /></TabsContent>
-        <TabsContent value="images" className="mt-3"><ImagesTab /></TabsContent>
-        <TabsContent value="history" className="mt-3"><HistoryTab /></TabsContent>
       </Tabs>
     </div>
   );

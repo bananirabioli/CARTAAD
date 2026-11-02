@@ -1,11 +1,13 @@
 """Clients, users, topics, settings, hard rules and audit log."""
 
 from datetime import datetime
+from typing import Any
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import func, select
 
 from app.api.deps import Ctx, accessible_client_ids, get_ctx, require
+from app.config import get_settings as get_app_settings
 from app.errors import AppError, conflict, not_found
 from app.guardrails.hard_rules import HARD_RULES
 from app.models.core import AuditLog, Client, Topic, User, UserClient
@@ -24,6 +26,7 @@ from app.schemas.core import (
     UserIn,
     UserPatch,
 )
+from app.seed.production import ensure_main_account
 from app.services import audit
 from app.services.bootstrap import bootstrap_client
 from app.services.client_settings import get_client_settings, update_client_settings
@@ -49,6 +52,7 @@ def create_client(body: ClientIn, ctx: Ctx = Depends(require("config.manage"))) 
     ctx.db.add(client)
     ctx.db.flush()
     bootstrap_client(ctx.db, client)
+    ensure_main_account(ctx.db, client, ctx.user)
     ctx.db.add(UserClient(user_id=ctx.user.id, client_id=client.id))
     audit.record(ctx.db, action="client.create", entity_type="client", entity_id=client.id, client_id=client.id, user=ctx.user, after=audit.snapshot(client))
     ctx.db.commit()
@@ -189,6 +193,18 @@ def update_user(user_id: int, body: UserPatch, ctx: Ctx = Depends(require("users
 
 
 # ------------------------------------------------------------------ hard rules & audit
+
+
+@router.get("/meta/ai-status", response_model=dict[str, Any])
+def ai_status(ctx: Ctx = Depends(get_ctx)) -> dict[str, Any]:
+    """What the Modelos tab shows: active providers, models and whether the key is set (never the key itself)."""
+    s = get_app_settings()
+    return {
+        "llm_provider": s.llm_provider, "image_provider": s.image_provider, "video_provider": s.video_provider,
+        "key_present": bool(s.openrouter_api_key), "models": {"analysis": s.openrouter_model_analysis, "text": s.openrouter_model_text,
+                                                              "image": s.openrouter_model_image, "video": s.openrouter_model_video},
+        "video_seconds": s.video_max_seconds,
+    }
 
 
 @router.get("/meta/hard-rules", response_model=list[HardRuleOut])

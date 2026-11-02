@@ -1,0 +1,250 @@
+{
+  "$defs": {
+    "CopyVariantOut": {
+      "properties": {
+        "style": {
+          "description": "slug del estilo de esta variante (uno de los entregados).",
+          "title": "Style",
+          "type": "string"
+        },
+        "angle": {
+          "default": "",
+          "description": "El ángulo creativo de esta variante en pocas palabras (distinto en cada variante).",
+          "title": "Angle",
+          "type": "string"
+        },
+        "hook": {
+          "default": "",
+          "description": "La primera línea / gancho que detiene el scroll (también va como primer segmento).",
+          "title": "Hook",
+          "type": "string"
+        },
+        "segments": {
+          "items": {
+            "$ref": "#/$defs/Segment"
+          },
+          "title": "Segments",
+          "type": "array"
+        },
+        "hashtags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Hashtags",
+          "type": "array"
+        },
+        "cta": {
+          "default": "",
+          "title": "Cta",
+          "type": "string"
+        },
+        "why": {
+          "title": "Why",
+          "type": "string"
+        }
+      },
+      "required": [
+        "style",
+        "segments",
+        "why"
+      ],
+      "title": "CopyVariantOut",
+      "type": "object"
+    },
+    "ImagePromptOut": {
+      "properties": {
+        "concept": {
+          "description": "Idea de la imagen en español, para la persona que revisa.",
+          "title": "Concept",
+          "type": "string"
+        },
+        "visual_style": {
+          "default": "",
+          "description": "Tratamiento visual elegido: fotografía editorial, collage, 3D, póster tipográfico, ilustración…",
+          "title": "Visual Style",
+          "type": "string"
+        },
+        "prompt": {
+          "description": "Prompt en inglés para el modelo de imagen: escena, encuadre, luz, paleta, estilo.",
+          "title": "Prompt",
+          "type": "string"
+        },
+        "negative_prompt": {
+          "default": "",
+          "title": "Negative Prompt",
+          "type": "string"
+        },
+        "aspect_ratio": {
+          "default": "4:5",
+          "enum": [
+            "1:1",
+            "4:5",
+            "9:16",
+            "16:9"
+          ],
+          "title": "Aspect Ratio",
+          "type": "string"
+        },
+        "headline": {
+          "default": "",
+          "description": "Titular corto en español que el sistema superpone sobre la imagen.",
+          "title": "Headline",
+          "type": "string"
+        }
+      },
+      "required": [
+        "concept",
+        "prompt"
+      ],
+      "title": "ImagePromptOut",
+      "type": "object"
+    },
+    "Segment": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "asercion_factual",
+            "opinion_marcada",
+            "pregunta",
+            "llamado",
+            "saludo"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "fact_ids": {
+          "description": "Obligatorio (≥1) si type = asercion_factual.",
+          "items": {
+            "type": "integer"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text",
+        "type"
+      ],
+      "title": "Segment",
+      "type": "object"
+    },
+    "VideoPlanOut": {
+      "properties": {
+        "concept": {
+          "title": "Concept",
+          "type": "string"
+        },
+        "scenes": {
+          "items": {
+            "$ref": "#/$defs/VideoScene"
+          },
+          "title": "Scenes",
+          "type": "array"
+        },
+        "prompt": {
+          "description": "Prompt en inglés para el modelo de video: acción, cámara, luz, ritmo.",
+          "title": "Prompt",
+          "type": "string"
+        },
+        "aspect_ratio": {
+          "default": "9:16",
+          "enum": [
+            "9:16",
+            "16:9",
+            "1:1"
+          ],
+          "title": "Aspect Ratio",
+          "type": "string"
+        },
+        "voiceover_full": {
+          "default": "",
+          "description": "Guion completo de voz en off en español.",
+          "title": "Voiceover Full",
+          "type": "string"
+        },
+        "on_screen_text": {
+          "description": "Textos a sobreponer en edición; el modelo de video no los dibuja.",
+          "items": {
+            "type": "string"
+          },
+          "title": "On Screen Text",
+          "type": "array"
+        }
+      },
+      "required": [
+        "concept",
+        "prompt"
+      ],
+      "title": "VideoPlanOut",
+      "type": "object"
+    },
+    "VideoScene": {
+      "properties": {
+        "seconds": {
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Seconds",
+          "type": "integer"
+        },
+        "visual": {
+          "title": "Visual",
+          "type": "string"
+        },
+        "voiceover": {
+          "default": "",
+          "title": "Voiceover",
+          "type": "string"
+        }
+      },
+      "required": [
+        "seconds",
+        "visual"
+      ],
+      "title": "VideoScene",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "copies": {
+      "items": {
+        "$ref": "#/$defs/CopyVariantOut"
+      },
+      "title": "Copies",
+      "type": "array"
+    },
+    "image_prompts": {
+      "items": {
+        "$ref": "#/$defs/ImagePromptOut"
+      },
+      "title": "Image Prompts",
+      "type": "array"
+    },
+    "video": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/VideoPlanOut"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "missing_data": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Data",
+      "type": "array"
+    }
+  },
+  "required": [
+    "copies"
+  ],
+  "title": "GenerateContentOut",
+  "type": "object"
+}

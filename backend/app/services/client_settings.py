@@ -31,7 +31,39 @@ class ValidatorModes(BaseModel):
     unbacked_actor_mention: ValidatorMode = "block"
 
 
+AiLayer = Literal["analysis", "text", "image", "video"]  # text = copies
+AI_LAYERS: tuple[str, ...] = ("analysis", "text", "image", "video")
+
+
+class AiModels(BaseModel):
+    """OpenRouter model id per layer; None means the .env default."""
+
+    analysis: str | None = None
+    text: str | None = None  # copies
+    image: str | None = None
+    video: str | None = None
+
+
+class AiGuides(BaseModel):
+    """Free-text creative guide per layer, injected into the prompts (Laboratorio → Guías)."""
+
+    analysis: str = ""
+    text: str = ""  # copies
+    image: str = ""
+    video: str = ""
+
+
+class RuleConfig(BaseModel):
+    enabled: bool = True
+    text: str | None = None
+
+
 class ClientSettings(BaseModel):
+    context: str = ""  # region / who the client is; goes into the analyze and generate prompts
+    ai_models: AiModels = Field(default_factory=AiModels)
+    ai_guides: AiGuides = Field(default_factory=AiGuides)
+    rules: dict[str, RuleConfig] = Field(default_factory=dict)
+    facts_top_k: int = Field(default=8, ge=1, le=25)
     alert_thresholds: AlertThresholds = Field(default_factory=AlertThresholds)
     alert_window_hours: float = 6
     baseline_min_days: int = 14
@@ -98,7 +130,23 @@ def get_client_settings(client: Client) -> ClientSettings:
     return ClientSettings.model_validate(client.settings or {})
 
 
+def rules_dict(settings: ClientSettings) -> dict[str, dict[str, Any]]:
+    return {k: v.model_dump() for k, v in settings.rules.items()}
+
+
+def rules_for(obj: Any) -> dict[str, dict[str, Any]]:
+    """Client rules for any ORM object with client_id (case, piece…), through its session."""
+    from sqlalchemy.orm import object_session
+
+    db = object_session(obj)
+    client = db.get(Client, obj.client_id) if db is not None and getattr(obj, "client_id", None) else None
+    return rules_dict(get_client_settings(client)) if client else {}
+
+
 def update_client_settings(client: Client, patch: dict[str, Any]) -> ClientSettings:
+    from app.errors import AppError
+    from app.guardrails.hard_rules import HardRuleViolation, validate_rules_patch
+
     merged = get_client_settings(client).model_dump()
     for key, value in patch.items():
         if isinstance(value, dict) and isinstance(merged.get(key), dict):
@@ -106,5 +154,9 @@ def update_client_settings(client: Client, patch: dict[str, Any]) -> ClientSetti
         else:
             merged[key] = value
     settings = ClientSettings.model_validate(merged)
+    try:
+        validate_rules_patch(rules_dict(settings))
+    except HardRuleViolation as exc:
+        raise AppError(422, "hard_rule", exc.message, details={"rule_id": exc.rule_id}) from exc
     client.settings = settings.model_dump()
     return settings

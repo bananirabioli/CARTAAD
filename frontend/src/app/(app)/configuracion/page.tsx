@@ -4,7 +4,7 @@ import { CheckCircle2, Plus, Save } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { EmptyState, JsonBlock, Loading, PageHeader, Pagination } from "@/components/app/common";
+import { EmptyState, Loading, PageHeader } from "@/components/app/common";
 import { FormDialog, type FieldSpec } from "@/components/app/form-dialog";
 import { useSession } from "@/components/app/session";
 import { errMsg } from "@/components/pieces/parts";
@@ -14,17 +14,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { enumOptions, fmtDate, t, tEnum } from "@/i18n";
-import { api, qs, refresh, useApi, type Schemas } from "@/lib/api/client";
-import { useStateResetOn, useTopics } from "@/lib/hooks";
+import { api, refresh, useApi, type Schemas } from "@/lib/api/client";
+import { useStateResetOn } from "@/lib/hooks";
 
 const commas = (v: unknown) => (Array.isArray(v) ? v : String(v ?? "").split(",")).map((s) => String(s).trim()).filter(Boolean);
 
 // ------------------------------------------------------------------ veda
 
+// Hidden in the MVP (no campaign restrictions); kept for later.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function VedaTab() {
   const { can, reload } = useSession();
   const { data, mutate } = useApi<Schemas["RestrictionOut"][]>("/veda");
@@ -165,6 +166,7 @@ function AccountsTab() {
 
 type SettingsData = Record<string, unknown>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- hidden in the MVP
 function ThresholdsTab() {
   const { can } = useSession();
   const { data, mutate } = useApi<Schemas["SettingsOut"]>("/settings");
@@ -248,115 +250,8 @@ function ThresholdsTab() {
 
 // ------------------------------------------------------------------ topics, catalogs, users, clients, AI runs
 
-function TopicsTab() {
-  const { can } = useSession();
-  const topics = useTopics();
-  const [editing, setEditing] = useState<Schemas["TopicOut"] | "new" | null>(null);
-  return (
-    <div className="grid gap-3">
-      {can("catalog.manage") ? <div className="flex justify-end"><Button size="sm" onClick={() => setEditing("new")}><Plus />{t("settings.topics.new")}</Button></div> : null}
-      <div className="grid gap-2 md:grid-cols-2">
-        {topics.list.map((tp) => (
-          <Card key={tp.id} className="gap-1 py-3"><CardContent className="grid gap-1 px-4">
-            <button className="text-left text-sm font-medium hover:underline" disabled={!can("catalog.manage")} onClick={() => setEditing(tp)}>{tp.name} <span className="font-mono text-xs text-muted-foreground">{tp.slug}</span></button>
-            <div className="flex flex-wrap gap-1">{tp.keywords.map((k) => <Badge key={k} variant="outline">{k}</Badge>)}</div>
-          </CardContent></Card>
-        ))}
-      </div>
-      <FormDialog
-        open={editing !== null}
-        onOpenChange={(o) => !o && setEditing(null)}
-        title={editing === "new" ? t("settings.topics.new") : editing ? editing.name : ""}
-        fields={[...(editing === "new" ? [{ name: "slug", label: t("settings.topics.slug"), required: true } as FieldSpec] : []), { name: "name", label: t("settings.topics.name"), required: true }, { name: "keywords", label: t("settings.topics.keywords"), type: "tags" }, { name: "active", label: t("common.active"), type: "checkbox" }]}
-        initial={editing && editing !== "new" ? { ...editing } : { active: true }}
-        onSubmit={async (v) => {
-          if (editing === "new") await api.post("/topics", v);
-          else if (editing) await api.patch(`/topics/${editing.id}`, v);
-          await refresh("/topics");
-        }}
-      />
-    </div>
-  );
-}
-
-function CatalogTab() {
-  const { can } = useSession();
-  const { data: formats, mutate: mf } = useApi<Schemas["FormatOut"][]>("/catalog/formats");
-  const { data: creatives, mutate: mc } = useApi<Schemas["CreativeTypeOut"][]>("/catalog/creatives");
-  const [fmt, setFmt] = useState<Schemas["FormatOut"] | null>(null);
-  const [ct, setCt] = useState<Schemas["CreativeTypeOut"] | null>(null);
-  return (
-    <div className="grid gap-4">
-      <p className="text-sm font-medium">{t("settings.catalog.formats")}</p>
-      <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
-        {(formats ?? []).map((f) => (
-          <Card key={f.id} className="gap-1 py-3"><CardContent className="grid gap-1 px-4 text-xs">
-            <button className="text-left text-sm font-medium hover:underline" disabled={!can("catalog.manage")} onClick={() => setFmt(f)}>{f.code} · {f.name}</button>
-            <p className="text-muted-foreground">{f.description}</p>
-            <p><span className="font-medium">{t("settings.catalog.defaultStyle")}:</span> {f.default_style_slug} · <span className="font-medium">{t("settings.catalog.allowedStyles")}:</span> {f.allowed_style_slugs.join(", ")}</p>
-          </CardContent></Card>
-        ))}
-      </div>
-      <p className="text-sm font-medium">{t("settings.catalog.creatives")}</p>
-      <div className="rounded-lg border bg-card">
-        <Table>
-          <TableBody>
-            {(creatives ?? []).map((c) => (
-              <TableRow key={c.id}>
-                <TableCell className="w-16 font-mono text-xs">{c.code}</TableCell>
-                <TableCell><button className="text-left hover:underline" disabled={!can("catalog.manage")} onClick={() => setCt(c)}><span className="font-medium">{c.name}</span></button><div className="text-xs text-muted-foreground">{c.description}</div></TableCell>
-                <TableCell className="text-xs">{c.required_slots.join(", ")}</TableCell>
-                <TableCell className="text-xs">{[c.requires_fact && t("settings.catalog.requiresFact"), c.requires_consent && t("settings.catalog.requiresConsent"), c.requires_real_photo && t("settings.catalog.requiresPhoto")].filter(Boolean).join(" · ")}</TableCell>
-                <TableCell>{c.active ? <Badge variant="outline">{t("common.active")}</Badge> : <Badge variant="secondary">{t("common.inactive")}</Badge>}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-      <FormDialog
-        open={fmt !== null}
-        onOpenChange={(o) => !o && setFmt(null)}
-        title={fmt ? `${fmt.code} · ${fmt.name}` : ""}
-        wide
-        fields={[
-          { name: "name", label: t("common.name"), required: true },
-          { name: "description", label: t("common.description"), type: "textarea", rows: 3 },
-          { name: "default_style_slug", label: t("settings.catalog.defaultStyle"), required: true, colSpan: 1 },
-          { name: "allowed_style_slugs", label: t("settings.catalog.allowedStyles"), type: "tags", colSpan: 1 },
-          { name: "options", label: t("settings.catalog.options"), type: "textarea", rows: 4 },
-          { name: "active", label: t("common.active"), type: "checkbox" },
-        ]}
-        initial={fmt ? { ...fmt, options: JSON.stringify(fmt.options, null, 1) } : {}}
-        onSubmit={async (v) => {
-          if (!fmt) return;
-          await api.patch(`/catalog/formats/${fmt.id}`, { ...v, options: JSON.parse(String(v.options || "{}")) });
-          await mf();
-        }}
-      />
-      <FormDialog
-        open={ct !== null}
-        onOpenChange={(o) => !o && setCt(null)}
-        title={ct ? `${ct.code} · ${ct.name}` : ""}
-        fields={[
-          { name: "name", label: t("common.name"), required: true },
-          { name: "description", label: t("common.description"), type: "textarea", rows: 3 },
-          { name: "required_slots", label: t("settings.catalog.requiredSlots"), type: "tags" },
-          { name: "requires_fact", label: t("settings.catalog.requiresFact"), type: "checkbox" },
-          { name: "requires_consent", label: t("settings.catalog.requiresConsent"), type: "checkbox" },
-          { name: "requires_real_photo", label: t("settings.catalog.requiresPhoto"), type: "checkbox" },
-          { name: "active", label: t("common.active"), type: "checkbox" },
-        ]}
-        initial={ct ? { ...ct } : {}}
-        onSubmit={async (v) => {
-          if (!ct) return;
-          await api.patch(`/catalog/creatives/${ct.id}`, v);
-          await mc();
-        }}
-      />
-    </div>
-  );
-}
-
+// Per-user permissions come after the MVP; the master user does everything for now.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function UsersTab() {
   const { can, me } = useSession();
   const { data, mutate } = useApi<Schemas["UserAdminOut"][]>(can("users.manage") ? "/users" : null);
@@ -406,18 +301,39 @@ function UsersTab() {
   );
 }
 
+function ClientContext() {
+  const { can, me } = useSession();
+  const { data, mutate } = useApi<{ settings: Record<string, unknown> }>("/settings");
+  const [value, setValue] = useStateResetOn<string>(data, () => String(data?.settings.context ?? ""));
+  if (!data) return <Loading />;
+  return (
+    <Card className="gap-2 py-4">
+      <CardHeader className="px-4"><CardTitle className="text-sm">{t("mvp.contextTitle", { client: me?.client.name ?? "" })}</CardTitle></CardHeader>
+      <CardContent className="grid gap-2 px-4">
+        <p className="text-xs text-muted-foreground">{t("mvp.contextHelp")}</p>
+        <Input value={value} onChange={(e) => setValue(e.target.value)} disabled={!can("config.manage")} placeholder="Juárez, Chihuahua" />
+        {can("config.manage") ? (
+          <Button size="sm" className="w-fit" onClick={async () => {
+            try { await api.patch("/settings", { patch: { context: value } }); await mutate(); toast.success(t("common.saved")); } catch (err) { toast.error(errMsg(err)); }
+          }}><Save />{t("common.save")}</Button>
+        ) : null}
+      </CardContent>
+    </Card>
+  );
+}
+
 function ClientsTab() {
   const { can, me, reload } = useSession();
   const [editing, setEditing] = useState<Schemas["ClientOut"] | "new" | null>(null);
   return (
     <div className="grid gap-3">
+      <ClientContext />
       {can("config.manage") ? <div className="flex justify-end"><Button size="sm" onClick={() => setEditing("new")}><Plus />{t("settings.clients.new")}</Button></div> : null}
       <div className="grid gap-2 md:grid-cols-2">
         {(me?.clients ?? []).map((c) => (
           <Card key={c.id} className="gap-1 py-3"><CardContent className="grid gap-1 px-4 text-xs">
             <button className="text-left text-sm font-medium hover:underline" disabled={!can("config.manage")} onClick={() => setEditing(c)}>{c.name} <Badge variant="outline">{tEnum("client_type", c.client_type)}</Badge></button>
             <p className="text-muted-foreground">{c.default_tone}</p>
-            <p>{c.restrictions}</p>
           </CardContent></Card>
         ))}
       </div>
@@ -431,9 +347,8 @@ function ClientsTab() {
           { name: "client_type", label: t("settings.clients.type"), type: "select", options: enumOptions("client_type"), required: true, colSpan: 1 },
           { name: "default_style_slug", label: t("settings.clients.defaultStyle"), colSpan: 1 },
           { name: "default_tone", label: t("settings.clients.tone"), type: "textarea", rows: 2 },
-          { name: "restrictions", label: t("settings.clients.restrictions"), type: "textarea", rows: 2 },
         ]}
-        initial={editing && editing !== "new" ? { ...editing } : { client_type: "gobierno" }}
+        initial={editing && editing !== "new" ? { ...editing } : { client_type: "candidatura", default_style_slug: "cercano" }}
         onSubmit={async (v) => {
           if (editing === "new") await api.post("/clients", v);
           else if (editing) await api.patch(`/clients/${editing.id}`, v);
@@ -444,60 +359,19 @@ function ClientsTab() {
   );
 }
 
-function AiRunsTab() {
-  const [page, setPage] = useState(1);
-  const [step, setStep] = useState("");
-  const [openId, setOpenId] = useState<number | null>(null);
-  const { data } = useApi<Schemas["Page_AiRunOut_"]>(`/ai-runs${qs({ page, page_size: 30, step })}`);
-  const { data: detail } = useApi<Schemas["AiRunDetail"]>(openId ? `/ai-runs/${openId}` : null);
-  return (
-    <div className="grid gap-3">
-      <div className="flex items-center gap-3"><p className="text-xs text-muted-foreground">{t("settings.ai.help")}</p><Input className="ml-auto w-48" placeholder={t("settings.ai.step")} value={step} onChange={(e) => { setStep(e.target.value); setPage(1); }} /></div>
-      <div className="rounded-lg border bg-card">
-        <Table>
-          <TableHeader><TableRow><TableHead>{t("common.date")}</TableHead><TableHead>{t("settings.ai.step")}</TableHead><TableHead>{t("settings.ai.prompt")}</TableHead><TableHead>{t("settings.ai.provider")}</TableHead><TableHead>{t("kb.history.style")}</TableHead><TableHead className="text-right">{t("settings.ai.latency")}</TableHead><TableHead>{t("settings.ai.status")}</TableHead></TableRow></TableHeader>
-          <TableBody>
-            {(data?.items ?? []).map((r) => (
-              <TableRow key={r.id} className="cursor-pointer" onClick={() => setOpenId(r.id)}>
-                <TableCell className="text-xs">{fmtDate(r.created_at)}</TableCell>
-                <TableCell className="font-mono text-xs">{r.step}</TableCell>
-                <TableCell className="font-mono text-xs">v{r.prompt_version}</TableCell>
-                <TableCell className="text-xs">{r.provider} · {r.model}</TableCell>
-                <TableCell className="text-xs">{r.style_slug ? `${r.style_slug} v${r.style_version}` : t("common.none")}{r.applied_directives.length ? ` · ${r.applied_directives.map((d) => String(d.code)).join(", ")}` : ""}</TableCell>
-                <TableCell className="text-right font-mono text-xs">{r.latency_ms} ms</TableCell>
-                <TableCell><Badge variant={r.status === "ok" ? "outline" : "destructive"}>{r.status}</Badge></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-      {data ? <Pagination page={page} pageSize={data.page_size} total={data.total} onPage={setPage} /> : null}
-      <Sheet open={openId !== null} onOpenChange={(o) => !o && setOpenId(null)}>
-        <SheetContent className="w-full overflow-y-auto sm:max-w-2xl">
-          <SheetHeader><SheetTitle className="font-mono">{detail?.step} #{detail?.id}</SheetTitle></SheetHeader>
-          {detail ? <div className="grid gap-3 px-4 pb-6"><p className="text-xs">{detail.error}</p><p className="text-xs font-medium">Input</p><JsonBlock value={detail.input} /><p className="text-xs font-medium">Output</p><JsonBlock value={detail.output} /></div> : <Loading />}
-        </SheetContent>
-      </Sheet>
-    </div>
-  );
-}
-
 export default function SettingsPage() {
   return (
     <div>
-      <PageHeader title={t("settings.title")} subtitle={t("settings.subtitle")} />
-      <Tabs defaultValue="veda">
+      <PageHeader title={t("settings.title")} subtitle={t("mvp.settingsSubtitle")} />
+      <Tabs defaultValue="clients">
         <TabsList className="h-auto flex-wrap">
-          {(["veda", "accounts", "thresholds", "topics", "catalog", "users", "clients", "ai"] as const).map((k) => <TabsTrigger key={k} value={k}>{t(`settings.tabs.${k}`)}</TabsTrigger>)}
+          <TabsTrigger value="clients">{t("settings.tabs.clients")}</TabsTrigger>
+          <TabsTrigger value="accounts">{t("settings.tabs.accounts")}</TabsTrigger>
+
         </TabsList>
-        <TabsContent value="veda" className="mt-3"><VedaTab /></TabsContent>
-        <TabsContent value="accounts" className="mt-3"><AccountsTab /></TabsContent>
-        <TabsContent value="thresholds" className="mt-3"><ThresholdsTab /></TabsContent>
-        <TabsContent value="topics" className="mt-3"><TopicsTab /></TabsContent>
-        <TabsContent value="catalog" className="mt-3"><CatalogTab /></TabsContent>
-        <TabsContent value="users" className="mt-3"><UsersTab /></TabsContent>
         <TabsContent value="clients" className="mt-3"><ClientsTab /></TabsContent>
-        <TabsContent value="ai" className="mt-3"><AiRunsTab /></TabsContent>
+        <TabsContent value="accounts" className="mt-3"><AccountsTab /></TabsContent>
+
       </Tabs>
     </div>
   );

@@ -48,6 +48,12 @@ export function FactsTab() {
     { name: "fact_date", label: t("kb.facts.factDate"), type: "date", colSpan: 1 },
     { name: "valid_until", label: t("kb.facts.validity"), type: "date", colSpan: 1 },
     { name: "document_id", label: t("kb.facts.document"), type: "select", options: docs.options },
+    ...(editing === "new" ? [
+      { name: "source_title", label: t("kb.lab.quickSource"), help: t("kb.lab.quickSourceHelp") },
+      { name: "source_issuer", label: t("kb.lab.sourceIssuer"), colSpan: 1 },
+      { name: "source_date", label: t("kb.lab.sourceDate"), type: "date", colSpan: 1 },
+      { name: "source_url", label: t("kb.lab.sourceUrl") },
+    ] as FieldSpec[] : []),
     { name: "gov_level_id", label: t("kb.facts.level"), type: "select", options: levels.options, colSpan: 1 },
     { name: "topic_id", label: t("kb.facts.topic"), type: "select", options: topics.options, colSpan: 1 },
     { name: "notes", label: t("kb.facts.notes"), type: "textarea", rows: 2 },

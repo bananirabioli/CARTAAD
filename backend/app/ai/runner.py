@@ -10,10 +10,14 @@ from sqlalchemy.orm import Session
 from app.ai.prompts import load_prompt
 from app.ai.provider import LLMRequest, ProviderError, ProviderRefusal, get_provider
 from app.ai.steps import STEP_MODELS
+
+VISION_STEPS = {"analyze_capture", "ocr_vision"}
 from app.db import SessionLocal
 from app.errors import AppError
 from app.guardrails.hard_rules import hard_rules_prompt_block
+from app.models.core import Client
 from app.models.ops import AiRun
+from app.services.client_settings import ClientSettings, get_client_settings, rules_dict
 from app.services.audit import _jsonable
 
 MAX_INPUT_CHARS = 60_000
@@ -39,19 +43,43 @@ def _trim(value: Any) -> Any:
     return {"truncated": True, "preview": text[:MAX_INPUT_CHARS]}
 
 
-def run_step(db: Session, step: str, context: dict[str, Any], meta: StepMeta | None = None, image: tuple[bytes, str] | None = None) -> tuple[BaseModel, AiRun]:
+def layer_for(step: str) -> str:
+    return "analysis" if step in VISION_STEPS else "text"
+
+
+def resolve_model(step: str, settings: ClientSettings | None, override: str | None = None) -> str | None:
+    """Run override > client default (Laboratorio → Modelos) > .env. None lets the provider decide."""
+    if override and override.strip():
+        return override.strip()
+    if settings is not None:
+        chosen = getattr(settings.ai_models, layer_for(step), None)
+        if chosen:
+            return chosen
+    return None
+
+
+def run_step(
+    db: Session, step: str, context: dict[str, Any], meta: StepMeta | None = None, image: tuple[bytes, str] | None = None, model: str | None = None
+) -> tuple[BaseModel, AiRun]:
     meta = meta or StepMeta()
     model_cls = STEP_MODELS[step]
     prompt = load_prompt(step)
-    system, body = prompt.render(hard_rules_block=hard_rules_prompt_block(), **context)
+    client = db.get(Client, meta.client_id) if meta.client_id else None
+    settings = get_client_settings(client) if client else None
+    rules = rules_dict(settings) if settings else None
+    guides = settings.ai_guides.model_dump() if settings else {}
+    render_ctx = {"guides": guides, **context}
+    system, body = prompt.render(hard_rules_block=hard_rules_prompt_block(rules), **render_ctx)
     provider = get_provider()
+    chosen = resolve_model(step, settings, model) if provider.name == "openrouter" else None
     run = AiRun(
-        client_id=meta.client_id, step=step, prompt_version=prompt.version, provider=provider.name, model=provider.model,
+        client_id=meta.client_id, step=step, prompt_version=prompt.version, provider=provider.name,
+        model=chosen or (provider.model_for(step) if hasattr(provider, "model_for") else provider.model),
         input=_trim({"context": context, "prompt_chars": len(system) + len(body)}), user_id=meta.user_id, case_id=meta.case_id,
         piece_id=meta.piece_id, style_id=meta.style_id, style_slug=meta.style_slug, style_version=meta.style_version,
         applied_directives=_jsonable(meta.applied_directives),
     )
-    request = LLMRequest(step=step, system=system, prompt=body, context=context, output_model=model_cls, image=image)
+    request = LLMRequest(step=step, system=system, prompt=body, context=context, output_model=model_cls, image=image, model=chosen)
     started = time.perf_counter()
     result: BaseModel | None = None
     try:

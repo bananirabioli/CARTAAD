@@ -38,7 +38,11 @@ ADMIN = {
 }
 KB_OWNER = {"kb.curate", "fact.verify", "figure.verify", "directive.propose", "directive.activate_kb", "assets.upload"}
 
+# MVP master user: everything, including KB curation. Per-user permission picking comes later.
+OWNER = ANALISTA | APROBADOR | LEGAL | DISENO | ADMIN | KB_OWNER
+
 ROLE_PERMISSIONS: dict[str, set[str]] = {
+    "owner": OWNER,
     "analista": ANALISTA,
     "aprobador": APROBADOR,
     "legal": LEGAL,

@@ -29,6 +29,7 @@ class LLMRequest:
     output_model: type[BaseModel]
     image: tuple[bytes, str] | None = None
     feedback: str | None = None  # validation error from the previous attempt
+    model: str | None = None  # resolved model id (run override > client default > .env)
     meta: dict[str, Any] = field(default_factory=dict)
 
 
@@ -42,6 +43,10 @@ class LLMProvider(Protocol):
 @lru_cache
 def get_provider(name: str | None = None) -> LLMProvider:
     choice = (name or get_settings().llm_provider).lower()
+    if choice == "openrouter":
+        from app.ai.openrouter import OpenRouterProvider
+
+        return OpenRouterProvider()
     if choice == "anthropic":
         from app.ai.anthropic_provider import AnthropicProvider
 

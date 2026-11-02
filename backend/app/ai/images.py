@@ -31,6 +31,7 @@ class ImageSpec:
     referencias: list[int] = field(default_factory=list)  # ApprovedImage ids (style/composition reference only)
     kind: str = "scene"  # scene | figures | puppets | panels
     palette: list[str] = field(default_factory=list)
+    model: str | None = None  # image model override (OpenRouter)
 
 
 @dataclass
@@ -130,9 +131,30 @@ class ExternalImageProvider:
         return ImageResult(resp.content, resp.headers.get("content-type", "image/png"), meta)
 
 
+class OpenRouterImageProvider:
+    """Image models through OpenRouter (chat completions with modalities image+text). Prompts arrive sanitized (HR-11)."""
+
+    name = "openrouter"
+    version = "1"
+
+    def generate(self, spec: ImageSpec) -> ImageResult:
+        from app.ai.openrouter import generate_image
+
+        prompt = spec.prompt
+        if spec.negative_prompt:
+            prompt += f"\nAvoid: {spec.negative_prompt}"
+        model = spec.model or get_settings().openrouter_model_image
+        data, mime = generate_image(prompt, spec.aspect_ratio, model)
+        meta = generated_image_metadata(prompt_hash=hashlib.sha256(spec.prompt.encode()).hexdigest()[:16], seed=spec.seed, provider=self.name, version=self.version, kind=spec.kind)
+        meta["model"] = model
+        return ImageResult(data, mime, meta)
+
+
 @lru_cache
 def get_image_provider() -> ImageProvider:
     s = get_settings()
+    if s.image_provider == "openrouter":
+        return OpenRouterImageProvider()
     return ExternalImageProvider() if s.image_provider == "external" and s.external_image_enabled else PlaceholderImageProvider()
 
 

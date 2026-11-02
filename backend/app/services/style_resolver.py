@@ -24,6 +24,15 @@ from app.services.veda import active_restriction
 from app.textnorm import normalize
 
 LEVEL_HARD, LEVEL_VEDA, LEVEL_RED_LINE, LEVEL_MANDATORY, LEVEL_STYLE, LEVEL_SUGGESTED, LEVEL_ADJUST = 1, 2, 3, 4, 5, 6, 7
+def _veda_rule_on(db: Session, client_id: int) -> bool:
+    from app.guardrails.hard_rules import rule_enabled
+    from app.models.core import Client
+    from app.services.client_settings import get_client_settings, rules_dict
+
+    client = db.get(Client, client_id)
+    return rule_enabled(rules_dict(get_client_settings(client)), "HR-04") if client else True
+
+
 LEVEL_NAMES = {1: "regla_dura", 2: "modo_veda", 3: "linea_roja", 4: "obligatoria", 5: "estilo", 6: "sugerida", 7: "ajuste"}
 SCOPE_KEYS = ("topics", "formats", "accounts", "styles", "flows")
 
@@ -210,6 +219,8 @@ def resolve(
     values = {"topics": topic, "formats": format_slug, "accounts": account_id, "styles": style.slug, "flows": flow}
     directives = applicable_directives(db, client_id, values, when)
     veda = active_restriction(db, client_id, when)
+    if veda is not None and not _veda_rule_on(db, client_id):
+        veda = None  # HR-04 switched off for this client
 
     vocab: list[VocabRule] = [VocabRule(term, "prohibit", LEVEL_STYLE, 0, f"estilo:{style.slug}") for term in style.prohibited_vocab or []]
     legends: list[dict[str, str]] = [{"text": text, "source": "veda"} for text in required_legends(veda, when)]

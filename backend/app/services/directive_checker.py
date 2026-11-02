@@ -162,7 +162,9 @@ def _ai_findings(db: Session, d: Directive, others: list[Directive], previous: l
 
 
 def check_directive(db: Session, d: Directive, *, use_ai: bool = True, user_id: int | None = None) -> dict[str, Any]:
-    hard = [m.as_dict() for m in check_text_against_hard_rules(*_text_of(d))]
+    from app.services.styles import client_rules
+
+    hard = [m.as_dict() for m in check_text_against_hard_rules(*_text_of(d), rules=client_rules(db, d.client_id))]
     others = [
         o
         for o in db.scalars(select(Directive).where(Directive.client_id == d.client_id, Directive.status.in_(("activa", "en_revision", "borrador"))))

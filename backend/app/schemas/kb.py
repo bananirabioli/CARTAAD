@@ -54,6 +54,9 @@ class FactOut(ORM):
     verified_at: datetime | None
     valid_until: datetime | None
     notes: str
+    status: str = "activo"
+    source_quote: str = ""
+    source_page: int | None = None
     expired: bool = False
     source_label: str = ""
     created_at: datetime
@@ -73,6 +76,11 @@ class FactIn(BaseModel):
     topic_id: int | None = None
     valid_until: datetime | None = None
     notes: str = ""
+    # Quick source: when there is no document yet, these create one on the fly (a fact without a document is not used to generate).
+    source_title: str | None = Field(default=None, max_length=300)
+    source_issuer: str | None = Field(default=None, max_length=200)
+    source_url: str | None = Field(default=None, max_length=500)
+    source_date: datetime | None = None
 
 
 class FactPatch(BaseModel):
@@ -89,6 +97,32 @@ class FactPatch(BaseModel):
     topic_id: int | None = None
     valid_until: datetime | None = None
     notes: str | None = None
+    status: Literal["propuesto", "activo", "descartado"] | None = None
+
+
+class FactReviewIn(BaseModel):
+    action: Literal["aprobar", "descartar"]
+
+
+class ExtractIn(BaseModel):
+    model: str | None = Field(default=None, max_length=120)
+
+
+class ExtractTextIn(ExtractIn):
+    title: str = Field(min_length=3, max_length=300)
+    text: str = Field(min_length=40, max_length=60_000)
+    issuer: str = ""
+    url: str | None = None
+    issued_at: datetime | None = None
+    topic_id: int | None = None
+
+
+class ExtractReport(BaseModel):
+    document_id: int
+    proposed: int
+    fact_ids: list[int] = []
+    notes: str = ""
+    model: str = ""
 
 
 class ImportReport(BaseModel):

@@ -3,6 +3,7 @@
 import base64
 import csv
 import io
+import logging
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, File, Form, Header, Query, UploadFile
@@ -37,6 +38,7 @@ from app.services.alert import add_snapshot, apply_alert, baseline_sufficient
 from app.services.capture import capture_manual
 from app.services.ingest import run_source, store_post
 
+logger = logging.getLogger("uvicorn.error")  # shows up in `docker compose logs api`
 router = APIRouter(tags=["monitoring"])
 
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
@@ -225,20 +227,23 @@ async def manual_capture(
     comments: int | None = Form(None),
     shares: int | None = Form(None),
     comments_text: str = Form(""),
+    analyst_context: str = Form("", max_length=3000),
+    analysis_model: str | None = Form(None),
     image: UploadFile | None = File(None),
     ctx: Ctx = Depends(require("case.capture")),
 ) -> PostOut:
     data = None
-    if image is not None and image.filename:
-        if image.content_type not in ("image/png", "image/jpeg", "image/webp"):
+    if image is not None:  # pasted images can arrive without a filename
+        data = await image.read() or None
+        if data and image.content_type not in ("image/png", "image/jpeg", "image/webp", "application/octet-stream"):
             raise invalid("la captura debe ser PNG, JPG o WEBP")
-        data = await image.read()
-        if len(data) > MAX_IMAGE_BYTES:
+        if data and len(data) > MAX_IMAGE_BYTES:
             raise invalid("la imagen excede 8 MB")
+    logger.info("manual capture: text=%d chars, image=%s bytes (%s, %r)", len(text or ""), len(data) if data else 0, image.content_type if image else None, image.filename if image else None)
     post = capture_manual(
         ctx.db, ctx.client, ctx.user, text=text, network=network, image=data, url=url, source_id=source_id, source_name=source_name, source_type=source_type,
         blur=blur_names, published_at=published_at, likes=likes, comments=comments, shares=shares,
-        comments_text=[c.strip() for c in comments_text.split("\n") if c.strip()],
+        comments_text=[c.strip() for c in comments_text.split("\n") if c.strip()], analyst_context=analyst_context, analysis_model=analysis_model,
     )
     ctx.db.commit()
     return _post_out(ctx, post, PostDetail)

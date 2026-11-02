@@ -19,6 +19,7 @@ from app.schemas.generation import (
     ContentIn,
     CopilotIn,
     CopilotOut,
+    GenerateContentIn,
     GenerateIn,
     PieceDetail,
     PieceLegalIn,
@@ -87,6 +88,25 @@ def _proposal_out(ctx: Ctx, p: Proposal) -> ProposalOut:
 def generate(case_id: int, body: GenerateIn, ctx: Ctx = Depends(require("generation.run"))) -> ProposalOut:
     case = owned(ctx.db, Case, case_id, ctx.client_id)
     proposal = start_generation(ctx.db, case, ctx.user, body.variant_styles)
+    ctx.db.commit()
+    from app.tasks import generate_proposal_task
+
+    generate_proposal_task.delay(proposal.id, ctx.user.id)
+    ctx.db.expire_all()
+    return _proposal_out(ctx, ctx.db.get(Proposal, proposal.id))
+
+
+@router.post("/cases/{case_id}/generate-content", response_model=ProposalOut, status_code=202)
+def generate_content(case_id: int, body: GenerateContentIn, ctx: Ctx = Depends(require("generation.run"))) -> ProposalOut:
+    """MVP: decide «responder» with the main account and generate copies, images and (optionally) a video in one go."""
+    from app.services.content import start_content_generation
+
+    case = owned(ctx.db, Case, case_id, ctx.client_id)
+    proposal = start_content_generation(
+        ctx.db, case, ctx.user, strategy=body.strategy, style_slug=body.style_slug, variant_slugs=body.variant_styles, network=body.network,
+        image_count=body.image_count, video=body.video, instructions=body.instructions, engagement=body.engagement, models=body.models,
+        image_text=body.image_text,
+    )
     ctx.db.commit()
     from app.tasks import generate_proposal_task
 

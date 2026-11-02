@@ -24,6 +24,7 @@ class Proposal(Base):
     error: Mapped[str] = mapped_column(Text, default="")
     excluded_creatives: Mapped[list[dict[str, Any]]] = mapped_column(default=list)
     learning_context: Mapped[dict[str, Any]] = mapped_column(default=dict)
+    options: Mapped[dict[str, Any]] = mapped_column(default=dict)  # MVP: mode, network, image_count, video, instructions
     created_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=utcnow)
     finished_at: Mapped[datetime | None] = mapped_column(nullable=True)
@@ -40,7 +41,7 @@ class Piece(Base):
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id", ondelete="CASCADE"), index=True)
     proposal_id: Mapped[int] = mapped_column(ForeignKey("proposals.id", ondelete="CASCADE"), index=True)
     case_id: Mapped[int] = mapped_column(ForeignKey("cases.id", ondelete="CASCADE"), index=True)
-    kind: Mapped[str] = mapped_column(String(10))  # copy | creative
+    kind: Mapped[str] = mapped_column(String(10))  # copy | creative | image | video
     creative_slug: Mapped[str | None] = mapped_column(String(80), nullable=True)
     format_slug: Mapped[str] = mapped_column(String(80))
     account_id: Mapped[int | None] = mapped_column(ForeignKey("owned_accounts.id", ondelete="SET NULL"), nullable=True)

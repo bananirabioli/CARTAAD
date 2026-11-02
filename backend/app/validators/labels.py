@@ -1,7 +1,8 @@
 """9.5 Mandatory labels and image rules: «ilustración representativa» (HR-07), consent for real testimonies (HR-07),
 generated-image metadata and real photos as the only evidence (HR-06), visible sources (HR-01)."""
 
-from app.guardrails.hard_rules import REPRESENTATIVE_LABEL
+from app.guardrails.hard_rules import REPRESENTATIVE_LABEL, rule_enabled
+from app.services.client_settings import rules_dict
 from app.textnorm import find_terms
 from app.validators.common import Finding, finding
 from app.validators.context import PieceContext
@@ -17,7 +18,7 @@ def validate_labels(ctx: PieceContext) -> list[Finding]:
     if p.kind != "creative":
         return out
     text_only = bool(ctx.creative and ctx.creative.text_only)
-    if ctx.fmt and (ctx.fmt.options or {}).get("illustrated_figures") and not text_only:
+    if ctx.fmt and (ctx.fmt.options or {}).get("illustrated_figures") and not text_only and rule_enabled(rules_dict(ctx.settings), "HR-07L"):
         if not find_terms(content.get("label") or "", [REPRESENTATIVE_LABEL]):
             out.append(finding(V, "representative_label", "block", rule_id="HR-07"))
     if ctx.creative and ctx.creative.requires_consent:

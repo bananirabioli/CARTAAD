@@ -5,8 +5,8 @@ from pydantic import BaseModel, EmailStr, Field
 
 from app.schemas.common import ORM
 
-ClientType = Literal["gobierno", "partido", "candidatura"]
-Role = Literal["analista", "aprobador", "legal", "diseno", "admin"]
+ClientType = Literal["gobierno", "partido", "candidatura", "organizacion", "empresa", "otro"]
+Role = Literal["analista", "aprobador", "legal", "diseno", "admin", "owner"]
 
 
 class LoginIn(BaseModel):

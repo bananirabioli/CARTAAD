@@ -73,6 +73,7 @@ class PieceOut(ORM):
     missing_inputs: list[str]
     renders: list[str]
     render_status: str
+    render_error: str = ""
     status: str
     validation: list[dict[str, Any]]
     validation_status: str
@@ -121,6 +122,7 @@ class ProposalOut(ORM):
     error: str
     excluded_creatives: list[dict[str, Any]]
     learning_context: dict[str, Any]
+    options: dict[str, Any] = {}
     created_at: datetime
     finished_at: datetime | None
     pieces: list[PieceOut] = []
@@ -129,6 +131,21 @@ class ProposalOut(ORM):
 
 class GenerateIn(BaseModel):
     variant_styles: list[str] | None = None
+
+
+class GenerateContentIn(BaseModel):
+    """MVP: decide + generate in one step (copies, image prompts and images, optional video)."""
+
+    strategy: Literal["desmentir", "contextualizar", "reencuadrar", "contrastar", "amplificar", "agradecer"] | None = None
+    style_slug: str | None = None
+    variant_styles: list[str] | None = None
+    network: Literal["facebook", "x", "instagram", "tiktok", "youtube", "whatsapp"] = "facebook"
+    image_count: int = Field(default=1, ge=0, le=2)
+    video: bool = False
+    instructions: str = Field(default="", max_length=1000)
+    engagement: str = Field(default="", max_length=2000, description="Directrices de engagement para esta corrida.")
+    models: dict[Literal["text", "image", "video"], str | None] = Field(default_factory=dict, description="Modelo de OpenRouter por capa para esta corrida.")
+    image_text: bool = Field(default=True, description="Permitir texto dentro de la imagen (solo si HR-11T está apagada para el cliente).")
 
 
 class CopilotIn(BaseModel):

@@ -16,9 +16,16 @@ celery_app.conf.update(
     timezone="America/Mexico_City",
     enable_utc=True,
     beat_schedule={
-        "ingest-due-sources": {"task": "app.tasks.ingest_due_sources", "schedule": 300.0},
-        "recompute-baselines": {"task": "app.tasks.recompute_baselines", "schedule": 3600.0},
         "publish-due-posts": {"task": "app.tasks.publish_due_posts", "schedule": 60.0},
+        # The mock listening adapter invents posts: automatic ingestion only runs in demo mode.
+        **(
+            {
+                "ingest-due-sources": {"task": "app.tasks.ingest_due_sources", "schedule": 300.0},
+                "recompute-baselines": {"task": "app.tasks.recompute_baselines", "schedule": 3600.0},
+            }
+            if _s.demo_mode
+            else {}
+        ),
     },
 )
 

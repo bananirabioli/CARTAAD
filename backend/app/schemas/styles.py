@@ -206,6 +206,7 @@ class FormatOut(ORM):
 
 class FormatPatch(BaseModel):
     name: str | None = None
+    template: str | None = None
     description: str | None = None
     default_style_slug: str | None = None
     allowed_style_slugs: list[str] | None = None
@@ -230,8 +231,34 @@ class CreativeTypeOut(ORM):
     active: bool
 
 
+class FormatIn(BaseModel):
+    slug: str = Field(pattern=r"^[a-z0-9_]+$", min_length=2, max_length=80)
+    name: str = Field(min_length=2)
+    description: str = ""
+    template: str = "clasico"  # one of the render frames: clasico, contexto, historieta, titeres, comparativa, voz_pueblo
+    default_style_slug: str = "cercano"
+    allowed_style_slugs: list[str] = []
+    options: dict[str, Any] = {}
+
+
+class CreativeTypeIn(BaseModel):
+    slug: str = Field(pattern=r"^[a-z0-9_]+$", min_length=2, max_length=80)
+    name: str = Field(min_length=2)
+    description: str = ""
+    flow: Literal["A", "B"] = "A"
+    template: str = "dato_duro"
+    required_slots: list[str] = ["titulo", "texto"]
+    requires_fact: bool = False
+    requires_consent: bool = False
+    requires_real_photo: bool = False
+    text_only: bool = False
+
+
 class CreativeTypePatch(BaseModel):
     name: str | None = None
+    flow: Literal["A", "B"] | None = None
+    template: str | None = None
+    text_only: bool | None = None
     description: str | None = None
     required_slots: list[str] | None = None
     requires_fact: bool | None = None

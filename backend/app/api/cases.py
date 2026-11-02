@@ -23,6 +23,7 @@ from app.schemas.cases import (
     DecideIn,
     InterpretationOut,
     LegalIn,
+    ReanalyzeIn,
     ReasonIn,
 )
 from app.schemas.common import Page
@@ -98,6 +99,7 @@ def _detail(ctx: Ctx, case: Case) -> CaseDetail:
         strategy_candidates=strategy_candidates(ctx.settings, case.stance, case.message_type) if case.flow else [],
         account_options=_account_options(ctx),
         timeline=timeline,
+        lab={k: (post.meta or {}).get(k) for k in ("analyst_context", "analysis_model", "analysis", "engagement")},
     )
 
 
@@ -173,6 +175,15 @@ def edit_classification(case_id: int, body: ClassificationPatch, ctx: Ctx = Depe
 def reinterpret(case_id: int, ctx: Ctx = Depends(require("case.classify_edit"))) -> CaseDetail:
     case = owned(ctx.db, Case, case_id, ctx.client_id)
     case_svc.reprocess(ctx.db, case, ctx.user)
+    ctx.db.commit()
+    return _detail(ctx, case)
+
+
+@router.post("/cases/{case_id}/reanalyze", response_model=CaseDetail)
+def reanalyze(case_id: int, body: ReanalyzeIn, ctx: Ctx = Depends(require("case.classify_edit"))) -> CaseDetail:
+    """Laboratorio: analyze the capture again with new context and/or another model."""
+    case = owned(ctx.db, Case, case_id, ctx.client_id)
+    case_svc.reanalyze_case(ctx.db, case, ctx.user, context=body.context, model=body.model)
     ctx.db.commit()
     return _detail(ctx, case)
 
