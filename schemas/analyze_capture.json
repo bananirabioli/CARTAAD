@@ -74,6 +74,30 @@
       "title": "CommentThemeOut",
       "type": "object"
     },
+    "EngagementRead": {
+      "properties": {
+        "emotion": {
+          "default": "",
+          "description": "Emoción dominante que mueve la publicación (enojo, miedo, orgullo, burla…).",
+          "title": "Emotion",
+          "type": "string"
+        },
+        "why_it_spreads": {
+          "default": "",
+          "description": "Por qué está circulando o podría circular.",
+          "title": "Why It Spreads",
+          "type": "string"
+        },
+        "response_angle": {
+          "default": "",
+          "description": "Ángulo de respuesta con más posibilidad de enganchar a la audiencia del cliente.",
+          "title": "Response Angle",
+          "type": "string"
+        }
+      },
+      "title": "EngagementRead",
+      "type": "object"
+    },
     "StrategyAlternative": {
       "properties": {
         "strategy": {
@@ -259,6 +283,10 @@
       },
       "title": "Detected Names",
       "type": "array"
+    },
+    "engagement": {
+      "$ref": "#/$defs/EngagementRead",
+      "description": "Lectura de engagement: emoción, por qué circula, ángulo de respuesta."
     }
   },
   "required": [

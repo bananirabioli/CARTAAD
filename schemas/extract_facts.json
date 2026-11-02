@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "ExtractedFact": {
+      "properties": {
+        "statement": {
+          "description": "Afirmación atómica y autocontenida.",
+          "title": "Statement",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "El número tal como aparece, o null.",
+          "title": "Value"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "base": {
+          "default": "",
+          "title": "Base",
+          "type": "string"
+        },
+        "period_label": {
+          "default": "",
+          "title": "Period Label",
+          "type": "string"
+        },
+        "fact_date": {
+          "default": "",
+          "description": "AAAA-MM-DD o vacío.",
+          "title": "Fact Date",
+          "type": "string"
+        },
+        "topic": {
+          "default": "",
+          "description": "slug de un tema del cliente o vacío.",
+          "title": "Topic",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "quote": {
+          "default": "",
+          "description": "Frase literal del documento (≤ 300 caracteres).",
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "statement"
+      ],
+      "title": "ExtractedFact",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/ExtractedFact"
+      },
+      "title": "Facts",
+      "type": "array"
+    },
+    "notes": {
+      "default": "",
+      "title": "Notes",
+      "type": "string"
+    }
+  },
+  "title": "ExtractFactsOut",
+  "type": "object"
+}

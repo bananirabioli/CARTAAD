@@ -112,7 +112,7 @@ class OpenRouterProvider:
             content.append({"type": "image_url", "image_url": {"url": f"data:{mime};base64,{base64.standard_b64encode(data).decode()}"}})
         schema = _strict_schema(request_.output_model.model_json_schema())
         body = {
-            "model": self.model_for(request_.step),
+            "model": request_.model or self.model_for(request_.step),
             "max_tokens": self.max_tokens,
             "messages": [
                 {"role": "system", "content": request_.system + "\n\nResponde únicamente con un objeto JSON válido que cumpla el esquema."},
@@ -120,7 +120,15 @@ class OpenRouterProvider:
             ],
             "response_format": {"type": "json_schema", "json_schema": {"name": request_.step, "strict": True, "schema": schema}},
         }
-        data = request("POST", "/chat/completions", json=body).json()
+        try:
+            data = request("POST", "/chat/completions", json=body).json()
+        except ProviderError as exc:
+            if "respondió 4" not in str(exc):
+                raise
+            # Not every model supports strict json_schema: ask for plain JSON (the schema goes in the prompt) and parse it.
+            body.pop("response_format")
+            body["messages"][0]["content"] += "\n\nEsquema JSON de la respuesta:\n" + json.dumps(schema, ensure_ascii=False)
+            data = request("POST", "/chat/completions", json=body).json()
         if data.get("error"):
             raise ProviderError(f"OpenRouter: {data['error'].get('message', data['error'])}")
         choice = (data.get("choices") or [{}])[0]
@@ -135,15 +143,21 @@ class OpenRouterProvider:
 # ------------------------------------------------------------------ images
 
 
-def generate_image(prompt: str, aspect_ratio: str = "1:1") -> tuple[bytes, str]:
+def generate_image(prompt: str, aspect_ratio: str = "1:1", model: str | None = None) -> tuple[bytes, str]:
     s = get_settings()
     body = {
-        "model": s.openrouter_model_image,
+        "model": model or s.openrouter_model_image,
         "messages": [{"role": "user", "content": prompt}],
         "modalities": ["image", "text"],
         "image_config": {"aspect_ratio": aspect_ratio},
     }
-    data = request("POST", "/chat/completions", json=body).json()
+    try:
+        data = request("POST", "/chat/completions", json=body).json()
+    except ProviderError as exc:
+        if "respondió 4" not in str(exc):
+            raise
+        body["modalities"] = ["image"]  # image-only models (FLUX, Seedream…) reject the text modality
+        data = request("POST", "/chat/completions", json=body).json()
     message = ((data.get("choices") or [{}])[0]).get("message") or {}
     for img in message.get("images") or []:
         url = (img.get("image_url") or {}).get("url", "")
@@ -173,10 +187,10 @@ def _snap_duration(model: str, wanted: int) -> int:
     return fitting[-1] if fitting else durations[0]
 
 
-def generate_video(prompt: str, *, aspect_ratio: str = "9:16", duration: int | None = None) -> tuple[bytes, dict[str, Any]]:
+def generate_video(prompt: str, *, aspect_ratio: str = "9:16", duration: int | None = None, model: str | None = None) -> tuple[bytes, dict[str, Any]]:
     """Submit a video job, poll until it finishes and download the first MP4. Blocking: call it from the worker."""
     s = get_settings()
-    model = s.openrouter_model_video
+    model = model or s.openrouter_model_video
     seconds = _snap_duration(model, duration or s.video_max_seconds)
     job = request("POST", "/videos", json={
         "model": model, "prompt": prompt, "duration": seconds, "resolution": s.openrouter_video_resolution,

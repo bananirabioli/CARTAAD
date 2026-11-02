@@ -1,17 +1,6 @@
 "use client";
 
-import {
-  Activity,
-  BookOpen,
-  Camera,
-  FolderOpen,
-  LayoutDashboard,
-  LogOut,
-  Palette,
-  Settings,
-  ShieldAlert,
-  Sparkles,
-} from "lucide-react";
+import { Activity, BookOpen, Camera, FlaskConical, FolderOpen, LayoutDashboard, LogOut, Palette, Settings, ShieldAlert, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -46,7 +35,10 @@ const NAV: { section: string; items: NavItem[] }[] = [
   },
   {
     section: "nav.sectionAdmin",
-    items: [{ href: "/configuracion", label: "nav.settings", icon: Settings }],
+    items: [
+      { href: "/laboratorio", label: "nav.lab", icon: FlaskConical },
+      { href: "/configuracion", label: "nav.settings", icon: Settings },
+    ],
   },
 ];
 

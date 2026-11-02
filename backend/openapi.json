@@ -812,6 +812,314 @@
     }
    }
   },
+  "/lab/models": {
+   "get": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "List Models",
+    "description": "OpenRouter catalog filtered for one layer (vision for analysis, text, image output, video). Cached one hour.",
+    "operationId": "list_models_lab_models_get",
+    "parameters": [
+     {
+      "name": "kind",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "enum": [
+        "analysis",
+        "text",
+        "image",
+        "video"
+       ],
+       "type": "string",
+       "title": "Kind"
+      }
+     },
+     {
+      "name": "refresh",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Refresh"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "additionalProperties": true
+         },
+         "title": "Response List Models Lab Models Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "Set Models",
+    "operationId": "set_models_lab_models_put",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ModelsIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Set Models Lab Models Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/lab/config": {
+   "get": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "Get Config",
+    "operationId": "get_config_lab_config_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Get Config Lab Config Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/lab/guides": {
+   "put": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "Set Guides",
+    "operationId": "set_guides_lab_guides_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/GuidesIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Set Guides Lab Guides Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/lab/rules": {
+   "put": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "Set Rules",
+    "operationId": "set_rules_lab_rules_put",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RulesIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Set Rules Lab Rules Put"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/lab/history": {
+   "get": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "History",
+    "operationId": "history_lab_history_get",
+    "parameters": [
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 30,
+       "title": "Limit"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "additionalProperties": true
+         },
+         "title": "Response History Lab History Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/lab/preview": {
+   "post": {
+    "tags": [
+     "lab"
+    ],
+    "summary": "Preview",
+    "description": "Re-render the latest real run of this step (for the case, or the client) with today's template, guides and rules.\nNo AI call: it shows exactly what the next run would send.",
+    "operationId": "preview_lab_preview_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PreviewIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Preview Lab Preview Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/files/{key}": {
    "get": {
     "tags": [
@@ -1031,6 +1339,23 @@
       }
      },
      {
+      "name": "state",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^(propuesto|activo|descartado)$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "State"
+      }
+     },
+     {
       "name": "page",
       "in": "query",
       "required": false,
@@ -1234,6 +1559,175 @@
        "application/json": {
         "schema": {
          "$ref": "#/components/schemas/FactOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/facts-template.csv": {
+   "get": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Facts Template",
+    "description": "CSV template for /facts/import (UTF-8, one fact per row; document = title or id of an uploaded source).",
+    "operationId": "facts_template_kb_facts_template_csv_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/facts/{fact_id}/review": {
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Review Fact",
+    "description": "Approve (→ activo) or discard (→ descartado) a fact proposed by the AI. Approving with fact.verify also verifies it.",
+    "operationId": "review_fact_kb_facts__fact_id__review_post",
+    "parameters": [
+     {
+      "name": "fact_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Fact Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FactReviewIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/FactOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/documents/{doc_id}/extract-facts": {
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Extract From Document",
+    "operationId": "extract_from_document_kb_documents__doc_id__extract_facts_post",
+    "parameters": [
+     {
+      "name": "doc_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Doc Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExtractIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ExtractReport"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/kb/extract-text": {
+   "post": {
+    "tags": [
+     "kb"
+    ],
+    "summary": "Extract From Text",
+    "description": "Paste a text (press release, report, web page): it becomes a source document and the AI proposes its facts.",
+    "operationId": "extract_from_text_kb_extract_text_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExtractTextIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ExtractReport"
         }
        }
       }
@@ -5324,6 +5818,59 @@
     }
    }
   },
+  "/cases/{case_id}/reanalyze": {
+   "post": {
+    "tags": [
+     "cases"
+    ],
+    "summary": "Reanalyze",
+    "description": "Laboratorio: analyze the capture again with new context and/or another model.",
+    "operationId": "reanalyze_cases__case_id__reanalyze_post",
+    "parameters": [
+     {
+      "name": "case_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Case Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReanalyzeIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CaseDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/cases/{case_id}/decide": {
    "post": {
     "tags": [
@@ -8844,6 +9391,23 @@
       "title": "Comments Text",
       "default": ""
      },
+     "analyst_context": {
+      "type": "string",
+      "maxLength": 3000,
+      "title": "Analyst Context",
+      "default": ""
+     },
+     "analysis_model": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Analysis Model"
+     },
      "image": {
       "anyOf": [
        {
@@ -9444,6 +10008,12 @@
       "type": "array",
       "title": "Timeline",
       "default": []
+     },
+     "lab": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Lab",
+      "default": {}
      }
     },
     "type": "object",
@@ -11735,6 +12305,133 @@
     ],
     "title": "DocumentRef"
    },
+   "ExtractIn": {
+    "properties": {
+     "model": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Model"
+     }
+    },
+    "type": "object",
+    "title": "ExtractIn"
+   },
+   "ExtractReport": {
+    "properties": {
+     "document_id": {
+      "type": "integer",
+      "title": "Document Id"
+     },
+     "proposed": {
+      "type": "integer",
+      "title": "Proposed"
+     },
+     "fact_ids": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Fact Ids",
+      "default": []
+     },
+     "notes": {
+      "type": "string",
+      "title": "Notes",
+      "default": ""
+     },
+     "model": {
+      "type": "string",
+      "title": "Model",
+      "default": ""
+     }
+    },
+    "type": "object",
+    "required": [
+     "document_id",
+     "proposed"
+    ],
+    "title": "ExtractReport"
+   },
+   "ExtractTextIn": {
+    "properties": {
+     "model": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Model"
+     },
+     "title": {
+      "type": "string",
+      "maxLength": 300,
+      "minLength": 3,
+      "title": "Title"
+     },
+     "text": {
+      "type": "string",
+      "maxLength": 60000,
+      "minLength": 40,
+      "title": "Text"
+     },
+     "issuer": {
+      "type": "string",
+      "title": "Issuer",
+      "default": ""
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "issued_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Issued At"
+     },
+     "topic_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Topic Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "title",
+     "text"
+    ],
+    "title": "ExtractTextIn"
+   },
    "FactIn": {
     "properties": {
      "statement": {
@@ -11853,6 +12550,54 @@
       "type": "string",
       "title": "Notes",
       "default": ""
+     },
+     "source_title": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 300
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Title"
+     },
+     "source_issuer": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 200
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Issuer"
+     },
+     "source_url": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Url"
+     },
+     "source_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Date"
      }
     },
     "type": "object",
@@ -12049,6 +12794,27 @@
       "type": "string",
       "title": "Notes"
      },
+     "status": {
+      "type": "string",
+      "title": "Status",
+      "default": "activo"
+     },
+     "source_quote": {
+      "type": "string",
+      "title": "Source Quote",
+      "default": ""
+     },
+     "source_page": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Source Page"
+     },
      "expired": {
       "type": "boolean",
       "title": "Expired",
@@ -12236,10 +13002,43 @@
        }
       ],
       "title": "Notes"
+     },
+     "status": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "propuesto",
+         "activo",
+         "descartado"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status"
      }
     },
     "type": "object",
     "title": "FactPatch"
+   },
+   "FactReviewIn": {
+    "properties": {
+     "action": {
+      "type": "string",
+      "enum": [
+       "aprobar",
+       "descartar"
+      ],
+      "title": "Action"
+     }
+    },
+    "type": "object",
+    "required": [
+     "action"
+    ],
+    "title": "FactReviewIn"
    },
    "FigureOut": {
     "properties": {
@@ -12639,6 +13438,41 @@
       "maxLength": 1000,
       "title": "Instructions",
       "default": ""
+     },
+     "engagement": {
+      "type": "string",
+      "maxLength": 2000,
+      "title": "Engagement",
+      "description": "Directrices de engagement para esta corrida.",
+      "default": ""
+     },
+     "models": {
+      "additionalProperties": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "propertyNames": {
+       "enum": [
+        "text",
+        "image",
+        "video"
+       ]
+      },
+      "type": "object",
+      "title": "Models",
+      "description": "Modelo de OpenRouter por capa para esta corrida."
+     },
+     "image_text": {
+      "type": "boolean",
+      "title": "Image Text",
+      "description": "Permitir texto dentro de la imagen (solo si HR-11T está apagada para el cliente).",
+      "default": true
      }
     },
     "type": "object",
@@ -12716,6 +13550,40 @@
      "ord"
     ],
     "title": "GovLevelOut"
+   },
+   "GuidesIn": {
+    "properties": {
+     "guides": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "propertyNames": {
+       "enum": [
+        "analysis",
+        "text",
+        "image",
+        "video"
+       ]
+      },
+      "type": "object",
+      "title": "Guides"
+     },
+     "facts_top_k": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 25.0,
+        "minimum": 1.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Facts Top K"
+     }
+    },
+    "type": "object",
+    "title": "GuidesIn"
    },
    "HTTPValidationError": {
     "properties": {
@@ -13858,6 +14726,37 @@
      "reach"
     ],
     "title": "MetricsIn"
+   },
+   "ModelsIn": {
+    "properties": {
+     "models": {
+      "additionalProperties": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ]
+      },
+      "propertyNames": {
+       "enum": [
+        "analysis",
+        "text",
+        "image",
+        "video"
+       ]
+      },
+      "type": "object",
+      "title": "Models"
+     }
+    },
+    "type": "object",
+    "required": [
+     "models"
+    ],
+    "title": "ModelsIn"
    },
    "NarrativeOut": {
     "properties": {
@@ -15265,6 +16164,34 @@
     ],
     "title": "PostOut"
    },
+   "PreviewIn": {
+    "properties": {
+     "step": {
+      "type": "string",
+      "enum": [
+       "analyze_capture",
+       "generate_content"
+      ],
+      "title": "Step"
+     },
+     "case_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "step"
+    ],
+    "title": "PreviewIn"
+   },
    "ProposalOut": {
     "properties": {
      "id": {
@@ -15494,6 +16421,36 @@
      "outcome"
     ],
     "title": "RateIn"
+   },
+   "ReanalyzeIn": {
+    "properties": {
+     "context": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 3000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Context"
+     },
+     "model": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Model"
+     }
+    },
+    "type": "object",
+    "title": "ReanalyzeIn"
    },
    "ReasonIn": {
     "properties": {
@@ -15785,6 +16742,45 @@
      "version"
     ],
     "title": "RevertIn"
+   },
+   "RuleIn": {
+    "properties": {
+     "enabled": {
+      "type": "boolean",
+      "title": "Enabled",
+      "default": true
+     },
+     "text": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 1500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "title": "RuleIn"
+   },
+   "RulesIn": {
+    "properties": {
+     "rules": {
+      "additionalProperties": {
+       "$ref": "#/components/schemas/RuleIn"
+      },
+      "type": "object",
+      "title": "Rules"
+     }
+    },
+    "type": "object",
+    "required": [
+     "rules"
+    ],
+    "title": "RulesIn"
    },
    "ScheduleIn": {
     "properties": {

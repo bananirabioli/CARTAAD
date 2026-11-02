@@ -4,7 +4,8 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
-from app.guardrails.hard_rules import requires_legal_review
+from app.guardrails.hard_rules import requires_legal_review, rule_enabled
+from app.services.client_settings import rules_dict
 from app.i18n import t
 from app.models.generation import FigureCheck, Piece
 from app.services.actors import mentioned_actors
@@ -39,6 +40,10 @@ def _legal(ctx: PieceContext) -> tuple[bool, str]:
     style = ctx.style
     satirical = bool(style and ("satirico" in (style.tags or {}).get("humor", []) or "satirico" in (style.tags or {}).get("tono", [])))
     actors = [a for a in mentioned_actors(ctx.actors, ctx.visible_text()) if not a.is_own]
+    rules = rules_dict(ctx.settings)
+    if not rule_enabled(rules, "HR-09V"):
+        return False, ""
+    satirical = satirical and rule_enabled(rules, "HR-10S")
     required = requires_legal_review(bool(style and style.requires_legal), satirical, bool(actors))
     if not required:
         return False, ""

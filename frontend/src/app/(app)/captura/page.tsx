@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { AlertBadge } from "@/components/app/badges";
 import { PageHeader } from "@/components/app/common";
 import { useSession } from "@/components/app/session";
+import { ModelPicker, useLabConfig } from "@/components/lab/parts";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -48,6 +49,9 @@ export default function CapturePage() {
   const [blur, setBlur] = useState(true);
   const [counts, setCounts] = useState({ likes: "", comments: "", shares: "" });
   const [commentsText, setCommentsText] = useState("");
+  const [analystContext, setAnalystContext] = useState("");
+  const [analysisModel, setAnalysisModel] = useState("");
+  const { data: lab } = useLabConfig();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<Schemas["PostDetail"] | null>(null);
@@ -76,6 +80,7 @@ export default function CapturePage() {
     setUrl("");
     setCounts({ likes: "", comments: "", shares: "" });
     setCommentsText("");
+    setAnalystContext("");
     setResult(null);
     setError(null);
   }
@@ -91,6 +96,8 @@ export default function CapturePage() {
       if (url) fd.append("url", url);
       for (const [k, v] of Object.entries(counts)) if (v !== "") fd.append(k, v);
       if (commentsText.trim()) fd.append("comments_text", commentsText);
+      if (analystContext.trim()) fd.append("analyst_context", analystContext.trim());
+      if (analysisModel.trim()) fd.append("analysis_model", analysisModel.trim());
       if (file) fd.append("image", await toUploadable(file), "captura.jpg");
       const post = await api.upload<Schemas["PostDetail"]>("/posts/manual", fd);
       await refresh("/posts", "/cases", "/dashboard");
@@ -189,6 +196,14 @@ export default function CapturePage() {
                 <SelectContent>{enumOptions("network").map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
               </Select>
             </div>
+          </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="actx">{t("lab.analystContext")}</Label>
+            <Textarea id="actx" rows={3} value={analystContext} onChange={(e) => setAnalystContext(e.target.value)} placeholder={t("lab.analystContextPlaceholder")} />
+          </div>
+          <div className="grid gap-1.5">
+            <Label>{t("lab.analysisModel")}</Label>
+            <ModelPicker kind="analysis" value={analysisModel} fallback={lab?.models.analysis.effective} onChange={setAnalysisModel} />
           </div>
           <label className="flex items-start gap-3 rounded-md border p-3">
             <Switch checked={blur} onCheckedChange={setBlur} />

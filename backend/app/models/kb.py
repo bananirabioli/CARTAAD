@@ -79,6 +79,9 @@ class Fact(Base):
     verified_at: Mapped[datetime | None] = mapped_column(nullable=True)
     valid_until: Mapped[datetime | None] = mapped_column(nullable=True)
     notes: Mapped[str] = mapped_column(Text, default="")
+    status: Mapped[str] = mapped_column(String(20), default="activo", index=True)  # propuesto (IA, por revisar) | activo | descartado
+    source_quote: Mapped[str] = mapped_column(Text, default="")  # literal text the fact was extracted from
+    source_page: Mapped[int | None] = mapped_column(Integer, nullable=True)
     embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBED_DIM), nullable=True)
     created_at: Mapped[datetime] = mapped_column(default=utcnow)
 

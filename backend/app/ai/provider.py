@@ -29,6 +29,7 @@ class LLMRequest:
     output_model: type[BaseModel]
     image: tuple[bytes, str] | None = None
     feedback: str | None = None  # validation error from the previous attempt
+    model: str | None = None  # resolved model id (run override > client default > .env)
     meta: dict[str, Any] = field(default_factory=dict)
 
 

@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from fastapi.responses import PlainTextResponse
 from sqlalchemy import func, or_, select
 
 from app.api.deps import Ctx, get_ctx, next_code, owned, require
@@ -31,9 +32,13 @@ from app.schemas.kb import (
     DocumentDetail,
     DocumentOut,
     DocumentPatch,
+    ExtractIn,
+    ExtractReport,
+    ExtractTextIn,
     FactIn,
     FactOut,
     FactPatch,
+    FactReviewIn,
     GovLevelIn,
     GovLevelOut,
     HistoryOut,
@@ -87,10 +92,12 @@ def list_facts(
     topic_id: int | None = None,
     gov_level_id: int | None = None,
     status: str | None = Query(None, pattern="^(vigente|vencido|sin_documento|sin_verificar)$"),
+    state: str | None = Query(None, pattern="^(propuesto|activo|descartado)$"),
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=200),
 ) -> Page[FactOut]:
     stmt = select(Fact).where(Fact.client_id == ctx.client_id)
+    stmt = stmt.where(Fact.status == state) if state else stmt.where(Fact.status != "descartado")
     if q:
         like = f"%{q}%"
         stmt = stmt.where(or_(Fact.statement.ilike(like), Fact.code.ilike(like), Fact.notes.ilike(like)))
@@ -127,6 +134,12 @@ def _check_refs(ctx: Ctx, data: dict) -> None:
 @router.post("/facts", response_model=FactOut, status_code=201)
 def create_fact(body: FactIn, ctx: Ctx = Depends(require("kb.curate"))) -> FactOut:
     data = body.model_dump()
+    quick = {k: data.pop(k) for k in ("source_title", "source_issuer", "source_url", "source_date")}
+    if not data.get("document_id") and (quick["source_title"] or "").strip():
+        from app.services.fact_extraction import quick_source
+
+        doc = quick_source(ctx.db, ctx.client_id, ctx.user, title=quick["source_title"], issuer=quick["source_issuer"], url=quick["source_url"], date=quick["source_date"])
+        data["document_id"] = doc.id
     _check_refs(ctx, data)
     fact = Fact(client_id=ctx.client_id, code=next_code(ctx.db, ctx.client_id, "fact", "H"), **data)
     refresh_embedding(fact)
@@ -161,6 +174,49 @@ def verify_fact(fact_id: int, ctx: Ctx = Depends(require("fact.verify"))) -> Fac
     _audit(ctx, "fact.verify", "fact", fact, before)
     ctx.db.commit()
     return fact_out(ctx.db, fact)
+
+
+@router.get("/facts-template.csv", response_class=PlainTextResponse)
+def facts_template(ctx: Ctx = Depends(get_ctx)) -> PlainTextResponse:
+    """CSV template for /facts/import (UTF-8, one fact per row; document = title or id of an uploaded source)."""
+    header = "code,statement,value,unit,base,period_label,period_start,period_end,fact_date,document,gov_level,topic,valid_until,notes"
+    example = ',"Se rehabilitaron 120 km de calles en el suroriente",120,km,total,2026,2026-01-01,2026-06-30,2026-07-15,Informe de obra pública 2026,,,,'
+    return PlainTextResponse(f"{header}\n{example}\n", media_type="text/csv", headers={"Content-Disposition": 'attachment; filename="plantilla-hechos.csv"'})
+
+
+@router.post("/facts/{fact_id}/review", response_model=FactOut)
+def review_fact(fact_id: int, body: FactReviewIn, ctx: Ctx = Depends(require("kb.curate"))) -> FactOut:
+    """Approve (→ activo) or discard (→ descartado) a fact proposed by the AI. Approving with fact.verify also verifies it."""
+    fact = owned(ctx.db, Fact, fact_id, ctx.client_id)
+    before = audit.snapshot(fact)
+    fact.status = "activo" if body.action == "aprobar" else "descartado"
+    if body.action == "aprobar" and ctx.can("fact.verify"):
+        fact.verified_by_id, fact.verified_at = ctx.user.id, utcnow()
+    _audit(ctx, f"fact.{body.action}", "fact", fact, before)
+    ctx.db.commit()
+    return fact_out(ctx.db, fact)
+
+
+@router.post("/documents/{doc_id}/extract-facts", response_model=ExtractReport)
+def extract_from_document(doc_id: int, body: ExtractIn, ctx: Ctx = Depends(require("kb.curate"))) -> ExtractReport:
+    from app.services.fact_extraction import extract_facts_from_document
+
+    doc = owned(ctx.db, SourceDocument, doc_id, ctx.client_id)
+    report = extract_facts_from_document(ctx.db, doc, ctx.user, model=body.model)
+    ctx.db.commit()
+    return ExtractReport(**report)
+
+
+@router.post("/extract-text", response_model=ExtractReport)
+def extract_from_text(body: ExtractTextIn, ctx: Ctx = Depends(require("kb.curate"))) -> ExtractReport:
+    """Paste a text (press release, report, web page): it becomes a source document and the AI proposes its facts."""
+    from app.services.fact_extraction import document_from_text, extract_facts_from_document
+
+    doc = document_from_text(ctx.db, ctx.client_id, ctx.user, title=body.title, text=body.text, issuer=body.issuer, url=body.url, issued_at=body.issued_at,
+                             topic_id=body.topic_id)
+    report = extract_facts_from_document(ctx.db, doc, ctx.user, model=body.model)
+    ctx.db.commit()
+    return ExtractReport(**report)
 
 
 @router.post("/facts/import", response_model=ImportReport)

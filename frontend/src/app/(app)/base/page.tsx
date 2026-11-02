@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { PageHeader } from "@/components/app/common";
 import { FactsTab } from "@/components/kb/facts-tab";
+import { ReviewTab } from "@/components/kb/review-tab";
 import { DocumentsTab, MessagesTab } from "@/components/kb/other-tabs";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -58,10 +59,12 @@ export default function KnowledgeBasePage() {
       <Tabs defaultValue="facts">
         <TabsList className="h-auto flex-wrap">
           <TabsTrigger value="facts">{t("kb.tabs.facts")}</TabsTrigger>
+          <TabsTrigger value="review">{t("kb.lab.review")}</TabsTrigger>
           <TabsTrigger value="documents">{t("kb.tabs.documents")}</TabsTrigger>
           <TabsTrigger value="messages">{t("kb.tabs.messages")}</TabsTrigger>
         </TabsList>
         <TabsContent value="facts" className="mt-3"><FactsTab /></TabsContent>
+        <TabsContent value="review" className="mt-3"><ReviewTab /></TabsContent>
         <TabsContent value="documents" className="mt-3"><DocumentsTab /></TabsContent>
         <TabsContent value="messages" className="mt-3"><MessagesTab /></TabsContent>
       </Tabs>

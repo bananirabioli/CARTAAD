@@ -17,7 +17,7 @@ from app.ai.runner import StepMeta, run_step
 from app.config import get_settings
 from app.db import utcnow
 from app.errors import AppError
-from app.guardrails.hard_rules import HardRuleViolation, generated_image_metadata, sanitize_image_prompt
+from app.guardrails.hard_rules import HardRuleViolation, generated_image_metadata, image_text_allowed, rule_enabled, sanitize_image_prompt
 from app.i18n import t
 from app.models.cases import Case
 from app.models.core import Client, Topic, User
@@ -27,7 +27,7 @@ from app.models.styles import Style
 from app.services import audit
 from app.services.cases import CLOSING, decide, facts_for_case, reopen, transition
 from app.services.catalog import active_style, get_format, style_allowed_for_format
-from app.services.client_settings import get_client_settings
+from app.services.client_settings import get_client_settings, rules_dict
 from app.services.copy_context import fact_dict, key_messages, relevant_facts
 from app.services.facts import is_expired
 from app.services.generation import _new_piece, refresh_piece_risk, run_red_team, sources_for, variant_styles
@@ -49,7 +49,8 @@ def _main_account(db: Session, client: Client) -> OwnedAccount:
 
 
 def start_content_generation(db: Session, case: Case, user: User, *, strategy: str | None, style_slug: str | None, variant_slugs: list[str] | None,
-                             network: str, image_count: int, video: bool, instructions: str) -> Proposal:
+                             network: str, image_count: int, video: bool, instructions: str, engagement: str = "", models: dict[str, str | None] | None = None,
+                             image_text: bool = True) -> Proposal:
     client = db.get(Client, case.client_id)
     if case.status in CLOSING:
         reopen(db, case, user, "generar contenido")
@@ -69,7 +70,8 @@ def start_content_generation(db: Session, case: Case, user: User, *, strategy: s
     proposal = Proposal(
         client_id=client.id, case_id=case.id, account_id=account.id, format_slug=fmt.slug, flow=case.flow or "A", strategy=case.strategy or "contextualizar",
         variant_styles=variant_slugs or [], status="generando", created_by_id=user.id,
-        options={"mode": "content", "network": network, "image_count": image_count, "video": video, "instructions": instructions.strip(), "style_slug": case.style_slug},
+        options={"mode": "content", "network": network, "image_count": image_count, "video": video, "instructions": instructions.strip(), "style_slug": case.style_slug,
+                 "engagement": engagement.strip(), "models": {k: v for k, v in (models or {}).items() if v}, "image_text": image_text},
     )
     db.add(proposal)
     db.flush()
@@ -92,11 +94,13 @@ def _media_piece(db: Session, proposal: Proposal, case: Case, *, kind: str, styl
     return piece
 
 
-def safe_visual_prompt(prompt: str, negative: str, fallback: str) -> tuple[str, str]:
-    """HR-11: image/video models never draw text, figures, logos or real faces. Digits go; a forbidden request falls back."""
-    clean = re.sub(r"\s+", " ", _DIGITS.sub("", prompt)).strip()
+def safe_visual_prompt(prompt: str, negative: str, fallback: str, rules: dict[str, Any] | None = None) -> tuple[str, str]:
+    """HR-11: image/video models never draw real faces or third-party works. Text, figures and logos follow the client's
+    switches (HR-11T/N/L): while they are on, digits go and a forbidden request falls back to a neutral prompt."""
+    strip = (lambda x: x) if not rule_enabled(rules, "HR-11N") else (lambda x: _DIGITS.sub("", x))
+    clean = re.sub(r"\s+", " ", strip(prompt)).strip()
     try:
-        return sanitize_image_prompt(clean, negative)
+        return sanitize_image_prompt(clean, negative, rules)
     except HardRuleViolation:
         return sanitize_image_prompt(re.sub(r"\s+", " ", _DIGITS.sub("", fallback)).strip() or "Original illustration, soft shapes, warm light", negative)
 
@@ -107,14 +111,21 @@ def generate_content_proposal(db: Session, proposal: Proposal, user: User | None
     case = db.get(Case, proposal.case_id)
     client = db.get(Client, case.client_id)
     settings = get_client_settings(client)
+    rules = rules_dict(settings)
+    models = opts.get("models") or {}
+    image_model = models.get("image") or settings.ai_models.image
+    video_model = models.get("video") or settings.ai_models.video or s.openrouter_model_video
+    text_in_image = image_text_allowed(rules) and bool(opts.get("image_text", True))
+    visual_rules = rules if text_in_image else {**rules, "HR-11T": {"enabled": True}}  # the run can still ask for text-free images
     account = db.get(OwnedAccount, proposal.account_id)
     fmt = get_format(db, client.id, proposal.format_slug)
     post = db.get(Post, case.post_id)
     topic = db.scalar(select(Topic).where(Topic.client_id == client.id, Topic.slug == case.topic_slug))
 
-    cited = [f for f in facts_for_case(db, case) if not is_expired(f) and f.document_id] if case.interpretation else []
-    pool = cited + [f for f in relevant_facts(db, client.id, post.text, topic.id if topic else None, limit=12) if f not in cited]
-    facts = pool[:10]
+    cited = [f for f in facts_for_case(db, case) if not is_expired(f) and f.document_id and f.status == "activo"] if case.interpretation else []
+    top_k = settings.facts_top_k
+    pool = cited + [f for f in relevant_facts(db, client.id, post.text, topic.id if topic else None, limit=top_k + 2) if f not in cited]
+    facts = pool[:top_k]
     claims = [{"text": c.text, "verdict": c.verdict} for c in (case.interpretation.claims if case.interpretation else [])]
 
     if proposal.variant_styles:
@@ -135,9 +146,12 @@ def generate_content_proposal(db: Session, proposal: Proposal, user: User | None
         "styles": [{"slug": st.slug, "name": st.name, "description": st.description, "visual_guide": st.visual_guide} for st in styles],
         "key_messages": key_messages(db, client.id, topic.id if topic else None), "facts": [fact_dict(f) for f in facts],
         "max_images": max(image_count, 1), "want_video": want_video, "video_seconds": s.video_max_seconds,
+        "engagement": opts.get("engagement", ""), "engagement_read": (post.meta or {}).get("engagement") or None, "text_in_image": text_in_image, "figures_in_image": not rule_enabled(rules, "HR-11N"),
+        "palette": main.palette or [], "post_visual_context": post.visual_context or "", "narrative": case.interpretation.narrative if case.interpretation else "",
     }
     out, run = run_step(db, "generate_content", ctx, StepMeta(client_id=client.id, user_id=user.id if user else None, case_id=case.id, style_id=main.id,
-                                                              style_slug=main.slug, style_version=main.version, applied_directives=resolved.trace()))
+                                                              style_slug=main.slug, style_version=main.version, applied_directives=resolved.trace()),
+                        model=models.get("text"))
     pieces: list[Piece] = []
     facts_by_id = {f.id: f for f in facts}
     by_slug = {st.slug: st for st in styles}
@@ -149,18 +163,21 @@ def generate_content_proposal(db: Session, proposal: Proposal, user: User | None
         segs = [{**sg.model_dump(), "fact_ids": [x for x in sg.fact_ids if x in facts_by_id]} for sg in variant.segments]
         used = sorted({x for sg in segs for x in sg["fact_ids"]})
         content = {"segments": segs, "legends": style_resolved.legend_texts, "sources": sources_for([facts_by_id[x] for x in used]),
-                   "missing_data": out.missing_data, "hashtags": variant.hashtags, "cta": variant.cta, "network": opts.get("network")}  # type: ignore[attr-defined]
+                   "missing_data": out.missing_data, "hashtags": variant.hashtags, "cta": variant.cta, "network": opts.get("network"),  # type: ignore[attr-defined]
+                   "hook": variant.hook, "angle": variant.angle, "meta": {"model": run.model, "provider": run.provider, "ai_run_id": run.id}}
         pieces.append(_new_piece(db, proposal, case, kind="copy", style=style, resolved=style_resolved, fmt=fmt, content=content, why=variant.why, run_id=run.id))
 
     # ---- images: the model writes the prompt; code sanitizes it and the provider draws it
     media: list[Piece] = []
     if image_count:
         for n, ip in enumerate(out.image_prompts[:image_count]):  # type: ignore[attr-defined]
-            prompt, negative = safe_visual_prompt(ip.prompt, ip.negative_prompt, f"{main.visual_guide}. Original illustration about {ip.concept}")
-            content = {"concept": ip.concept, "prompt": prompt, "negative_prompt": negative, "aspect_ratio": ip.aspect_ratio, "headline": ip.headline}
+            prompt, negative = safe_visual_prompt(ip.prompt, ip.negative_prompt, f"{main.visual_guide}. Original illustration about {ip.concept}", visual_rules)
+            content = {"concept": ip.concept, "prompt": prompt, "negative_prompt": negative, "aspect_ratio": ip.aspect_ratio, "headline": ip.headline,
+                       "headline_in_image": text_in_image, "visual_style": ip.visual_style}
             piece = _media_piece(db, proposal, case, kind="image", style=main, fmt_slug=fmt.slug, content=content, why=ip.concept, run_id=run.id)
             try:
-                result = get_image_provider().generate(ImageSpec(prompt=prompt, negative_prompt=negative, aspect_ratio=ip.aspect_ratio, seed=case.id * 100 + n, palette=main.palette))
+                result = get_image_provider().generate(ImageSpec(prompt=prompt, negative_prompt=negative, aspect_ratio=ip.aspect_ratio, seed=case.id * 100 + n, palette=main.palette,
+                                                                 model=image_model))
                 ext = "jpg" if "jpeg" in result.mime else "png"
                 key = get_storage().save(client_key(client.id, "generated", f"{uuid.uuid4().hex}.{ext}"), result.data, result.mime)
                 piece.content = {**content, "meta": result.meta}
@@ -172,10 +189,10 @@ def generate_content_proposal(db: Session, proposal: Proposal, user: User | None
     # ---- video: planned now, rendered by the worker (it takes minutes)
     if want_video and out.video:  # type: ignore[attr-defined]
         v = out.video  # type: ignore[attr-defined]
-        prompt, negative = safe_visual_prompt(v.prompt, "", f"{main.visual_guide}. Short cinematic shot about {v.concept}")
+        prompt, negative = safe_visual_prompt(v.prompt, "", f"{main.visual_guide}. Short cinematic shot about {v.concept}", visual_rules)
         content = {"concept": v.concept, "scenes": [sc.model_dump() for sc in v.scenes], "prompt": prompt, "negative_prompt": negative, "aspect_ratio": v.aspect_ratio,
                    "voiceover": v.voiceover_full, "on_screen_text": v.on_screen_text, "seconds": s.video_max_seconds,
-                   "meta": generated_image_metadata(provider=s.video_provider, model=s.openrouter_model_video if s.video_provider == "openrouter" else None)}
+                   "meta": generated_image_metadata(provider=s.video_provider, model=video_model if s.video_provider == "openrouter" else None)}
         piece = _media_piece(db, proposal, case, kind="video", style=main, fmt_slug=fmt.slug, content=content, why=v.concept, run_id=run.id)
         if s.video_provider == "none":
             piece.render_status, piece.render_error = "no_aplica", "Generación de video desactivada (VIDEO_PROVIDER=none): usa el prompt y el guion."
@@ -207,7 +224,7 @@ def render_video(db: Session, piece: Piece) -> str | None:
 
     c = piece.content or {}
     try:
-        data, meta = generate_video(c.get("prompt", ""), aspect_ratio=c.get("aspect_ratio", "9:16"), duration=c.get("seconds"))
+        data, meta = generate_video(c.get("prompt", ""), aspect_ratio=c.get("aspect_ratio", "9:16"), duration=c.get("seconds"), model=(c.get("meta") or {}).get("model"))
     except Exception as exc:  # noqa: BLE001
         piece.render_status, piece.render_error = "error", str(exc)[:500]
         return None

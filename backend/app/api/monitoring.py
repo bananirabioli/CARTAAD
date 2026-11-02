@@ -227,6 +227,8 @@ async def manual_capture(
     comments: int | None = Form(None),
     shares: int | None = Form(None),
     comments_text: str = Form(""),
+    analyst_context: str = Form("", max_length=3000),
+    analysis_model: str | None = Form(None),
     image: UploadFile | None = File(None),
     ctx: Ctx = Depends(require("case.capture")),
 ) -> PostOut:
@@ -241,7 +243,7 @@ async def manual_capture(
     post = capture_manual(
         ctx.db, ctx.client, ctx.user, text=text, network=network, image=data, url=url, source_id=source_id, source_name=source_name, source_type=source_type,
         blur=blur_names, published_at=published_at, likes=likes, comments=comments, shares=shares,
-        comments_text=[c.strip() for c in comments_text.split("\n") if c.strip()],
+        comments_text=[c.strip() for c in comments_text.split("\n") if c.strip()], analyst_context=analyst_context, analysis_model=analysis_model,
     )
     ctx.db.commit()
     return _post_out(ctx, post, PostDetail)

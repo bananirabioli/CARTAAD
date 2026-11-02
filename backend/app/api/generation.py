@@ -104,7 +104,8 @@ def generate_content(case_id: int, body: GenerateContentIn, ctx: Ctx = Depends(r
     case = owned(ctx.db, Case, case_id, ctx.client_id)
     proposal = start_content_generation(
         ctx.db, case, ctx.user, strategy=body.strategy, style_slug=body.style_slug, variant_slugs=body.variant_styles, network=body.network,
-        image_count=body.image_count, video=body.video, instructions=body.instructions,
+        image_count=body.image_count, video=body.video, instructions=body.instructions, engagement=body.engagement, models=body.models,
+        image_text=body.image_text,
     )
     ctx.db.commit()
     from app.tasks import generate_proposal_task

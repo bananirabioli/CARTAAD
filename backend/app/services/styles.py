@@ -28,15 +28,29 @@ INTENT_TO_STRATEGY = {
 }
 
 
-def style_hard_rule_matches(data: dict[str, Any]) -> list[dict[str, str]]:
+def rules_for(style: Style) -> dict[str, Any]:
+    from app.services.client_settings import rules_for as _rules_for
+
+    return _rules_for(style) if style.client_id else {}
+
+
+def client_rules(db: Session, client_id: int | None) -> dict[str, Any]:
+    from app.models.core import Client
+    from app.services.client_settings import get_client_settings, rules_dict
+
+    client = db.get(Client, client_id) if client_id else None
+    return rules_dict(get_client_settings(client)) if client else {}
+
+
+def style_hard_rule_matches(data: dict[str, Any], rules: dict[str, Any] | None = None) -> list[dict[str, str]]:
     """Hard rules over the parts of a style that instruct generation (haz, visual guide, examples). `evita` lists are negations."""
     guidelines = data.get("guidelines") or {}
     texts = [data.get("visual_guide") or "", data.get("description") or "", *(guidelines.get("haz") or [])]
-    return [m.as_dict() for m in check_text_against_hard_rules(*texts)]
+    return [m.as_dict() for m in check_text_against_hard_rules(*texts, rules=rules)]
 
 
-def assert_style_ok(data: dict[str, Any]) -> None:
-    hits = style_hard_rule_matches(data)
+def assert_style_ok(data: dict[str, Any], rules: dict[str, Any] | None = None) -> None:
+    hits = style_hard_rule_matches(data, rules)
     if hits:
         raise AppError(422, "hard_rule", t("styles.errors.hard_rule", detail="; ".join(f"{h['rule_id']} «{h['snippet']}»" for h in hits)), details={"hard_rules": hits})
     if int(data.get("intensity_min", 1)) > int(data.get("intensity_max", 1)):
@@ -50,7 +64,7 @@ def latest_version(db: Session, client_id: int, slug: str) -> int:
 def new_version_from(db: Session, style: Style, user: User, changes: dict[str, Any], note: str = "") -> Style:
     data = {f: getattr(style, f) for f in EDITABLE_FIELDS}
     data.update(changes)
-    assert_style_ok(data)
+    assert_style_ok(data, rules_for(style))
     draft = Style(
         client_id=style.client_id, slug=style.slug, version=latest_version(db, style.client_id, style.slug) + 1, status="borrador",
         parent_id=style.id, created_by_id=user.id, change_note=note, **data,
@@ -67,7 +81,7 @@ def update_draft(style: Style, changes: dict[str, Any]) -> None:
         raise AppError(409, "conflict", t("styles.errors.not_editable"))
     data = {f: getattr(style, f) for f in EDITABLE_FIELDS}
     data.update(changes)
-    assert_style_ok(data)
+    assert_style_ok(data, rules_for(style))
     for k, v in changes.items():
         setattr(style, k, v)
     if style.risk == "alto":
@@ -81,7 +95,7 @@ def transition(db: Session, style: Style, target: str, user: User) -> None:
     if target not in allowed.get(style.status, set()):
         raise AppError(409, "conflict", t("styles.errors.bad_status", status=style.status))
     if target == "activo":
-        assert_style_ok({f: getattr(style, f) for f in EDITABLE_FIELDS})
+        assert_style_ok({f: getattr(style, f) for f in EDITABLE_FIELDS}, client_rules(db, style.client_id))
         if (style.requires_legal or style.risk == "alto") and not style.legal_approved_at:
             raise AppError(409, "legal_required", t("styles.errors.legal_required"))
         for other in db.scalars(select(Style).where(Style.client_id == style.client_id, Style.slug == style.slug, Style.status == "activo", Style.id != style.id)):
@@ -101,7 +115,7 @@ def import_style(db: Session, client_id: int, data: dict[str, Any], user: User) 
         raise AppError(422, "invalid_value", detail="slug")
     fields = {f: data[f] for f in EDITABLE_FIELDS if f in data}
     fields.setdefault("name", slug)
-    assert_style_ok(fields)
+    assert_style_ok(fields, client_rules(db, client_id))
     style = Style(client_id=client_id, slug=slug, version=latest_version(db, client_id, slug) + 1, status="borrador", created_by_id=user.id, change_note="Importado desde JSON", **fields)
     if style.risk == "alto":
         style.requires_legal = True

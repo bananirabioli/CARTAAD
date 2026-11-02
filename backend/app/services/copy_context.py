@@ -43,7 +43,7 @@ def detect_topic(db: Session, client_id: int, text: str) -> Topic | None:
 
 def relevant_facts(db: Session, client_id: int, text: str, topic_id: int | None = None, limit: int = 6, usable_only: bool = True) -> list[Fact]:
     """Facts for a text: same topic first, ranked by semantic similarity; expired / undocumented last (or excluded)."""
-    filters = [Fact.client_id == client_id]
+    filters = [Fact.client_id == client_id, Fact.status == "activo"]
     hits = search_text(db, Fact, text, *filters, limit=40)
     ranked = sorted(hits, key=lambda pair: (pair[0].topic_id != topic_id if topic_id else False, -pair[1]))
     out = []

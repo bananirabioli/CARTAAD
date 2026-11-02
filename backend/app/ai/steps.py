@@ -146,6 +146,12 @@ class CheckDirectiveOut(BaseModel):
 # ------------------------------------------------------------------ MVP: one call to analyze, one call to generate
 
 
+class EngagementRead(BaseModel):
+    emotion: str = Field(default="", description="Emoción dominante que mueve la publicación (enojo, miedo, orgullo, burla…).")
+    why_it_spreads: str = Field(default="", description="Por qué está circulando o podría circular.")
+    response_angle: str = Field(default="", description="Ángulo de respuesta con más posibilidad de enganchar a la audiencia del cliente.")
+
+
 class AnalyzeCaptureOut(BaseModel):
     extracted_text: str = Field(description="Texto visible de la publicación, tal cual (sin los comentarios).")
     network_guess: Literal["facebook", "x", "instagram", "tiktok", "youtube", "whatsapp", "otra"] = "otra"
@@ -168,10 +174,13 @@ class AnalyzeCaptureOut(BaseModel):
     alternatives: list[StrategyAlternative] = Field(default_factory=list)
     canalizar_a_atencion: bool = False
     detected_names: list[str] = Field(default_factory=list, description="Nombres o handles visibles de particulares, solo para difuminarlos.")
+    engagement: EngagementRead = Field(default_factory=EngagementRead, description="Lectura de engagement: emoción, por qué circula, ángulo de respuesta.")
 
 
 class CopyVariantOut(BaseModel):
     style: str = Field(description="slug del estilo de esta variante (uno de los entregados).")
+    angle: str = Field(default="", description="El ángulo creativo de esta variante en pocas palabras (distinto en cada variante).")
+    hook: str = Field(default="", description="La primera línea / gancho que detiene el scroll (también va como primer segmento).")
     segments: list[Segment]
     hashtags: list[str] = Field(default_factory=list)
     cta: str = ""
@@ -180,6 +189,7 @@ class CopyVariantOut(BaseModel):
 
 class ImagePromptOut(BaseModel):
     concept: str = Field(description="Idea de la imagen en español, para la persona que revisa.")
+    visual_style: str = Field(default="", description="Tratamiento visual elegido: fotografía editorial, collage, 3D, póster tipográfico, ilustración…")
     prompt: str = Field(description="Prompt en inglés para el modelo de imagen: escena, encuadre, luz, paleta, estilo.")
     negative_prompt: str = ""
     aspect_ratio: Literal["1:1", "4:5", "9:16", "16:9"] = "4:5"
@@ -208,7 +218,25 @@ class GenerateContentOut(BaseModel):
     missing_data: list[str] = Field(default_factory=list)
 
 
+class ExtractedFact(BaseModel):
+    statement: str = Field(description="Afirmación atómica y autocontenida.")
+    value: float | None = Field(default=None, description="El número tal como aparece, o null.")
+    unit: str = ""
+    base: str = ""
+    period_label: str = ""
+    fact_date: str = Field(default="", description="AAAA-MM-DD o vacío.")
+    topic: str = Field(default="", description="slug de un tema del cliente o vacío.")
+    page: int | None = None
+    quote: str = Field(default="", description="Frase literal del documento (≤ 300 caracteres).")
+
+
+class ExtractFactsOut(BaseModel):
+    facts: list[ExtractedFact] = Field(default_factory=list)
+    notes: str = ""
+
+
 STEP_MODELS: dict[str, type[BaseModel]] = {
+    "extract_facts": ExtractFactsOut,
     "analyze_capture": AnalyzeCaptureOut,
     "generate_content": GenerateContentOut,
     "ocr_vision": OcrVisionOut,

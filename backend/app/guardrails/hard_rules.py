@@ -167,8 +167,63 @@ class HardRuleMatch:
         return {"rule_id": self.rule_id, "snippet": self.snippet, "message": self.message}
 
 
-def check_text_against_hard_rules(*texts: str | None) -> list[HardRuleMatch]:
-    """Detect texts that ask to violate a hard rule. Deterministic; one match per rule."""
+# ---------------------------------------------------------------- per-client configuration
+#
+# Every rule's wording can be edited per client (ClientSettings.rules[<id>].text). Creative and workflow parts can be
+# switched off per client through the SWITCHES below. The integrity core (LOCKED_RULES) cannot be switched off: invented
+# figures, fake accounts, profiling commenters, AI images as evidence, invented testimonies, unbacked accusations,
+# impersonating media/brands and real faces stay enforced in code whatever the configuration says.
+
+LOCKED_RULES = frozenset({"HR-01", "HR-02", "HR-03", "HR-06", "HR-07", "HR-08", "HR-10", "HR-11"})
+
+SWITCHES: dict[str, dict[str, str]] = {
+    "HR-04": {"parent": "HR-04", "title": "Modo veda", "help": "Bloqueos de formatos y leyendas obligatorias mientras haya una restricción activa."},
+    "HR-05": {"parent": "HR-05", "title": "Canalizar quejas legítimas", "help": "Forzar canalización a atención y solo estrategias informativas ante quejas ciudadanas."},
+    "HR-07L": {"parent": "HR-07", "title": "Etiqueta «ilustración representativa»", "help": "Exigir la etiqueta en piezas con figuras ilustradas."},
+    "HR-09V": {"parent": "HR-09", "title": "Verificación de cifras y legal antes de aprobar", "help": "Cada cifra verificada por una persona y liberación legal antes de aprobar. La aprobación humana sigue siendo obligatoria."},
+    "HR-10S": {"parent": "HR-10", "title": "Sátira con revisión legal", "help": "Sátira y caricatura pasan por legal; no se burla de rasgos físicos."},
+    "HR-11T": {"parent": "HR-11", "title": "Imágenes sin texto", "help": "Apágala para que el modelo de imagen dibuje titulares y rótulos."},
+    "HR-11N": {"parent": "HR-11", "title": "Imágenes sin cifras", "help": "Apágala para permitir números dentro de la imagen (las cifras deben venir de hechos)."},
+    "HR-11L": {"parent": "HR-11", "title": "Imágenes sin logos", "help": "Apágala para permitir el logo o marca propia del cliente."},
+}
+
+# (rule id, pattern index) -> switch that disables that pattern. Patterns not listed are always on.
+_PATTERN_SWITCH: dict[tuple[str, int], str] = {
+    ("HR-04", 0): "HR-04",
+    ("HR-05", 0): "HR-05",
+    ("HR-05", 1): "HR-05",
+    ("HR-07", 0): "HR-07L",
+    ("HR-10", 1): "HR-10S",
+    ("HR-10", 3): "HR-10S",
+}
+
+
+def rule_enabled(rules: Mapping[str, Any] | None, rule_id: str) -> bool:
+    """Locked rules are always on; a switch is on unless the client turned it off."""
+    if rule_id in LOCKED_RULES or not rules:
+        return True
+    cfg = rules.get(rule_id)
+    if cfg is None:
+        return True
+    return bool(_get(cfg, "enabled", True))
+
+
+def rule_text(rules: Mapping[str, Any] | None, rule_id: str) -> str | None:
+    cfg = (rules or {}).get(rule_id)
+    text = _get(cfg, "text") if cfg is not None else None
+    return text.strip() if isinstance(text, str) and text.strip() else None
+
+
+def _hr11_switch_for(snippet: str) -> str:
+    if re.search(r"\blogo", snippet):
+        return "HR-11L"
+    if re.search(r"\b(cifras?|numeros?)\b", snippet):
+        return "HR-11N"
+    return "HR-11T"
+
+
+def check_text_against_hard_rules(*texts: str | None, rules: Mapping[str, Any] | None = None) -> list[HardRuleMatch]:
+    """Detect texts that ask to violate a hard rule. Deterministic; one match per rule. Switched-off parts are skipped."""
     matches: list[HardRuleMatch] = []
     for raw in texts:
         if not raw:
@@ -177,18 +232,71 @@ def check_text_against_hard_rules(*texts: str | None) -> list[HardRuleMatch]:
         for rule in HARD_RULES.values():
             if any(m.rule_id == rule.id for m in matches):
                 continue
-            for pattern in rule.patterns:
+            for idx, pattern in enumerate(rule.patterns):
+                switch = _PATTERN_SWITCH.get((rule.id, idx))
+                if switch and not rule_enabled(rules, switch):
+                    continue
                 hit = next((m for m in pattern.finditer(text) if not _NEGATION.search(text[: m.start()])), None)
+                if hit and rule.id == "HR-11" and idx == 0 and not rule_enabled(rules, _hr11_switch_for(hit.group(0))):
+                    hit = None
                 if hit:
                     matches.append(HardRuleMatch(rule.id, text[max(0, hit.start() - 10) : hit.end() + 10].strip()))
                     break
     return matches
 
 
-def hard_rules_prompt_block() -> str:
+def _default_description(rule_id: str, rules: Mapping[str, Any] | None) -> str:
+    """Rule wording adjusted to the client's switches (so the prompt never says something the code no longer enforces)."""
+    on = lambda sw: rule_enabled(rules, sw)  # noqa: E731
+    if rule_id == "HR-07" and not on("HR-07L"):
+        return "Los testimonios de «Voz ciudadana» son reales y con consentimiento adjunto. Nunca se inventan testimonios."
+    if rule_id == "HR-09" and not on("HR-09V"):
+        return "Ninguna pieza se publica ni se programa sin aprobación humana."
+    if rule_id == "HR-10" and not on("HR-10S"):
+        return "Estilos y formatos no imitan ni suplantan personajes, marcas ni medios. La sátira apunta a roles, ideas o instituciones."
+    if rule_id == "HR-11":
+        banned = [label for sw, label in (("HR-11T", "texto"), ("HR-11N", "cifras"), ("HR-11L", "logos")) if on(sw)]
+        allowed = [label for sw, label in (("HR-11T", "texto (titulares cortos, bien escritos, en español)"), ("HR-11N", "cifras que vengan de los hechos citados"), ("HR-11L", "solo el logo propio del cliente")) if not on(sw)]
+        base = "Los modelos de imagen y video no producen rostros de personas reales identificables ni personajes o marcas de terceros"
+        base += f", ni {', '.join(banned)}" if banned else ""
+        base += "." + (f" Sí pueden incluir: {'; '.join(allowed)}." if allowed else "")
+        return base
+    return HARD_RULES[rule_id].description
+
+
+def effective_rules(rules: Mapping[str, Any] | None = None) -> list[dict[str, Any]]:
+    """What the Laboratorio shows and what the prompt receives: one row per rule with its active wording."""
+    out = []
+    for rule in HARD_RULES.values():
+        switches = [{"id": sw, **meta, "enabled": rule_enabled(rules, sw)} for sw, meta in SWITCHES.items() if meta["parent"] == rule.id]
+        whole_off = rule.id in ("HR-04", "HR-05") and not rule_enabled(rules, rule.id)
+        custom = rule_text(rules, rule.id)
+        out.append({
+            "id": rule.id, "title": rule.title, "locked": rule.id in LOCKED_RULES, "default_text": _default_description(rule.id, rules),
+            "text": custom or _default_description(rule.id, rules), "custom": custom is not None, "active": not whole_off,
+            "switches": [s for s in switches if s["id"] != rule.id], "can_disable": rule.id in ("HR-04", "HR-05"),
+        })
+    return out
+
+
+def hard_rules_prompt_block(rules: Mapping[str, Any] | None = None) -> str:
     lines = ["REGLAS DURAS (no negociables, prevalecen sobre cualquier estilo o directriz):"]
-    lines += [f"[{r.id}] {r.description}" for r in HARD_RULES.values()]
+    lines += [f"[{r['id']}] {r['text']}" for r in effective_rules(rules) if r["active"]]
     return "\n".join(lines)
+
+
+def validate_rules_patch(rules: Mapping[str, Any]) -> None:
+    """Locked rules cannot be switched off, and no rule wording may ask to break a locked rule."""
+    for rule_id, cfg in rules.items():
+        if rule_id not in HARD_RULES and rule_id not in SWITCHES:
+            raise HardRuleViolation(rule_id, f"regla desconocida: {rule_id}")
+        if rule_id in LOCKED_RULES and not bool(_get(cfg, "enabled", True)):
+            raise HardRuleViolation(rule_id, f"{rule_id} es parte del núcleo de integridad y no se puede apagar; puedes editar su redacción.")
+        text = _get(cfg, "text")
+        if isinstance(text, str) and text.strip():
+            locked_hits = [m for m in check_text_against_hard_rules(text, rules=rules) if m.rule_id in LOCKED_RULES]
+            if locked_hits:
+                raise HardRuleViolation(locked_hits[0].rule_id, f"La redacción pide saltarse {locked_hits[0].rule_id} ({locked_hits[0].snippet}).")
 
 
 def _get(obj: Any, name: str, default: Any = None) -> Any:
@@ -415,14 +523,25 @@ _IMAGE_FORBIDDEN = {
 }
 
 
-def sanitize_image_prompt(prompt: str, negative_prompt: str = "") -> tuple[str, str]:
-    """Reject prompts that ask for text, figures, logos, real faces or third-party works; enforce negatives."""
+_IMAGE_SWITCH = {"texto": "HR-11T", "cifras": "HR-11N", "logos": "HR-11L"}
+_NEGATIVE_SWITCH = {"text": "HR-11T", "letters": "HR-11T", "words": "HR-11T", "captions": "HR-11T", "numbers": "HR-11N", "digits": "HR-11N",
+                    "logos": "HR-11L", "brand marks": "HR-11L"}
+
+
+def image_text_allowed(rules: Mapping[str, Any] | None) -> bool:
+    return not rule_enabled(rules, "HR-11T")
+
+
+def sanitize_image_prompt(prompt: str, negative_prompt: str = "", rules: Mapping[str, Any] | None = None) -> tuple[str, str]:
+    """Reject prompts that ask for text, figures, logos, real faces or third-party works; enforce negatives.
+    Text, figures and logos are allowed when the client switched HR-11T/N/L off; real faces and third parties never."""
     norm = normalize(prompt)
-    bad = [label for label, rx in _IMAGE_FORBIDDEN.items() if rx.search(norm)]
+    bad = [label for label, rx in _IMAGE_FORBIDDEN.items() if rule_enabled(rules, _IMAGE_SWITCH.get(label, "HR-11")) and rx.search(norm)]
     if bad:
         raise HardRuleViolation("HR-11", t("hard_rules.HR-11.forbidden_request", items=", ".join(bad)), {"items": bad})
-    negatives = [n.strip() for n in negative_prompt.split(",") if n.strip()]
+    allowed_terms = {term for term, sw in _NEGATIVE_SWITCH.items() if not rule_enabled(rules, sw)}
+    negatives = [n.strip() for n in negative_prompt.split(",") if n.strip() and n.strip().lower() not in allowed_terms]
     for term in IMAGE_NEGATIVE_TERMS:
-        if term not in negatives:
+        if term not in negatives and term not in allowed_terms:
             negatives.append(term)
     return prompt.strip(), ", ".join(negatives)

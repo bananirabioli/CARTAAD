@@ -9,11 +9,13 @@ import { toast } from "sonner";
 import { ErrorState, Loading, PageHeader } from "@/components/app/common";
 import { useSession } from "@/components/app/session";
 import { RiskMeter } from "@/components/cases/parts";
+import { ENGAGEMENT_CHIPS, ModelBadge, ModelPicker, useLabConfig } from "@/components/lab/parts";
 import { CopilotPanel, CopyText, CreativeThumb, errMsg, FiguresPanel, PieceStatusBadge, ValidationBadge, ValidationFindings, VersionsPanel, type PieceD, type PieceS } from "@/components/pieces/parts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -109,13 +111,19 @@ function CopilotSheet({ pieceId, onClose }: { pieceId: number | null; onClose: (
 function GenerateForm({ c, proposal, onStarted }: { c: CaseD; proposal: Proposal | undefined; onStarted: () => Promise<unknown> }) {
   const styles = c.account_options?.[0]?.allowed_styles ?? [];
   const strategies = c.strategy_candidates?.length ? c.strategy_candidates : enumOptions("strategy").map((o) => o.value);
-  const opts = (proposal?.options ?? {}) as { network?: string; image_count?: number; video?: boolean; instructions?: string };
+  const opts = (proposal?.options ?? {}) as { network?: string; image_count?: number; video?: boolean; instructions?: string; engagement?: string; models?: Record<string, string>; image_text?: boolean };
   const [strategy, setStrategy] = useState(c.strategy ?? c.strategy_suggested ?? strategies[0] ?? "contextualizar");
   const [variants, setVariants] = useState<string[]>(proposal?.variant_styles ?? []);
   const [network, setNetwork] = useState<string>(opts.network ?? "facebook");
   const [images, setImages] = useState<string>(String(opts.image_count ?? 1));
   const [video, setVideo] = useState<boolean>(opts.video ?? false);
   const [instructions, setInstructions] = useState(opts.instructions ?? "");
+  const [engagement, setEngagement] = useState(opts.engagement ?? "");
+  const [models, setModels] = useState<Record<"text" | "image" | "video", string>>({ text: opts.models?.text ?? "", image: opts.models?.image ?? "", video: opts.models?.video ?? "" });
+  const [imageText, setImageText] = useState<boolean>(opts.image_text ?? true);
+  const { data: lab } = useLabConfig();
+  const textAllowed = lab?.rules.find((r) => r.id === "HR-11")?.switches.find((s) => s.id === "HR-11T")?.enabled === false;
+  const addChip = (chip: string) => setEngagement((cur) => (cur.includes(chip) ? cur : [cur.trim(), chip].filter(Boolean).join(". ")));
   const [legalNote, setLegalNote] = useState("");
   const [busy, setBusy] = useState(false);
   const legalPending = c.legal_required && c.legal_status !== "liberada";
@@ -126,6 +134,7 @@ function GenerateForm({ c, proposal, onStarted }: { c: CaseD; proposal: Proposal
       if (legalPending) await api.post(`/cases/${c.id}/legal`, { action: "liberar", note: legalNote });
       await api.post(`/cases/${c.id}/generate-content`, {
         strategy, variant_styles: variants.length ? variants : null, network, image_count: Number(images), video, instructions,
+        engagement, models: Object.fromEntries(Object.entries(models).filter(([, v]) => v.trim())), image_text: imageText,
       });
       await onStarted();
       await refresh("/cases", "/dashboard");
@@ -187,6 +196,33 @@ function GenerateForm({ c, proposal, onStarted }: { c: CaseD; proposal: Proposal
           <span className="text-xs text-muted-foreground">{t("mvp.videoHelp")}</span>
         </label>
         <div className="grid gap-1.5">
+          <Label htmlFor="eng">{t("lab.engagement")}</Label>
+          <div className="flex flex-wrap gap-1.5">
+            {ENGAGEMENT_CHIPS.map((chip) => (
+              <button key={chip} type="button" onClick={() => addChip(chip)}
+                className={cn("rounded-full border px-2.5 py-1 text-xs", engagement.includes(chip) ? "border-primary bg-primary/10" : "hover:bg-muted")}>{chip}</button>
+            ))}
+          </div>
+          <Textarea id="eng" rows={2} value={engagement} onChange={(e) => setEngagement(e.target.value)} placeholder={t("lab.engagementPlaceholder")} />
+        </div>
+        {textAllowed && Number(images) > 0 ? (
+          <label className="flex items-start gap-3 rounded-md border p-3">
+            <Switch checked={imageText} onCheckedChange={setImageText} />
+            <span className="grid gap-0.5"><span className="text-sm font-medium">{t("lab.imageText")}</span><span className="text-xs text-muted-foreground">{t("lab.imageTextHelp")}</span></span>
+          </label>
+        ) : null}
+        <details className="rounded-md border p-3">
+          <summary className="cursor-pointer text-sm">{t("lab.modelsRun")}</summary>
+          <div className="mt-3 grid gap-3 md:grid-cols-3">
+            {(["text", "image", "video"] as const).map((layer) => (
+              <div key={layer} className="grid gap-1.5">
+                <Label>{t(`lab.layers.${layer}`)}</Label>
+                <ModelPicker kind={layer} value={models[layer]} fallback={lab?.models[layer].effective} onChange={(v) => setModels({ ...models, [layer]: v })} />
+              </div>
+            ))}
+          </div>
+        </details>
+        <div className="grid gap-1.5">
           <Label htmlFor="instr">{t("mvp.instructions")}</Label>
           <Textarea id="instr" rows={2} value={instructions} onChange={(e) => setInstructions(e.target.value)} placeholder={t("mvp.instructionsPlaceholder")} />
         </div>
@@ -208,13 +244,15 @@ function GenerateForm({ c, proposal, onStarted }: { c: CaseD; proposal: Proposal
 }
 
 function ImageCard({ p, onDone }: { p: PieceS; onDone: () => void }) {
-  const c = p.content as { concept?: string; prompt?: string; headline?: string; aspect_ratio?: string };
+  const c = p.content as { concept?: string; prompt?: string; headline?: string; aspect_ratio?: string; visual_style?: string; meta?: { model?: string } };
   return (
     <Card className="gap-2 overflow-hidden py-0">
       <CreativeThumb piece={p} className="aspect-[4/5] w-full rounded-none border-0 border-b object-contain" />
       <CardContent className="grid grid-cols-1 gap-2 p-3 text-xs">
         <PieceMeta p={p} />
+        <ModelBadge model={c.meta?.model} className="w-fit" />
         <p className="text-sm font-medium">{c.concept}</p>
+        {c.visual_style ? <p><span className="text-muted-foreground">{t("lab.visualStyle")}: </span>{c.visual_style}</p> : null}
         {c.headline ? <p><span className="text-muted-foreground">{t("mvp.headline")}: </span>{c.headline}</p> : null}
         {p.render_error ? <p className="text-status-block">{p.render_error}</p> : null}
         <details>
@@ -231,10 +269,10 @@ function ImageCard({ p, onDone }: { p: PieceS; onDone: () => void }) {
 }
 
 function VideoCard({ p, onDone }: { p: PieceS; onDone: () => void }) {
-  const c = p.content as { concept?: string; prompt?: string; voiceover?: string; on_screen_text?: string[]; scenes?: { seconds: number; visual: string; voiceover: string }[]; seconds?: number };
+  const c = p.content as { concept?: string; prompt?: string; voiceover?: string; on_screen_text?: string[]; scenes?: { seconds: number; visual: string; voiceover: string }[]; seconds?: number; meta?: { model?: string } };
   return (
     <Card className="gap-3 py-4">
-      <CardHeader className="px-4"><CardTitle className="flex items-center gap-2 text-sm"><Film className="size-4" />{c.concept}</CardTitle></CardHeader>
+      <CardHeader className="px-4"><CardTitle className="flex flex-wrap items-center gap-2 text-sm"><Film className="size-4" />{c.concept}<ModelBadge model={c.meta?.model} /></CardTitle></CardHeader>
       <CardContent className="grid gap-4 px-4 md:grid-cols-[280px_minmax(0,1fr)]">
         <div className="grid content-start gap-2">
           {p.render_status === "listo" && p.renders[0] ? (
@@ -277,10 +315,13 @@ export default function GenerationPage() {
     refreshInterval: (latest) => (latest?.[0]?.status === "generando" || latest?.[0]?.pieces?.some((p) => BUSY_RENDER.includes(p.render_status)) ? 3000 : 0),
   });
   const [copilotId, setCopilotId] = useState<number | null>(null);
+  const [shownId, setShownId] = useState<number | null>(null);
 
   if (error) return <ErrorState error={error} />;
   if (!c) return <Loading />;
-  const proposal = proposals?.[0];
+  const latest = proposals?.[0];
+  const proposal = proposals?.find((p) => p.id === shownId) ?? latest;
+  const runModels = (p: Proposal) => Object.values(((p.options ?? {}) as { models?: Record<string, string> }).models ?? {}).join(" · ");
   const pieces = proposal?.pieces ?? [];
   const copies = pieces.filter((p) => p.kind === "copy");
   const images = pieces.filter((p) => p.kind === "image" || p.kind === "creative");
@@ -293,7 +334,7 @@ export default function GenerationPage() {
         <Link href={`/casos/${c.id}`} className="mb-2 inline-flex items-center gap-1 text-xs text-muted-foreground hover:underline"><ArrowLeft className="size-3" />{c.code}</Link>
         <PageHeader title={`${t("generation.title")} · ${c.code}`} subtitle={t("mvp.generateSubtitle")} />
       </div>
-      {can("generation.run") ? <GenerateForm key={proposal?.id ?? 0} c={c} proposal={proposal} onStarted={() => Promise.all([mutate(), mutateCase()])} /> : null}
+      {can("generation.run") ? <GenerateForm key={latest?.id ?? 0} c={c} proposal={latest} onStarted={() => { setShownId(null); return Promise.all([mutate(), mutateCase()]); }} /> : null}
 
       {!proposal ? <p className="text-sm text-muted-foreground">{t("generation.noProposal")}</p> : proposal.status === "generando" ? (
         <div className="flex items-center gap-2 text-sm"><Loader2 className="size-4 animate-spin" />{t("mvp.generating")}</div>
@@ -307,17 +348,28 @@ export default function GenerationPage() {
               <TabsTrigger value="images"><ImageIcon className="size-3.5" />{t("mvp.imagesTab")} ({images.length})</TabsTrigger>
               <TabsTrigger value="video"><Film className="size-3.5" />{t("mvp.videoTab")} ({videos.length})</TabsTrigger>
             </TabsList>
-            <span className="text-xs text-muted-foreground">{t("generation.proposalOf", { id: proposal.id, date: fmtDate(proposal.created_at) })}</span>
+            {(proposals?.length ?? 0) > 1 ? (
+              <Select value={String(proposal.id)} onValueChange={(v) => setShownId(Number(v))}>
+                <SelectTrigger className="h-8 w-auto max-w-full text-xs"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {proposals!.map((p) => <SelectItem key={p.id} value={String(p.id)} className="text-xs">{t("generation.proposalOf", { id: p.id, date: fmtDate(p.created_at) })}{runModels(p) ? ` · ${runModels(p)}` : ""}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            ) : <span className="text-xs text-muted-foreground">{t("generation.proposalOf", { id: proposal.id, date: fmtDate(proposal.created_at) })}</span>}
           </div>
           <TabsContent value="copy" className="mt-3">
             <div className="grid gap-4 xl:grid-cols-3 [&>*]:min-w-0">
               {copies.map((p) => {
-                const content = p.content as { hashtags?: string[]; cta?: string; missing_data?: string[] };
+                const content = p.content as { hashtags?: string[]; cta?: string; missing_data?: string[]; angle?: string; meta?: { model?: string } };
                 return (
                   <Card key={p.id} className="gap-3 py-4">
                     <CardHeader className="grid-cols-1 gap-2 px-4">
                       <CardTitle className="text-sm">{p.style_slug} <span className="font-mono text-xs font-normal text-muted-foreground">· {tEnum("strategy", p.strategy)}</span></CardTitle>
                       <PieceMeta p={p} />
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <ModelBadge model={content.meta?.model} />
+                        {content.angle ? <Badge variant="secondary" className="text-[10px] font-normal">{t("lab.angle")}: {content.angle}</Badge> : null}
+                      </div>
                     </CardHeader>
                     <CardContent className="grid grid-cols-1 gap-3 px-4">
                       <CopyText piece={p} facts={proposal.facts ?? []} />

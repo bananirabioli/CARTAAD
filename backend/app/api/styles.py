@@ -151,7 +151,7 @@ def create_style(body: StyleIn, ctx: Ctx = Depends(require("style.edit"))) -> St
     if ctx.db.scalar(select(Style.id).where(Style.client_id == ctx.client_id, Style.slug == body.slug)):
         raise AppError(409, "conflict", t("styles.errors.slug_exists", slug=body.slug))
     data = body.model_dump(exclude={"slug"})
-    style_svc.assert_style_ok(data)
+    style_svc.assert_style_ok(data, style_svc.client_rules(ctx.db, ctx.client_id))
     style = Style(client_id=ctx.client_id, slug=body.slug, version=1, status="borrador", created_by_id=ctx.user.id, change_note="Creado", **data)
     if style.risk == "alto":
         style.requires_legal = True

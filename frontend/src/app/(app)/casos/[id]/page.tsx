@@ -11,6 +11,7 @@ import { ErrorState, KeyValue, Loading, ReasonDialog } from "@/components/app/co
 import { FormDialog } from "@/components/app/form-dialog";
 import { useSession } from "@/components/app/session";
 import { CaseStatusBadge, ClaimList, RiskBreakdown, RiskMeter } from "@/components/cases/parts";
+import { ModelBadge, ModelPicker, useLabConfig } from "@/components/lab/parts";
 import { CaseMetricsPanel } from "@/components/metrics/parts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,58 @@ function Section({ title, children, action, className }: { title: string; childr
 }
 
 /** MVP: the decision is folded into «Generar contenido»; monitor / ignore / route stay one click away. */
+type LabInfo = { analyst_context?: string | null; analysis_model?: string | null; analysis?: { model?: string } | null; engagement?: { emotion?: string; why_it_spreads?: string; response_angle?: string } | null };
+
+function LabPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) {
+  const { can } = useSession();
+  const lab = (c.lab ?? {}) as LabInfo;
+  const { data: cfg } = useLabConfig();
+  const [context, setContext] = useState(lab.analyst_context ?? "");
+  const [model, setModel] = useState(lab.analysis_model ?? "");
+  const [busy, setBusy] = useState(false);
+  const eng = lab.engagement;
+  async function run() {
+    setBusy(true);
+    try {
+      onDone(await api.post<CaseD>(`/cases/${c.id}/reanalyze`, { context, model }));
+      await refresh("/cases", "/dashboard");
+      toast.success(t("lab.reanalyzed"));
+    } catch (err) {
+      toast.error(errMsg(err));
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <Section title={t("lab.reanalyzeTitle")} action={<ModelBadge model={lab.analysis?.model} />}>
+      <div className="grid gap-3 text-sm">
+        {eng && (eng.emotion || eng.response_angle) ? (
+          <div className="grid gap-1 rounded-md border bg-muted/30 p-3 text-xs">
+            <p className="font-medium">{t("lab.engagementRead")}</p>
+            {eng.emotion ? <p><span className="text-muted-foreground">{t("lab.emotion")}: </span>{eng.emotion}</p> : null}
+            {eng.why_it_spreads ? <p><span className="text-muted-foreground">{t("lab.whySpreads")}: </span>{eng.why_it_spreads}</p> : null}
+            {eng.response_angle ? <p><span className="text-muted-foreground">{t("lab.responseAngle")}: </span>{eng.response_angle}</p> : null}
+          </div>
+        ) : null}
+        {can("case.classify_edit") ? (
+          <>
+            <div className="grid gap-1.5">
+              <Label htmlFor="rctx">{t("lab.analystContext")}</Label>
+              <Textarea id="rctx" rows={3} value={context} onChange={(e) => setContext(e.target.value)} placeholder={t("lab.analystContextPlaceholder")} />
+            </div>
+            <div className="grid gap-1.5">
+              <Label>{t("lab.analysisModel")}</Label>
+              <ModelPicker kind="analysis" value={model} fallback={cfg?.models.analysis.effective} onChange={setModel} />
+            </div>
+            <p className="text-xs text-muted-foreground">{t("lab.reanalyzeHelp")}</p>
+            <div><Button size="sm" variant="outline" disabled={busy} onClick={run}><RefreshCw className={cn(busy && "animate-spin")} />{t("lab.reanalyze")}</Button></div>
+          </>
+        ) : lab.analyst_context ? <p className="text-xs"><span className="text-muted-foreground">{t("lab.analystContext")}: </span>{lab.analyst_context}</p> : null}
+      </div>
+    </Section>
+  );
+}
+
 function NextStepPanel({ c, onDone }: { c: CaseD; onDone: (d: CaseD) => void }) {
   const { can } = useSession();
   const [reasonFor, setReasonFor] = useState<string | null>(null);
@@ -183,6 +236,8 @@ export default function CaseDetailPage() {
               </div>
             </div>
           </Section>
+
+          <LabPanel key={`${c.id}-${c.updated_at}`} c={c} onDone={set} />
 
           {cls ? (
             <Section

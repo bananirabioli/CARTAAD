@@ -7,6 +7,7 @@ import { EmptyState, Loading } from "@/components/app/common";
 import { FormDialog, toFormData, type FieldSpec } from "@/components/app/form-dialog";
 import { Markdown } from "@/components/app/markdown";
 import { useSession } from "@/components/app/session";
+import { ExtractFromDocButton } from "@/components/kb/review-tab";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -61,6 +62,7 @@ export function DocumentsTab() {
                 <span>{t("kb.documents.facts", { count: d.fact_count ?? 0 })}</span>
                 <div className="ml-auto flex gap-1">
                   <Button size="xs" variant="outline" onClick={() => setDetailId(d.id)}>{t("kb.documents.viewChunks")}</Button>
+                  {can("kb.curate") ? <ExtractFromDocButton docId={d.id} disabled={d.status !== "procesado"} /> : null}
                   {d.file_key ? (
                     <Button size="xs" variant="ghost" asChild>
                       <a href={fileUrl(d.file_key)} target="_blank" rel="noreferrer"><ExternalLink />{t("kb.documents.openPdf")}</a>

@@ -70,11 +70,17 @@ def capture_manual(
     comments: int | None = None,
     shares: int | None = None,
     comments_text: list[str] | None = None,
+    analyst_context: str = "",
+    analysis_model: str | None = None,
 ) -> Post:
     image_key = None
     image_text = visual_context = ""
     detected: list[str] = []
     meta: dict[str, str] = {}
+    if analyst_context.strip():
+        meta["analyst_context"] = analyst_context.strip()
+    if analysis_model and analysis_model.strip():
+        meta["analysis_model"] = analysis_model.strip()
     if image:
         data, mime = normalize_image(image)
         if not single_analysis():  # with a real provider analyze_capture reads the image later, in the same call that classifies

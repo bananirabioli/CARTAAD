@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.schemas.common import ORM
 from app.schemas.kb import FactOut
@@ -116,6 +116,12 @@ class CaseDetail(CaseListItem):
     strategy_candidates: list[str] = []
     account_options: list[AccountOption] = []
     timeline: list[dict[str, Any]] = []
+    lab: dict[str, Any] = {}  # analyst_context, analysis model, engagement read (Laboratorio)
+
+
+class ReanalyzeIn(BaseModel):
+    context: str | None = Field(default=None, max_length=3000)
+    model: str | None = Field(default=None, max_length=120)
 
 
 class DecideIn(BaseModel):

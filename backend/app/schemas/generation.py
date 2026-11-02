@@ -143,6 +143,9 @@ class GenerateContentIn(BaseModel):
     image_count: int = Field(default=1, ge=0, le=2)
     video: bool = False
     instructions: str = Field(default="", max_length=1000)
+    engagement: str = Field(default="", max_length=2000, description="Directrices de engagement para esta corrida.")
+    models: dict[Literal["text", "image", "video"], str | None] = Field(default_factory=dict, description="Modelo de OpenRouter por capa para esta corrida.")
+    image_text: bool = Field(default=True, description="Permitir texto dentro de la imagen (solo si HR-11T está apagada para el cliente).")
 
 
 class CopilotIn(BaseModel):

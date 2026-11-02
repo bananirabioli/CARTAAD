@@ -26,7 +26,7 @@ from app.models.styles import Style
 from app.services import audit
 from app.services.cases import strategy_candidates, transition
 from app.services.catalog import active_style, compat, format_style_slugs, get_creative, get_format, style_allowed_for_format
-from app.services.client_settings import get_client_settings
+from app.services.client_settings import get_client_settings, rules_for
 from app.services.copy_context import build_copy_context, fact_dict, key_messages, relevant_facts
 from app.services.generation import piece_tags, piece_visible_text, refresh_piece_risk, run_red_team, sources_for
 from app.services.style_resolver import resolve
@@ -153,7 +153,7 @@ def run_copilot(db: Session, piece: Piece, user: User, *, action: str, instructi
         raise AppError(422, "invalid_value", detail=action)
     if piece.status in LOCKED:
         raise AppError(409, "conflict", t("pieces.errors.locked", status=piece.status))
-    hits = check_text_against_hard_rules(instruction) if instruction else []
+    hits = check_text_against_hard_rules(instruction, rules=rules_for(piece)) if instruction else []
     if hits:
         hit = hits[0]
         return {"applied": False, "message": t("pieces.copilot.hard_rule", rule=hit.rule_id, title=HARD_RULES[hit.rule_id].title, snippet=hit.snippet), "rule_id": hit.rule_id}

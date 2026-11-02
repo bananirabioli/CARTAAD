@@ -23,7 +23,8 @@
     "settings": "Configuración",
     "audit": "Bitácora de auditoría",
     "facts": "Hechos",
-    "catalogs": "Catálogos"
+    "catalogs": "Catálogos",
+    "lab": "Laboratorio"
   },
   "auth": {
     "title": "Iniciar sesión",
@@ -582,6 +583,28 @@
       "reach": "Alcance vs. original",
       "sentiment": "Δ sentimiento",
       "date": "Fecha"
+    },
+    "lab": {
+      "review": "Por revisar",
+      "reviewHelp": "Hechos propuestos por la IA. No se usan en análisis ni generación hasta que los apruebes.",
+      "approve": "Aprobar",
+      "discard": "Descartar",
+      "approved": "Hecho aprobado",
+      "discarded": "Hecho descartado",
+      "quote": "Cita del documento",
+      "page": "pág.",
+      "extract": "Extraer hechos con IA",
+      "extractTitle": "Extraer hechos de un texto",
+      "extractHelp": "Pega un comunicado, informe o página web. Se guarda como documento fuente y la IA propone sus hechos (con cita y página) para que los revises.",
+      "extractText": "Texto",
+      "extractDone": "{n} hechos propuestos: revísalos en «Por revisar».",
+      "extractFromDoc": "Extraer hechos",
+      "template": "Plantilla CSV",
+      "quickSource": "Fuente (si no hay documento)",
+      "quickSourceHelp": "Título de la fuente; se crea el documento automáticamente. Sin fuente, el hecho no se usa al generar.",
+      "sourceIssuer": "Emisor de la fuente",
+      "sourceUrl": "Enlace de la fuente",
+      "sourceDate": "Fecha de la fuente"
     }
   },
   "styles": {
@@ -1283,5 +1306,78 @@
     "modelText": "Copies y prompts",
     "modelImage": "Imágenes",
     "modelVideo": "Video"
+  },
+  "lab": {
+    "title": "Laboratorio",
+    "subtitle": "Prueba y pule la IA de este cliente: modelos por capa, guías creativas, reglas y comparación de corridas.",
+    "tabs": {
+      "models": "Modelos",
+      "guides": "Guías",
+      "rules": "Reglas",
+      "runs": "Corridas IA"
+    },
+    "layers": {
+      "analysis": "Análisis (visión)",
+      "text": "Copies",
+      "image": "Imagen",
+      "video": "Video"
+    },
+    "modelDefault": "Predeterminado",
+    "modelPlaceholder": "Escribe o elige un modelo de OpenRouter",
+    "modelsHelp": "Deja vacío para usar el predeterminado del servidor. La lista viene de OpenRouter (precio y si soporta JSON estricto). En cada captura o generación puedes probar otro modelo sin cambiar este.",
+    "effective": "En uso",
+    "refreshCatalog": "Actualizar catálogo",
+    "guidesHelp": "Lo que escribas aquí se inyecta en el prompt de cada capa, para todas las publicaciones de este cliente. Las reglas duras siempre prevalecen.",
+    "guidePlaceholder": {
+      "analysis": "Ej.: lee el sarcasmo norteño; distingue críticas de vecinos de ataques organizados; considera que el cliente es candidatura en Juárez…",
+      "text": "Ej.: abre siempre con un gancho de 6–10 palabras; usa ejemplos de colonias; humor ligero permitido; termina con una pregunta…",
+      "image": "Ej.: fotografía editorial de alto contraste, colores guinda y blanco, personas de la región en primer plano, nada de ilustración plana…",
+      "video": "Ej.: primer segundo con movimiento brusco o primer plano; ritmo rápido; remate con el gesto de una persona…"
+    },
+    "factsTopK": "Hechos por prompt",
+    "factsTopKHelp": "Cuántos hechos de la base entran a cada prompt (los más cercanos al tema). Menos = menos contexto y menos costo.",
+    "preview": "Ver prompt final",
+    "previewStep": "Paso",
+    "previewCase": "Caso (opcional, id)",
+    "previewHelp": "Re-arma la última corrida real de este paso con la plantilla, las guías y las reglas de hoy. No llama a la IA.",
+    "previewInfo": "Basado en la corrida #{run} · modelo {model} · ~{tokens} tokens",
+    "history": "Historial de cambios",
+    "rulesHelp": "Puedes reescribir el texto que lee el modelo y apagar las partes creativas o de flujo. Las reglas con candado son el núcleo de integridad (no inventar datos, no bots, no perfilar ciudadanos, no hacer pasar IA por evidencia, no testimonios falsos, no acusaciones sin respaldo, no rostros reales ni suplantación): se pueden redactar, no apagar.",
+    "locked": "Núcleo de integridad",
+    "ruleActive": "Activa",
+    "customText": "Redacción propia",
+    "resetText": "Volver al texto original",
+    "saveRule": "Guardar regla",
+    "runsFilterModel": "Filtrar por modelo",
+    "analystContext": "Contexto y relaciones (opcional)",
+    "analystContextPlaceholder": "Quién publica, su relación con el cliente, antecedentes, qué sabemos que la captura no dice…",
+    "analysisModel": "Modelo de análisis",
+    "reanalyze": "Re-analizar",
+    "reanalyzeTitle": "Re-analizar con otro contexto o modelo",
+    "reanalyzeHelp": "Vuelve a correr el análisis. Las piezas ya generadas se conservan; el caso regresa a la decisión.",
+    "reanalyzed": "Análisis actualizado",
+    "engagementRead": "Lectura de engagement",
+    "emotion": "Emoción",
+    "whySpreads": "Por qué circula",
+    "responseAngle": "Ángulo sugerido",
+    "madeBy": "Hecho con",
+    "engagement": "Directrices de engagement",
+    "engagementPlaceholder": "Ej.: gancho con pregunta, humor ligero, referencia a la colonia, cierre que invite a etiquetar…",
+    "chips": [
+      "Gancho fuerte en la primera línea",
+      "Humor ligero",
+      "Emoción: orgullo local",
+      "Dato sorpresa al inicio",
+      "Cerrar con pregunta",
+      "Referencia local concreta",
+      "Formato lista corta",
+      "Tono de conversación entre vecinos"
+    ],
+    "modelsRun": "Modelos para esta corrida",
+    "imageText": "Texto dentro de la imagen",
+    "imageTextHelp": "El modelo de imagen dibuja el titular (HR-11 texto está apagada para este cliente).",
+    "hook": "Gancho",
+    "angle": "Ángulo",
+    "visualStyle": "Tratamiento"
   }
 }

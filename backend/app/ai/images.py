@@ -31,6 +31,7 @@ class ImageSpec:
     referencias: list[int] = field(default_factory=list)  # ApprovedImage ids (style/composition reference only)
     kind: str = "scene"  # scene | figures | puppets | panels
     palette: list[str] = field(default_factory=list)
+    model: str | None = None  # image model override (OpenRouter)
 
 
 @dataclass
@@ -142,9 +143,10 @@ class OpenRouterImageProvider:
         prompt = spec.prompt
         if spec.negative_prompt:
             prompt += f"\nAvoid: {spec.negative_prompt}"
-        data, mime = generate_image(prompt, spec.aspect_ratio)
+        model = spec.model or get_settings().openrouter_model_image
+        data, mime = generate_image(prompt, spec.aspect_ratio, model)
         meta = generated_image_metadata(prompt_hash=hashlib.sha256(spec.prompt.encode()).hexdigest()[:16], seed=spec.seed, provider=self.name, version=self.version, kind=spec.kind)
-        meta["model"] = get_settings().openrouter_model_image
+        meta["model"] = model
         return ImageResult(data, mime, meta)
 
 

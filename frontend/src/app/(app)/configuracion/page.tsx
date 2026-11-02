@@ -4,7 +4,7 @@ import { CheckCircle2, Plus, Save } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { EmptyState, JsonBlock, Loading, PageHeader, Pagination } from "@/components/app/common";
+import { EmptyState, Loading, PageHeader } from "@/components/app/common";
 import { FormDialog, type FieldSpec } from "@/components/app/form-dialog";
 import { useSession } from "@/components/app/session";
 import { errMsg } from "@/components/pieces/parts";
@@ -14,11 +14,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { enumOptions, fmtDate, t, tEnum } from "@/i18n";
-import { api, qs, refresh, useApi, type Schemas } from "@/lib/api/client";
+import { api, refresh, useApi, type Schemas } from "@/lib/api/client";
 import { useStateResetOn } from "@/lib/hooks";
 
 const commas = (v: unknown) => (Array.isArray(v) ? v : String(v ?? "").split(",")).map((s) => String(s).trim()).filter(Boolean);
@@ -323,33 +322,6 @@ function ClientContext() {
   );
 }
 
-function ModelsTab() {
-  const { data } = useApi<{ llm_provider: string; image_provider: string; video_provider: string; key_present: boolean; models: Record<string, string>; video_seconds: number }>("/meta/ai-status");
-  if (!data) return <Loading />;
-  const rows: [string, string, string][] = [
-    [t("mvp.modelAnalysis"), data.llm_provider, data.models.analysis],
-    [t("mvp.modelText"), data.llm_provider, data.models.text],
-    [t("mvp.modelImage"), data.image_provider, data.models.image],
-    [t("mvp.modelVideo"), data.video_provider, `${data.models.video} · ${data.video_seconds}s`],
-  ];
-  return (
-    <div className="grid gap-3">
-      {data.key_present ? (
-        <p className="flex items-center gap-2 text-sm text-status-ok"><CheckCircle2 className="size-4" />{t("mvp.keyPresent")}</p>
-      ) : (
-        <p className="rounded-md border border-status-warn/50 bg-status-warn/10 p-3 text-sm">{t("mvp.keyMissing")}</p>
-      )}
-      <div className="rounded-lg border bg-card">
-        <Table>
-          <TableHeader><TableRow><TableHead>{t("mvp.use")}</TableHead><TableHead>{t("mvp.provider")}</TableHead><TableHead>{t("mvp.model")}</TableHead></TableRow></TableHeader>
-          <TableBody>{rows.map(([use, prov, model]) => <TableRow key={use}><TableCell>{use}</TableCell><TableCell className="text-xs">{prov}</TableCell><TableCell className="font-mono text-xs">{model}</TableCell></TableRow>)}</TableBody>
-        </Table>
-      </div>
-      <p className="text-xs text-muted-foreground">{t("mvp.modelsHelp")}</p>
-    </div>
-  );
-}
-
 function ClientsTab() {
   const { can, me, reload } = useSession();
   const [editing, setEditing] = useState<Schemas["ClientOut"] | "new" | null>(null);
@@ -387,44 +359,6 @@ function ClientsTab() {
   );
 }
 
-function AiRunsTab() {
-  const [page, setPage] = useState(1);
-  const [step, setStep] = useState("");
-  const [openId, setOpenId] = useState<number | null>(null);
-  const { data } = useApi<Schemas["Page_AiRunOut_"]>(`/ai-runs${qs({ page, page_size: 30, step })}`);
-  const { data: detail } = useApi<Schemas["AiRunDetail"]>(openId ? `/ai-runs/${openId}` : null);
-  return (
-    <div className="grid gap-3">
-      <div className="flex items-center gap-3"><p className="text-xs text-muted-foreground">{t("settings.ai.help")}</p><Input className="ml-auto w-48" placeholder={t("settings.ai.step")} value={step} onChange={(e) => { setStep(e.target.value); setPage(1); }} /></div>
-      <div className="rounded-lg border bg-card">
-        <Table>
-          <TableHeader><TableRow><TableHead>{t("common.date")}</TableHead><TableHead>{t("settings.ai.step")}</TableHead><TableHead>{t("settings.ai.prompt")}</TableHead><TableHead>{t("settings.ai.provider")}</TableHead><TableHead>{t("kb.history.style")}</TableHead><TableHead className="text-right">{t("settings.ai.latency")}</TableHead><TableHead>{t("settings.ai.status")}</TableHead></TableRow></TableHeader>
-          <TableBody>
-            {(data?.items ?? []).map((r) => (
-              <TableRow key={r.id} className="cursor-pointer" onClick={() => setOpenId(r.id)}>
-                <TableCell className="text-xs">{fmtDate(r.created_at)}</TableCell>
-                <TableCell className="font-mono text-xs">{r.step}</TableCell>
-                <TableCell className="font-mono text-xs">v{r.prompt_version}</TableCell>
-                <TableCell className="text-xs">{r.provider} · {r.model}</TableCell>
-                <TableCell className="text-xs">{r.style_slug ? `${r.style_slug} v${r.style_version}` : t("common.none")}{r.applied_directives.length ? ` · ${r.applied_directives.map((d) => String(d.code)).join(", ")}` : ""}</TableCell>
-                <TableCell className="text-right font-mono text-xs">{r.latency_ms} ms</TableCell>
-                <TableCell><Badge variant={r.status === "ok" ? "outline" : "destructive"}>{r.status}</Badge></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-      {data ? <Pagination page={page} pageSize={data.page_size} total={data.total} onPage={setPage} /> : null}
-      <Sheet open={openId !== null} onOpenChange={(o) => !o && setOpenId(null)}>
-        <SheetContent className="w-full overflow-y-auto sm:max-w-2xl">
-          <SheetHeader><SheetTitle className="font-mono">{detail?.step} #{detail?.id}</SheetTitle></SheetHeader>
-          {detail ? <div className="grid gap-3 px-4 pb-6"><p className="text-xs">{detail.error}</p><p className="text-xs font-medium">Input</p><JsonBlock value={detail.input} /><p className="text-xs font-medium">Output</p><JsonBlock value={detail.output} /></div> : <Loading />}
-        </SheetContent>
-      </Sheet>
-    </div>
-  );
-}
-
 export default function SettingsPage() {
   return (
     <div>
@@ -433,13 +367,11 @@ export default function SettingsPage() {
         <TabsList className="h-auto flex-wrap">
           <TabsTrigger value="clients">{t("settings.tabs.clients")}</TabsTrigger>
           <TabsTrigger value="accounts">{t("settings.tabs.accounts")}</TabsTrigger>
-          <TabsTrigger value="models">{t("mvp.modelsTab")}</TabsTrigger>
-          <TabsTrigger value="ai">{t("settings.tabs.ai")}</TabsTrigger>
+
         </TabsList>
         <TabsContent value="clients" className="mt-3"><ClientsTab /></TabsContent>
         <TabsContent value="accounts" className="mt-3"><AccountsTab /></TabsContent>
-        <TabsContent value="models" className="mt-3"><ModelsTab /></TabsContent>
-        <TabsContent value="ai" className="mt-3"><AiRunsTab /></TabsContent>
+
       </Tabs>
     </div>
   );

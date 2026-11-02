@@ -7,6 +7,18 @@
           "title": "Style",
           "type": "string"
         },
+        "angle": {
+          "default": "",
+          "description": "El ángulo creativo de esta variante en pocas palabras (distinto en cada variante).",
+          "title": "Angle",
+          "type": "string"
+        },
+        "hook": {
+          "default": "",
+          "description": "La primera línea / gancho que detiene el scroll (también va como primer segmento).",
+          "title": "Hook",
+          "type": "string"
+        },
         "segments": {
           "items": {
             "$ref": "#/$defs/Segment"
@@ -44,6 +56,12 @@
         "concept": {
           "description": "Idea de la imagen en español, para la persona que revisa.",
           "title": "Concept",
+          "type": "string"
+        },
+        "visual_style": {
+          "default": "",
+          "description": "Tratamiento visual elegido: fotografía editorial, collage, 3D, póster tipográfico, ilustración…",
+          "title": "Visual Style",
           "type": "string"
         },
         "prompt": {

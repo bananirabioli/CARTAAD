@@ -38,3 +38,24 @@ def generate_content(ctx: dict[str, Any]) -> dict[str, Any]:
                  "prompt": "Slow dolly-in along a quiet neighborhood street at golden hour, people walking, cinematic", "aspect_ratio": "9:16",
                  "voiceover_full": "Esto es lo que sí está pasando.", "on_screen_text": ["Lo que sí está pasando"]}
     return {"copies": copies, "image_prompts": images, "video": video, "missing_data": [] if facts else ["Dato oficial sobre el tema"]}
+
+
+def extract_facts(ctx: dict[str, Any]) -> dict[str, Any]:
+    """One fact per sentence that carries a number (deterministic, for tests and the offline demo)."""
+    import re
+
+    facts = []
+    page = 1
+    for part in re.split(r"(\[página \d+\])", ctx.get("text") or ""):
+        m = re.fullmatch(r"\[página (\d+)\]", part.strip())
+        if m:
+            page = int(m.group(1))
+            continue
+        for sentence in re.split(r"(?<=[.!?])\s+", part):
+            num = re.search(r"(\d[\d,]*(?:\.\d+)?)\s*(%|pesos|colonias|personas|km|millones)?", sentence)
+            if num and len(sentence.strip()) > 20:
+                facts.append({"statement": sentence.strip()[:300], "value": float(num.group(1).replace(",", "")), "unit": num.group(2) or "", "base": "",
+                              "period_label": "", "fact_date": "", "topic": "", "page": page, "quote": sentence.strip()[:300]})
+            if len(facts) >= ctx.get("max_facts", 20):
+                break
+    return {"facts": facts, "notes": "" if facts else "Sin cifras en el texto."}

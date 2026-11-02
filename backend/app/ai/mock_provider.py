@@ -19,6 +19,7 @@ HANDLERS: dict[str, str] = {
     "red_team": "red_team:red_team",
     "analyze_capture": "mvp:analyze_capture",
     "generate_content": "mvp:generate_content",
+    "extract_facts": "mvp:extract_facts",
 }
 
 

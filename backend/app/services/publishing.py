@@ -15,7 +15,8 @@ from sqlalchemy.orm import Session
 
 from app.db import utcnow
 from app.errors import AppError
-from app.guardrails.hard_rules import HardRuleViolation, PieceGate, assert_approvable, assert_not_restricted, assert_publishable, assert_registered_account
+from app.guardrails.hard_rules import HardRuleViolation, PieceGate, assert_approvable, assert_not_restricted, assert_publishable, assert_registered_account, rule_enabled
+from app.services.client_settings import rules_for
 from app.i18n import t
 from app.models.cases import Case
 from app.models.core import User
@@ -32,10 +33,13 @@ from app.storage import get_storage
 
 
 def gate_for(piece: Piece) -> PieceGate:
+    verify = rule_enabled(rules_for(piece), "HR-09V")  # off: human approval stays, figure-by-figure and legal checks do not block
+    total = len(piece.figures)
     return PieceGate(
-        status=piece.status, current_version=piece.current_version, approved_version=piece.approved_version, figures_total=len(piece.figures),
-        figures_verified=sum(1 for f in piece.figures if f.status == "verificada"), blocking_findings=sum(1 for f in piece.validation if f.get("severity") == "block"),
-        legal_required=piece.legal_required, legal_status=piece.legal_status,
+        status=piece.status, current_version=piece.current_version, approved_version=piece.approved_version, figures_total=total,
+        figures_verified=sum(1 for f in piece.figures if f.status == "verificada") if verify else total,
+        blocking_findings=sum(1 for f in piece.validation if f.get("severity") == "block"),
+        legal_required=piece.legal_required and verify, legal_status=piece.legal_status,
     )
 
 
@@ -45,7 +49,7 @@ def approval_blockers(db: Session, piece: Piece) -> list[str]:
         assert_approvable(gate_for(piece))
     except HardRuleViolation as exc:
         blockers.append(f"{exc.rule_id}: {exc.message}")
-    if piece.legal_required and piece.legal_status != "liberada" and not any("legal" in b.lower() for b in blockers):
+    if piece.legal_required and piece.legal_status != "liberada" and rule_enabled(rules_for(piece), "HR-09V") and not any("legal" in b.lower() for b in blockers):
         blockers.append(t("publishing.blockers.legal"))
     if piece.missing_inputs:
         blockers.append(t("publishing.blockers.missing_inputs", items="; ".join(piece.missing_inputs)))
@@ -110,8 +114,9 @@ def publication_text(db: Session, piece: Piece, copy_piece: Piece | None = None)
 def _check_publishable(db: Session, piece: Piece, account: OwnedAccount, when: datetime) -> None:
     assert_registered_account(account, piece.client_id)  # HR-02
     assert_publishable(gate_for(piece))  # HR-09
-    for r in db.scalars(select(RestrictionMode).where(RestrictionMode.client_id == piece.client_id)):
-        assert_not_restricted(r, when, format_slug=account.format_slug, creative_slug=piece.creative_slug)  # HR-04
+    if rule_enabled(rules_for(piece), "HR-04"):
+        for r in db.scalars(select(RestrictionMode).where(RestrictionMode.client_id == piece.client_id)):
+            assert_not_restricted(r, when, format_slug=account.format_slug, creative_slug=piece.creative_slug)  # HR-04
 
 
 def schedule(db: Session, user: User, client_id: int, *, piece: Piece, account_id: int, scheduled_at: datetime, copy_piece: Piece | None = None) -> ScheduledPost:
